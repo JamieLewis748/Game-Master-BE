@@ -38,6 +38,7 @@ describe("GET /api/users", () => {
   });
 });
 
+//TEST EVENTS
 describe("GET /api/events", () => {
   test("200: Should return status 200 if successfully accessed", () => {
     return request(app).get("/api/events").expect(200);
@@ -55,4 +56,24 @@ describe("GET /api/events", () => {
         expect(body).toMatchObject(events)
       });
   });
+});
+
+describe('GET /api/events/:event_id', () => {
+  test('200: Should return 200', () => {
+    return request(app)
+    .get("/api/events")
+    .then(({body}) => {
+      body.map(async(event) => {
+        return await request(app)
+        .get(`/api/events/:${event._id}`)
+        .then(({body}) => {
+          
+          
+          expect(body).toMatchObject(event)
+        })
+      }).then(() => {
+        console.log("hi");
+      })
+    })
+  });  
 });

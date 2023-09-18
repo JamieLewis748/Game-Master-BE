@@ -1,13 +1,22 @@
 const { client } = require('../seed')
-const {getAllEvents} = require('../models/events.model.js')
+const {getAllEvents, getEvent} = require('../models/events.model.js')
 
 const returnAllEvents = (req, res) => {
-    console.log("here")
     getAllEvents().then((data)=>{
-        console.log(data)
         res.status(200).json(data)
     })
 };
 
 
-module.exports = returnAllEvents
+const returnEvent = (req, res) => {
+    const {event_id} = req.params
+    console.log(event_id);
+    getEvent().then((data)=>{
+        res.status(200).json(data)
+    })
+};
+
+
+
+
+module.exports = { returnAllEvents, returnEvent }
