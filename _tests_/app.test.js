@@ -5,7 +5,7 @@ const db = require("../connection");
 const request = require("supertest");
 const endpointsJSON = require("../endpoints.json")
 const {testSeed, closeConnection} = require("../seed")
-const {users} = require("./Data/User")
+const {users} = require("./data/user")
 
 beforeEach(() => {
   return testSeed(users)
