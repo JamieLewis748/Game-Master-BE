@@ -2,11 +2,13 @@ const { MongoClient } = require("mongodb");
 const {password} = require("./db_password")
 const uri =
 
-  `mongodb+srv://emm__:Q6g5KV2L1SDZy6kb@cluster0.pfbhecj.mongodb.net`;
+  `mongodb+srv://emm__:${password}@cluster0.pfbhecj.mongodb.net`;
 
 const client = new MongoClient(uri);
 const dbConnection = (req, res) => {
-  return client.connect()
+  return client.connect().then(() => {
+    return client.db()
+  })
 };
 
 const closeConnection = (req, res) => {
@@ -19,17 +21,16 @@ const closeConnection = (req, res) => {
 // you will still need to connect to the db with mongoDB extention or in terminal to get up and running
 
 const testSeed = (data) => {
-    console.log(data)
-    dbConnection()
+    return dbConnection()
     .then(() => {
-        const db = client.db("testDb")
-        return db.collection("users").drop()
+        const db = client.db("game-master-test")
+         return db.collection("users").deleteMany({})
         
     })
     .then(() => {
-        const db = client.db("testDb")
+        const db = client.db("game-master-test");
         return db.collection("users").insertMany(data)
     })
 }
 
-module.exports = {testSeed, closeConnection}
+module.exports = { testSeed, closeConnection, client, dbConnection };

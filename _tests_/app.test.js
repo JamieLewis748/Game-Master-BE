@@ -1,18 +1,19 @@
 //IMPORTS
-
-const app = require("../app")
+const {app, server} = require("../app")
 const db = require("../connection");
 const request = require("supertest");
 const endpointsJSON = require("../endpoints.json")
 const {testSeed, closeConnection} = require("../seed")
-const {users} = require("./data/user")
+const {users} = require("./data/user");
 
-beforeEach(() => {
-  return testSeed(users)
+
+beforeEach(async () => {
+  return await testSeed(users)
 })
 
 afterAll(() => {
   closeConnection()
+  server.close()
 })
 
 
@@ -36,3 +37,16 @@ describe("GET /api", () => {
       });
   });
 });
+describe("GET /api/users", () => {
+    test("200: Should return status 200 if successfully accessed", () => {
+      return request(app).get("/api/users").expect(200);
+    });
+  test("200: Should return an object if successfully accessed", () => {
+    return request(app)
+      .get("/api/users")
+      .then(({body}) => {
+        console.log("🚀 ~ file: app.test.js:48 ~ .then ~ body:", body)
+        expect(Array.isArray(body)).toBe(true);
+      });
+  });
+})
