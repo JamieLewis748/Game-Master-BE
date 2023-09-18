@@ -6,5 +6,8 @@
     "mongodb": "^6.1.0",
     "nodemon": "^3.0.1",
     "supertest": "^6.3.3"
+  },
+  "scripts": {
+    "test": "jest --detectOpenHandles"
   }
 }
