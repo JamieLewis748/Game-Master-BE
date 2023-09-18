@@ -1,0 +1,47 @@
+{
+ "GET /api" : {
+    "description" : "returns endpoints.json",
+    "expected status code" : 200,
+    "expected response type" : {},
+    "queries" : [],
+    "example response" : {
+        "GET /api" : {
+            "description" : "returns endpoints.json",
+            "expected status code" : 200,
+            "expected response type" : {},
+            "queries" : [],
+            "example response" : {}
+        },
+        "GET /api/users" : {
+            "description" : "returns an array of all user objects",
+            "expected status code" : 200,
+            "expected response type" : [],
+            "queries" : []
+        }
+    }
+ },
+ "GET /api/users" : {
+    "description" : "returns an array of all user objects",
+    "expected status code" : 200,
+    "expected response type" : [],
+    "queries" : [],
+    "example response" : [
+        {
+            "id": 1,
+            "name": "Jamie",
+            "username": "jamie1234",
+            "email": "jamie@gmail.com",
+            "img_url": "",
+            "collectables" : []
+        },
+        {
+            "id": 2,
+            "name": "Emm",
+            "username": "emm1234",
+            "email": "emm@gmail.com",
+            "img_url": "",
+            "collectables" : []
+        }
+    ]
+ }
+}
