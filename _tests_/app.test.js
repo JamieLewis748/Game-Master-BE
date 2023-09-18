@@ -4,6 +4,17 @@ const app = require("../app")
 const db = require("../connection");
 const request = require("supertest");
 const endpointsJSON = require("../endpoints.json")
+const {testSeed, closeConnection} = require("../seed")
+const {users} = require("./Data/User")
+
+beforeEach(() => {
+  return testSeed(users)
+})
+
+afterAll(() => {
+  closeConnection()
+})
+
 
 //TEST SUITE
 describe("GET /api", () => {
