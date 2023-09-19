@@ -235,6 +235,23 @@ describe("GET /api/collections/:collection_id", () => {
         expect(body).toMatchObject([collections[0]])
       });
   });
+  test("200: Should return an object if successfully accessed", () => {
+    return request(app)
+      .get("/api/collections/tree")
+      .then(({ body }) => {
+        expect(body).toMatchObject([collections[3]])
+      });
+  });
+  test("400: Not found", () => {
+    return request(app)
+      .get("/api/collections/banana")
+      .expect(400)
+  });
+  test("400: Not found", () => {
+    return request(app)
+      .get("/api/collections/100")
+      .expect(400)
+  });
 });
 
 
@@ -256,10 +273,24 @@ describe("POST /api/collections", () => {
 
     const event = (await request(app).post("/api/collections").send(data)).body
     expect(event.acknowledged).toBe(true)
+
     return await request(app).get(`/api/collections/${event.insertedId}`).expect(200)
       .then((response) => {
         expect(response.body).toMatchObject([data])
       })
+  });
+  test("404: Missing name and img_url", () => {
+    return request(app).post("/api/collections").send({}).expect(404)
+  });
+  test("404: Missing img_url", () => {
+    return request(app).post("/api/collections").send({
+      name : "test"
+    }).expect(404)
+  });
+  test("404: Missing name", () => {
+    return request(app).post("/api/collections").send({
+      img_url : "test"
+    }).expect(404)
   });
 });
 
