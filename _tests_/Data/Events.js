@@ -9,7 +9,8 @@ exports.events = [
     duration: '2:00:00',
     capacity: 5,
     participants: ["1", "2"],
-    requestedToParticipate:[]
+    requestedToParticipate:[],
+    collection_id: "1"
   },
   {
     _id: "2",
@@ -21,7 +22,8 @@ exports.events = [
     duration: '2:00:00',
     capacity: 2,
     participants: ["1", "3"],
-    requestedToParticipate:[]
+    requestedToParticipate:[],
+    collection_id: "2"
   },
   {
     _id: "3",
@@ -33,7 +35,8 @@ exports.events = [
     duration: '2:00:00',
     capacity: 5,
     participants: ["2", "4"],
-    requestedToParticipate:[]
+    requestedToParticipate:[],
+    collection_id: "3"
   },
   {
     _id: "4",
@@ -45,7 +48,8 @@ exports.events = [
     duration: '2:00:00',
     capacity: 8,
     participants: ["1", "3", "5"],
-    requestedToParticipate: []
+    requestedToParticipate: [],
+    collection_id: "1"
   },
   {
     _id: "5",
@@ -57,7 +61,8 @@ exports.events = [
     duration: '2:00:00',
     capacity: 4,
     participants: ["2", "4"],
-    requestedToParticipate: []
+    requestedToParticipate: [],
+    collection_id: "2"
   },
   {
     _id: "6",
@@ -69,6 +74,7 @@ exports.events = [
     duration: '2:00:00',
     capacity: 6,
     participants: ["1", "3"],
-    requestedToParticipate: []
+    requestedToParticipate: [],
+    collection_id: "3"
   }
 ];
