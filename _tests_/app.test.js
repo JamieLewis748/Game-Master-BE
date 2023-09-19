@@ -261,3 +261,54 @@ describe("POST /api/collections", () => {
       })
   });
 });
+
+
+
+
+
+describe.only("POST /api/users/:user_id", () => {
+  test("201: Should return status 201 if successfully posted", () => {
+    return request(app)
+      .post("/api/users/1")
+      .send({
+        _id: 5,
+        username: "henry1234",
+        img_url: "",
+        topics: ["RPGs", "Tabletop"],
+      })
+      .expect(201)
+      .then(({ body }) => {
+        expect(body.acknowledged).toBe(true);
+      });
+  });
+    test("201: Should return msg object with modifiedCount: 1 if successful", () => {
+      return request(app)
+        .post("/api/users/1")
+        .send({
+          _id: 5,
+          username: "henry1234",
+          img_url: "",
+          topics: ["RPGs", "Tabletop"],
+        })
+        .expect(201)
+        .then(({body}) => {
+          expect(typeof body === "object").toBe(true);
+          expect(body.modifiedCount === 1).toBe(true);
+        });
+    });
+    test("201: Should be unable to friend request self and recieve message instead", () => {
+      return request(app)
+        .post("/api/users/5")
+        .send({
+          _id: 5,
+          username: "henry1234",
+          img_url: "",
+          topics: ["RPGs", "Tabletop"],
+        })
+        .expect(200)
+        .then(({body}) => {
+          expect(typeof body === "object").toBe(true);
+          expect(body.msg === "can not send friend request to self").toBe(true);
+        });
+    });
+})

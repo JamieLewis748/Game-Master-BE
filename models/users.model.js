@@ -30,7 +30,8 @@ function addNewUser(name, username, email, img_url) {
         name: name,
         username: username,
         email:email,
-        img_url:img_url,
+        img_url: img_url,
+        topics: [],
         friends: [],
         friendRequestsReceived : [],
         friendRequestsSent : [],
@@ -43,4 +44,24 @@ function addNewUser(name, username, email, img_url) {
         })
 };
 
-module.exports = { getAllUsers, getUser, addNewUser }
+function requestNewFriend(user_id, friendToAdd) {
+  const db = client.db("game-master-test");
+  const usersCollection = db.collection("users");
+
+  return usersCollection
+    .updateOne(
+      { _id: user_id },
+      { $push: { friendRequestsReceived: friendToAdd } }
+    )
+    .then((msg) => {
+      return msg;
+    });
+}  
+    
+
+
+
+
+
+
+module.exports = { getAllUsers, getUser, addNewUser, requestNewFriend };
