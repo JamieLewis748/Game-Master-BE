@@ -62,7 +62,6 @@ describe("PATCH /api/users/characterStats/:user_id", () => {
   });
 });
 
-
 describe("POST /api/users", () => {
   test("200: Should return status 200 if successfully accessed", () => {
     return request(app).post("/api/users").send({
@@ -90,12 +89,6 @@ describe("POST /api/users", () => {
   });
 });
 
-
-
-
-
-
-//TEST EVENTS
 describe("GET /api/events", () => {
   test("200: Should return status 200 if successfully accessed", () => {
     return request(app).get("/api/events").expect(200);
@@ -218,8 +211,6 @@ describe("POST /api/events", () => {
   });
 });
 
-
-
 describe("GET /api/collections", () => {
   test("200: Should return status 200 if successfully accessed", () => {
     return request(app).get("/api/collections").expect(200);
@@ -232,7 +223,6 @@ describe("GET /api/collections", () => {
       });
   });
 });
-
 
 describe("GET /api/collections/:collection_id", () => {
   test("200: Should return status 200 if successfully accessed", () => {
@@ -272,10 +262,6 @@ describe("POST /api/collections", () => {
       })
   });
 });
-
-
-
-
 
 describe("POST /api/users/:user_id", () => {
   test("201: Should return status 201 if successfully posted", () => {
