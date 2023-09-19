@@ -43,4 +43,17 @@ function addNewUser(name, username, email, img_url) {
         })
 };
 
-module.exports = { getAllUsers, getUser, addNewUser }
+function modifyStats (user_id) {
+    const db = client.db('game-master-test');
+    const usersCollection = db.collection('users');
+    return usersCollection.findOneAndUpdate({_id: user_id, "characterStats.name": "Character1" }, {$set: { "characterStats.level": "8" }})
+    .then((msg) => {
+        console.log(msg);
+        return msg
+    }).catch((err) => {
+        console.log(err);
+        return err
+    })
+}
+
+module.exports = { getAllUsers, getUser, addNewUser, modifyStats }

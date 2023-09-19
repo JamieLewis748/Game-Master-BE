@@ -1,4 +1,4 @@
-const { getAllUsers, getUser, addNewUser } = require('../models/users.model.js')
+const { getAllUsers, getUser, addNewUser, modifyStats } = require('../models/users.model.js')
 
 const returnAllUsers = (req, res) => {
     getAllUsers()
@@ -29,7 +29,15 @@ const postNewUser = (req,res) => {
     .then((userArray)=> {
         res.status(200).json(userArray);
     })
+};
+
+const patchCharacterStats = (req, res) => {
+    const {user_id} = req.params
+    modifyStats(user_id)
+    .then((msg) => {
+        res.status(200).json(msg);
+    })    
 }
 
 
-module.exports = {returnAllUsers, returnUser, postNewUser}
+module.exports = {returnAllUsers, returnUser, postNewUser, patchCharacterStats}
