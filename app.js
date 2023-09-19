@@ -1,6 +1,7 @@
 const express = require("express");
 const app = express();
-const {returnAllUsers, returnUser, postNewUser, postFriendRequest} = require('./controllers/users.controller')
+
+const {returnAllUsers, returnUser, postNewUser, patchCharacterStats, postFriendRequest} = require('./controllers/users.controller')
 const { returnAllEvents, returnEvent, postNewEvent } = require('./controllers/events.controller')
 const {returnAllCollections, returnCollection, postNewCollection} = require('./controllers/collections.controller')
 
@@ -10,6 +11,7 @@ app.use(express.json());
 app.get("/api/users", returnAllUsers)
 app.get("/api/users/:user_id", returnUser)
 app.post("/api/users", postNewUser)
+app.patch("/api/users/characterStats/:user_id", patchCharacterStats)
 
 app.get("/api/events", returnAllEvents)
 app.get("/api/events/:event_id", returnEvent)

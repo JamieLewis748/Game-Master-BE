@@ -44,6 +44,29 @@ function addNewUser(name, username, email, img_url) {
         })
 };
 
+const modifyStats = async (user_id, exp) => {
+    const db = client.db('game-master-test');
+    const usersCollection = db.collection('users');
+
+    const userBeforeUpdate = (await usersCollection.find({ _id: user_id }).toArray())
+
+    let totalExp = Number(userBeforeUpdate[0].characterStats.experience) + exp
+
+    while(totalExp >= Number(userBeforeUpdate[0].characterStats.experienceToLevelUp)) {
+        totalExp - Number(userBeforeUpdate[0].characterStats.experienceToLevelUp)
+        userBeforeUpdate[0].characterStats.level = (Number(userBeforeUpdate[0].characterStats.level) + 1).toString()
+        userBeforeUpdate[0].characterStats.experienceToLevelUp = (Number(userBeforeUpdate[0].characterStats.experienceToLevelUp) + 10).toString()
+    }
+        
+    return usersCollection.findOneAndUpdate({_id: user_id}, {$set: { "characterStats.level": "8" }})
+    .then((msg) => {
+        return msg
+    }).catch((err) => {
+        console.log(err);
+        return err
+    })
+}
+
 function requestNewFriend(user_id, friendToAdd) {
   const db = client.db("game-master-test");
   const usersCollection = db.collection("users");
@@ -58,10 +81,4 @@ function requestNewFriend(user_id, friendToAdd) {
     });
 }  
     
-
-
-
-
-
-
-module.exports = { getAllUsers, getUser, addNewUser, requestNewFriend };
+module.exports = { getAllUsers, getUser, addNewUser, requestNewFriend, modifyStats };
