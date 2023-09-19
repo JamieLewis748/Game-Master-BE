@@ -48,8 +48,7 @@ describe("GET /api/users/:user_id", () => {
   }, 20000);
 });
 
-//PATCH
-describe.only("PATCH /api/users/characterStats/:user_id", () => {
+describe("PATCH /api/users/characterStats/:user_id", () => {
   test("200: Should return status 200 if successfully accessed", () => {
     return request(app).patch("/api/users/characterStats/1").send({exp: 80}).expect(200);
   });
@@ -167,7 +166,6 @@ describe("GET /api/events", () => {
         onlyGameNotFullEvents = onlyGameNotFullEvents.sort(function (a, b) {
           return new Date(b.dateTime) - new Date(a.dateTime)
         })
-        console.log(onlyGameNotFullEvents)
         expect(body).toMatchObject(onlyGameNotFullEvents)
       });
   });
@@ -268,11 +266,8 @@ describe("POST /api/collections", () => {
 
     const event = (await request(app).post("/api/collections").send(data)).body
     expect(event.acknowledged).toBe(true)
-    console.log(event)
-
     return await request(app).get(`/api/collections/${event.insertedId}`).expect(200)
       .then((response) => {
-        console.log(response.body)
         expect(response.body).toMatchObject([data])
       })
   });
@@ -282,7 +277,7 @@ describe("POST /api/collections", () => {
 
 
 
-describe.only("POST /api/users/:user_id", () => {
+describe("POST /api/users/:user_id", () => {
   test("201: Should return status 201 if successfully posted", () => {
     return request(app)
       .post("/api/users/1")

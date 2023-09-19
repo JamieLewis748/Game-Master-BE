@@ -13,10 +13,8 @@ function getAllEvents(isGameFull = undefined, gameType = undefined, sortBy = "da
     }
     let sort = {}
     sort[sortBy] = Number(order)
-    console.log(sort)
     return eventsCollection.find(searchBy).sort(sort).toArray()
         .then((userArray) => {
-            console.log(userArray)
             return userArray
         })
 };
