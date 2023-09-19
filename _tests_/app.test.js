@@ -7,9 +7,10 @@ const endpointsJSON = require("../endpoints.json")
 const { testSeed, closeConnection } = require("../seed")
 const { users } = require("./Data/Users")
 const { events } = require("./Data/Events")
+const { collections } = require("./Data/Collections")
 
 beforeEach(async () => {
-  await testSeed({ users, events });
+  await testSeed({ users, events, collections });
 });
 
 afterAll(() => {
@@ -56,7 +57,7 @@ describe("POST /api/users", () => {
       "img_url": ""
     }).expect(200)
   });
-  test("200: Should return status 200 if successfully accessed",async () => {
+  test("200: Should return status 200 if successfully accessed", async () => {
     const data = {
       "name": "newUser",
       "username": "newUser1234",
@@ -68,9 +69,9 @@ describe("POST /api/users", () => {
     expect(event.acknowledged).toBe(true)
 
     return await request(app).get(`/api/users/${event.insertedId}`)
-    .then((response) => {
-      expect(response.body).toMatchObject([data])
-    })
+      .then((response) => {
+        expect(response.body).toMatchObject([data])
+      })
   });
 });
 
@@ -88,7 +89,70 @@ describe("GET /api/events", () => {
     return request(app)
       .get("/api/events")
       .then(({ body }) => {
-        expect(body).toMatchObject(events)
+        let onlyGameNotFullEvents = [...events]
+        onlyGameNotFullEvents = onlyGameNotFullEvents.sort(function (a, b) {
+          return new Date(a.dateTime) - new Date(b.dateTime)
+        })
+        expect(body).toMatchObject(onlyGameNotFullEvents)
+      });
+  });
+  test("200: Should return an object if successfully accessed", () => {
+    return request(app)
+      .get("/api/events?isGameFull=false")
+      .then(({ body }) => {
+        let onlyGameNotFullEvents = [...events]
+        onlyGameNotFullEvents = onlyGameNotFullEvents.filter((event) => event.isGameFull === "false")
+        onlyGameNotFullEvents = onlyGameNotFullEvents.sort(function (a, b) {
+          return new Date(a.dateTime) - new Date(b.dateTime)
+        })
+        expect(body).toMatchObject(onlyGameNotFullEvents)
+      });
+  });
+  test("200: Should return an object if successfully accessed", () => {
+    return request(app)
+      .get("/api/events?gameType=Board Games")
+      .then(({ body }) => {
+        let onlyGameNotFullEvents = [...events]
+        onlyGameNotFullEvents = onlyGameNotFullEvents.filter((event) => event.gameType === "Board Games")
+        onlyGameNotFullEvents = onlyGameNotFullEvents.sort(function (a, b) {
+          return new Date(a.dateTime) - new Date(b.dateTime)
+        })
+        expect(body).toMatchObject(onlyGameNotFullEvents)
+      });
+  });
+  test("200: Should return an object if successfully accessed", () => {
+    return request(app)
+      .get("/api/events?gameType=Card Games")
+      .then(({ body }) => {
+        let onlyGameNotFullEvents = [...events]
+        onlyGameNotFullEvents = onlyGameNotFullEvents.filter((event) => event.gameType === "Card Games")
+        onlyGameNotFullEvents = onlyGameNotFullEvents.sort(function (a, b) {
+          return new Date(a.dateTime) - new Date(b.dateTime)
+        })
+        expect(body).toMatchObject(onlyGameNotFullEvents)
+      });
+  });
+  test("200: Should return an object if successfully accessed", () => {
+    return request(app)
+      .get("/api/events?sortBy=dateTime&order=1")
+      .then(({ body }) => {
+        let onlyGameNotFullEvents = [...events]
+        onlyGameNotFullEvents = onlyGameNotFullEvents.sort(function (a, b) {
+          return new Date(a.dateTime) - new Date(b.dateTime)
+        })
+        expect(body).toMatchObject(onlyGameNotFullEvents)
+      });
+  });
+  test("200: Should return an object if successfully accessed", () => {
+    return request(app)
+      .get("/api/events?sortBy=dateTime&order=-1")
+      .then(({ body }) => {
+        let onlyGameNotFullEvents = [...events]
+        onlyGameNotFullEvents = onlyGameNotFullEvents.sort(function (a, b) {
+          return new Date(b.dateTime) - new Date(a.dateTime)
+        })
+        console.log(onlyGameNotFullEvents)
+        expect(body).toMatchObject(onlyGameNotFullEvents)
       });
   });
 });
@@ -121,7 +185,7 @@ describe("POST /api/events", () => {
         expect(body.acknowledged).toBe(true)
       })
   });
-  test("200: Should return status 200 if successfully accessed",async () => {
+  test("200: Should return status 200 if successfully accessed", async () => {
     const data = {
       image: 'https://example.com/event2.jpg',
       gameInfo: 'Event 2 - Family Board Games',
@@ -134,8 +198,66 @@ describe("POST /api/events", () => {
     expect(event.acknowledged).toBe(true)
 
     return await request(app).get(`/api/events/${event.insertedId}`).expect(200)
-    .then((response) => {
-      expect(response.body).toMatchObject([data])
-    })
+      .then((response) => {
+        expect(response.body).toMatchObject([data])
+      })
+  });
+});
+
+
+
+describe("GET /api/collections", () => {
+  test("200: Should return status 200 if successfully accessed", () => {
+    return request(app).get("/api/collections").expect(200);
+  });
+  test("200: Should return an object if successfully accessed", () => {
+    return request(app)
+      .get("/api/collections")
+      .then(({ body }) => {
+        expect(body).toMatchObject(collections)
+      });
+  });
+});
+
+
+describe("GET /api/collections/:collection_id", () => {
+  test("200: Should return status 200 if successfully accessed", () => {
+    return request(app).get("/api/collections/1").expect(200);
+  });
+  test("200: Should return an object if successfully accessed", () => {
+    return request(app)
+      .get("/api/collections/1")
+      .then(({ body }) => {
+        expect(body).toMatchObject([collections[0]])
+      });
+  });
+});
+
+
+describe("POST /api/collections", () => {
+  test("200: Should return status 200 if successfully accessed", () => {
+    return request(app).post("/api/collections").send({
+      name: "Rock",
+      img_url: 'https://example.com/event2.jpg'
+    }).expect(200)
+      .then(({ body }) => {
+        expect(body.acknowledged).toBe(true)
+      })
+  });
+  test("200: Should return status 200 if successfully accessed", async () => {
+    const data = {
+      name: "Rock",
+      img_url: 'https://example.com/event2.jpg'
+    }
+
+    const event = (await request(app).post("/api/collections").send(data)).body
+    expect(event.acknowledged).toBe(true)
+    console.log(event)
+
+    return await request(app).get(`/api/collections/${event.insertedId}`).expect(200)
+      .then((response) => {
+        console.log(response.body)
+        expect(response.body).toMatchObject([data])
+      })
   });
 });
