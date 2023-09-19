@@ -33,6 +33,12 @@ const testSeed = (data) => {
     .then(() => {
         return db.collection("events").insertMany(data.events)
     })
+    .then(() => {
+        return db.collection("collections").deleteMany({})
+    })
+    .then(() => {
+        return db.collection("collections").insertMany(data.collections)
+    })
 }
 
 module.exports = {testSeed, closeConnection, client}

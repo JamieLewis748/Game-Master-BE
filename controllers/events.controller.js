@@ -1,8 +1,8 @@
-const { client } = require('../seed')
 const {getAllEvents, getEvent, addNewEvent} = require('../models/events.model.js')
 
 const returnAllEvents = (req, res) => {
-    getAllEvents().then((data)=>{
+    const {isGameFull, gameType, sortBy, order} = req.query
+    getAllEvents(isGameFull, gameType, sortBy, order).then((data)=>{
         res.status(200).json(data)
     })
 };

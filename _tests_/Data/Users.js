@@ -186,4 +186,4 @@ exports.users = [
             "experienceToLevelUp": "80"
         }]
     }
-];
+  ]

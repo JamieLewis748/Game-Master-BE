@@ -1,11 +1,22 @@
 const { client } = require('../seed')
 const { ObjectId } = require('mongodb');
 
-function getAllEvents() {
+function getAllEvents(isGameFull = undefined, gameType = undefined, sortBy = "dateTime", order = 1) {
     const db = client.db('game-master-test');
     const eventsCollection = db.collection('events');
-    return eventsCollection.find().toArray()
+    let searchBy = {}
+    if(isGameFull !== undefined){
+        searchBy["isGameFull"] = isGameFull
+    }
+    if(gameType !== undefined){
+        searchBy["gameType"] = gameType
+    }
+    let sort = {}
+    sort[sortBy] = Number(order)
+    console.log(sort)
+    return eventsCollection.find(searchBy).sort(sort).toArray()
         .then((userArray) => {
+            console.log(userArray)
             return userArray
         })
 };

@@ -1,4 +1,4 @@
-const { getAllUsers, getUser, addNewUser, modifyStats } = require('../models/users.model.js')
+const { getAllUsers, getUser, addNewUser, modifyStats, requestNewFriend } = require('../models/users.model.js')
 
 const returnAllUsers = (req, res) => {
     getAllUsers()
@@ -41,5 +41,15 @@ const patchCharacterStats = (req, res) => {
     })    
 }
 
+const postFriendRequest = (req, res) => {
+  const { user_id } = req.params;
+  if (user_id * 1 !== req.body._id) {
+    requestNewFriend(user_id, req.body).then((msg) => {
+      res.status(201).json(msg);
+    });
+  } else {
+    res.status(200).send({ msg: "can not send friend request to self" });
+  }
+};
 
-module.exports = {returnAllUsers, returnUser, postNewUser, patchCharacterStats}
+module.exports = {returnAllUsers, returnUser, postNewUser, patchCharacterStats, postFriendRequest }
