@@ -1,4 +1,4 @@
-const { getAllUsers, getUser, addNewUser } = require('../models/users.model.js')
+const { getAllUsers, getUser, addNewUser, modifyStats, requestNewFriend } = require('../models/users.model.js')
 
 const returnAllUsers = (req, res) => {
     const {topics} = req.query
@@ -30,7 +30,27 @@ const postNewUser = (req,res) => {
     .then((userArray)=> {
         res.status(200).json(userArray);
     })
+};
+
+const patchCharacterStats = (req, res) => {
+    const {user_id} = req.params
+    const { exp } = req.body
+    console.log(exp);
+    modifyStats(user_id, exp)
+    .then((msg) => {
+        res.status(200).json(msg);
+    })    
 }
 
+const postFriendRequest = (req, res) => {
+  const { user_id } = req.params;
+  if (user_id * 1 !== req.body._id) {
+    requestNewFriend(user_id, req.body).then((msg) => {
+      res.status(201).json(msg);
+    });
+  } else {
+    res.status(200).send({ msg: "can not send friend request to self" });
+  }
+};
 
-module.exports = {returnAllUsers, returnUser, postNewUser}
+module.exports = {returnAllUsers, returnUser, postNewUser, patchCharacterStats, postFriendRequest }

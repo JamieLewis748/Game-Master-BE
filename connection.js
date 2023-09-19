@@ -1,7 +1,7 @@
 const { MongoClient } = require("mongodb");
 const {password} = require("./db_password")
 const uri =
-  `mongodb+srv://emm__:const${password}@cluster0.pfbhecj.mongodb.net`;
+ `mongodb+srv://emm__:${password}@cluster0.pfbhecj.mongodb.net`;
 
 const client = new MongoClient(uri);
 exports.dbConnection = (req, res) => {

@@ -1,0 +1,358 @@
+{
+  "tldrawFileFormatVersion": 1,
+  "schema": {
+    "schemaVersion": 1,
+    "storeVersion": 4,
+    "recordVersions": {
+      "asset": {
+        "version": 1,
+        "subTypeKey": "type",
+        "subTypeVersions": {
+          "image": 2,
+          "video": 2,
+          "bookmark": 0
+        }
+      },
+      "camera": {
+        "version": 1
+      },
+      "document": {
+        "version": 2
+      },
+      "instance": {
+        "version": 17
+      },
+      "instance_page_state": {
+        "version": 3
+      },
+      "page": {
+        "version": 1
+      },
+      "shape": {
+        "version": 3,
+        "subTypeKey": "type",
+        "subTypeVersions": {
+          "group": 0,
+          "embed": 4,
+          "bookmark": 1,
+          "image": 2,
+          "text": 1,
+          "draw": 1,
+          "geo": 7,
+          "line": 0,
+          "note": 4,
+          "frame": 0,
+          "arrow": 1,
+          "highlight": 0,
+          "video": 1
+        }
+      },
+      "instance_presence": {
+        "version": 4
+      },
+      "pointer": {
+        "version": 1
+      }
+    }
+  },
+  "records": [
+    {
+      "gridSize": 10,
+      "name": "",
+      "meta": {},
+      "id": "document:document",
+      "typeName": "document"
+    },
+    {
+      "id": "pointer:pointer",
+      "typeName": "pointer",
+      "x": 1193.6626889761878,
+      "y": 453.94172903576987,
+      "lastActivityTimestamp": 1695115027211,
+      "meta": {}
+    },
+    {
+      "meta": {},
+      "id": "page:QLf__pUUlN0AY0Ui62EWQ",
+      "name": "Page 1",
+      "index": "a1",
+      "typeName": "page"
+    },
+    {
+      "x": -122.83523029317347,
+      "y": -0.7962079597582044,
+      "z": 0.6373234403054551,
+      "meta": {},
+      "id": "camera:page:QLf__pUUlN0AY0Ui62EWQ",
+      "typeName": "camera"
+    },
+    {
+      "editingId": null,
+      "croppingId": null,
+      "selectedIds": [],
+      "hoveredId": null,
+      "erasingIds": [],
+      "hintingIds": [],
+      "focusLayerId": null,
+      "meta": {},
+      "id": "instance_page_state:page:QLf__pUUlN0AY0Ui62EWQ",
+      "pageId": "page:QLf__pUUlN0AY0Ui62EWQ",
+      "typeName": "instance_page_state"
+    },
+    {
+      "followingUserId": null,
+      "opacityForNextShape": 1,
+      "stylesForNextShape": {
+        "tldraw:arrowheadStart": "none",
+        "tldraw:color": "orange",
+        "tldraw:size": "xl"
+      },
+      "brush": null,
+      "scribble": null,
+      "cursor": {
+        "type": "default",
+        "color": "white",
+        "rotation": 0
+      },
+      "isFocusMode": false,
+      "exportBackground": true,
+      "isDebugMode": false,
+      "isToolLocked": false,
+      "screenBounds": {
+        "x": 0,
+        "y": 0,
+        "w": 850.11572265625,
+        "h": 524.88427734375
+      },
+      "zoomBrush": null,
+      "isGridMode": false,
+      "isPenMode": false,
+      "chatMessage": "",
+      "isChatting": false,
+      "highlightedUserIds": [],
+      "meta": {},
+      "id": "instance:instance",
+      "currentPageId": "page:QLf__pUUlN0AY0Ui62EWQ",
+      "typeName": "instance"
+    },
+    {
+      "x": 40.48400115966797,
+      "y": 94.88480186462402,
+      "rotation": 0,
+      "isLocked": false,
+      "opacity": 1,
+      "meta": {},
+      "type": "text",
+      "props": {
+        "color": "black",
+        "size": "m",
+        "w": 274.01251220703125,
+        "text": "Things currently to fix",
+        "font": "draw",
+        "align": "middle",
+        "autoSize": true,
+        "scale": 1
+      },
+      "parentId": "page:QLf__pUUlN0AY0Ui62EWQ",
+      "index": "a1",
+      "id": "shape:4UQUuRl_6ERvY1_xQaCws",
+      "typeName": "shape"
+    },
+    {
+      "x": 444.92101287841797,
+      "y": 97.80544090270996,
+      "rotation": 0,
+      "isLocked": false,
+      "opacity": 1,
+      "meta": {},
+      "type": "text",
+      "props": {
+        "color": "black",
+        "size": "m",
+        "w": 209.6950225830078,
+        "text": "Things to discuss",
+        "font": "draw",
+        "align": "middle",
+        "autoSize": true,
+        "scale": 1
+      },
+      "parentId": "page:QLf__pUUlN0AY0Ui62EWQ",
+      "index": "a2",
+      "id": "shape:vlasrgLl3kfAKsgXU1CXa",
+      "typeName": "shape"
+    },
+    {
+      "x": 391.3755187988281,
+      "y": 98.98545837402344,
+      "rotation": 0,
+      "isLocked": false,
+      "opacity": 1,
+      "meta": {},
+      "type": "arrow",
+      "parentId": "page:QLf__pUUlN0AY0Ui62EWQ",
+      "index": "a3",
+      "props": {
+        "dash": "draw",
+        "size": "m",
+        "fill": "none",
+        "color": "light-violet",
+        "labelColor": "black",
+        "bend": 0,
+        "start": {
+          "type": "point",
+          "x": 0,
+          "y": 0
+        },
+        "end": {
+          "type": "point",
+          "x": 8.171241461241152e-14,
+          "y": 550.1457159779728
+        },
+        "arrowheadStart": "none",
+        "arrowheadEnd": "arrow",
+        "text": "",
+        "font": "draw"
+      },
+      "id": "shape:oSMIlxxbmTJKQKj6MQyo9",
+      "typeName": "shape"
+    },
+    {
+      "x": 17.14142608642578,
+      "y": 157.3847942352295,
+      "rotation": 0,
+      "isLocked": false,
+      "opacity": 1,
+      "meta": {},
+      "type": "text",
+      "props": {
+        "color": "light-violet",
+        "size": "s",
+        "w": 316.0679931640625,
+        "text": "users now has topics (check tests)",
+        "font": "draw",
+        "align": "middle",
+        "autoSize": true,
+        "scale": 1
+      },
+      "parentId": "page:QLf__pUUlN0AY0Ui62EWQ",
+      "index": "a4",
+      "id": "shape:TdUwKlhZtpsouivKaOGEM",
+      "typeName": "shape"
+    },
+    {
+      "x": 439.00740814208984,
+      "y": 155.56730461120605,
+      "rotation": 0,
+      "isLocked": false,
+      "opacity": 1,
+      "meta": {},
+      "type": "text",
+      "props": {
+        "color": "light-violet",
+        "size": "s",
+        "w": 290.74969482421875,
+        "text": "does mongoDB do serialisation \nfor user_id for us?",
+        "font": "draw",
+        "align": "middle",
+        "autoSize": true,
+        "scale": 1
+      },
+      "parentId": "page:QLf__pUUlN0AY0Ui62EWQ",
+      "index": "a5",
+      "id": "shape:UsithS7t4tPSMeC3p_MxE",
+      "typeName": "shape"
+    },
+    {
+      "x": 217.02024841308594,
+      "y": 9.625467300415039,
+      "rotation": 0,
+      "isLocked": false,
+      "opacity": 1,
+      "meta": {},
+      "type": "text",
+      "props": {
+        "color": "orange",
+        "size": "xl",
+        "w": 348.0232849121094,
+        "text": "Message board",
+        "font": "draw",
+        "align": "middle",
+        "autoSize": true,
+        "scale": 1
+      },
+      "parentId": "page:QLf__pUUlN0AY0Ui62EWQ",
+      "index": "a6",
+      "id": "shape:p2KCfycqMWq1nArZn5urh",
+      "typeName": "shape"
+    },
+    {
+      "x": -88.982470584227,
+      "y": 199.02613328926492,
+      "rotation": 0,
+      "isLocked": false,
+      "opacity": 1,
+      "meta": {},
+      "id": "shape:5_UhMveEb-HkfQDOLD02_",
+      "type": "text",
+      "props": {
+        "color": "light-violet",
+        "size": "s",
+        "w": 470.4010314941406,
+        "text": "line 111 app.test --> POST /api/events should be 201",
+        "font": "draw",
+        "align": "middle",
+        "autoSize": true,
+        "scale": 1
+      },
+      "parentId": "page:QLf__pUUlN0AY0Ui62EWQ",
+      "index": "a7",
+      "typeName": "shape"
+    },
+    {
+      "x": 564.8422942379058,
+      "y": 403.72369173131307,
+      "rotation": 0,
+      "isLocked": false,
+      "opacity": 1,
+      "meta": {},
+      "id": "shape:C6zoJJmdhGttg8DLYqN2q",
+      "type": "text",
+      "props": {
+        "color": "black",
+        "size": "m",
+        "w": 173.98719787597656,
+        "text": "General notes",
+        "font": "draw",
+        "align": "middle",
+        "autoSize": true,
+        "scale": 1
+      },
+      "parentId": "page:QLf__pUUlN0AY0Ui62EWQ",
+      "index": "a8",
+      "typeName": "shape"
+    },
+    {
+      "x": 489.0686073484179,
+      "y": 462.39366300834416,
+      "rotation": 0,
+      "isLocked": false,
+      "opacity": 1,
+      "meta": {},
+      "id": "shape:9_kzqxchPrknUE3TXME8D",
+      "type": "text",
+      "props": {
+        "color": "light-violet",
+        "size": "s",
+        "w": 325.7522277832031,
+        "text": "Emm changed server port to 9095 \nas 9090 in use for some reason",
+        "font": "draw",
+        "align": "middle",
+        "autoSize": true,
+        "scale": 1
+      },
+      "parentId": "page:QLf__pUUlN0AY0Ui62EWQ",
+      "index": "a9",
+      "typeName": "shape"
+    }
+  ]
+}

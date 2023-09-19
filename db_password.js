@@ -1,1 +1,1 @@
-exports.password ='Q6g5KV2L1SDZy6kb';
+exports.password = 'Q6g5KV2L1SDZy6kb'
