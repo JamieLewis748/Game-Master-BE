@@ -1,14 +1,15 @@
 const { getAllUsers, getUser, addNewUser } = require('../models/users.model.js')
 
 const returnAllUsers = (req, res) => {
-    getAllUsers()
-        .then((userArray) => {
-            res.status(200).json(userArray);
-        })
-        .catch((error) => {
-            console.error('Error fetching users:', error);
-            res.status(500).json({ error: 'Internal Server Error' });
-        });
+    const {topics} = req.query
+    getAllUsers(topics)
+      .then((userArray) => {
+        res.status(200).json(userArray);
+      })
+      .catch((error) => {
+        console.error("Error fetching users:", error);
+        res.status(500).json({ error: "Internal Server Error" });
+      });
 };
 
 const returnUser = (req, res) => {

@@ -23,7 +23,7 @@ describe("GET /api/users", () => {
   test("200: Should return status 200 if successfully accessed", () => {
     return request(app).get("/api/users").expect(200);
   });
-  test("200: Should return an object if successfully accessed", () => {
+  test("200: Should return an array of users if successfully accessed", () => {
     return request(app)
       .get("/api/users")
       .then(({ body }) => {
@@ -112,10 +112,10 @@ describe("POST /api/events", () => {
   test("200: Should return status 200 if successfully accessed", () => {
     return request(app).post("/api/events").send({
       image: 'https://example.com/event2.jpg',
-      gameInfo: 'Event 2 - Family Board Games',
+      gameInfo: 'Event 4 - Family Card Games',
       isGameFull: false,
-      gameType: 'Board Games',
-      dateTime: '2023-09-21 19:30:00'
+      gameType: 'Card Games',
+      dateTime: '2023-11-21 19:30:00'
     }).expect(200)
       .then(({ body }) => {
         expect(body.acknowledged).toBe(true)
@@ -139,3 +139,20 @@ describe("POST /api/events", () => {
     })
   });
 });
+
+
+//TEST userList QUERIES
+describe("200: GET /users with  queries", () => {
+  test("200: GET /users?topics=BoardGame", () => {
+    return request(app).get("/api/users?topics=BoardGames").expect(200);
+  })
+  test("200: should only return users with topic specified in query", () => {
+    return request(app).get("/api/users?topics=BoardGames")
+      .expect(200)
+      .then(({ body }) => {
+        body.map((user) => {
+        expect(user.topics.includes('Board Games')).toBe(true)
+      })
+      })
+  })
+})
