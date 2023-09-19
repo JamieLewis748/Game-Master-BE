@@ -19,17 +19,20 @@ const closeConnection = (req, res) => {
 // you will still need to connect to the db with mongoDB extention or in terminal to get up and running
 
 const testSeed = (data) => {
-    console.log(data)
-    dbConnection()
+    const db = client.db("game-master-test")
+    return dbConnection()
     .then(() => {
-        const db = client.db("testDb")
-        return db.collection("users").drop()
-        
+        return db.collection("users").deleteMany({})
     })
     .then(() => {
-        const db = client.db("testDb")
-        return db.collection("users").insertMany(data)
+        return db.collection("users").insertMany(data.users)
+    })
+    .then(() => {
+        return db.collection("events").deleteMany({})
+    })
+    .then(() => {
+        return db.collection("events").insertMany(data.events)
     })
 }
 
-module.exports = {testSeed, closeConnection}
+module.exports = {testSeed, closeConnection, client}
