@@ -50,17 +50,16 @@ describe("GET /api/users/:user_id", () => {
 //PATCH
 describe.only("PATCH /api/users/characterStats/:user_id", () => {
   test("200: Should return status 200 if successfully accessed", () => {
-    return request(app).patch("/api/users/characterStats/1").expect(200);
+    return request(app).patch("/api/users/characterStats/1").send({exp: 80}).expect(200);
   });
 
   test("200: Should update the characterStats.level of the user", async () => {
-    const response = ( await request(app).patch("/api/users/characterStats/1")).body
+    await request(app).patch("/api/users/characterStats/1").send({exp: 80})
     return await request(app).get("/api/users/1").expect(200)
     .then(({body}) => {
-      console.log(body);
       expect(body[0].characterStats.level).toBe("8")
     })
-  })
+  });
 });
 
 

@@ -33,7 +33,9 @@ const postNewUser = (req,res) => {
 
 const patchCharacterStats = (req, res) => {
     const {user_id} = req.params
-    modifyStats(user_id)
+    const { exp } = req.body
+    console.log(exp);
+    modifyStats(user_id, exp)
     .then((msg) => {
         res.status(200).json(msg);
     })    
