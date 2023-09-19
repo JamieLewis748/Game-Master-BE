@@ -98,6 +98,8 @@ describe("GET /api/events", () => {
       .get("/api/events")
       .then(({ body }) => {
         let onlyGameNotFullEvents = [...events]
+        onlyGameNotFullEvents = onlyGameNotFullEvents
+        .filter((event) => event.completed === "false")
         onlyGameNotFullEvents = onlyGameNotFullEvents.sort(function (a, b) {
           return new Date(a.dateTime) - new Date(b.dateTime)
         })
@@ -109,6 +111,8 @@ describe("GET /api/events", () => {
       .get("/api/events?isGameFull=false")
       .then(({ body }) => {
         let onlyGameNotFullEvents = [...events]
+        onlyGameNotFullEvents = onlyGameNotFullEvents
+        .filter((event) => event.completed === "false")
         onlyGameNotFullEvents = onlyGameNotFullEvents.filter((event) => event.isGameFull === "false")
         onlyGameNotFullEvents = onlyGameNotFullEvents.sort(function (a, b) {
           return new Date(a.dateTime) - new Date(b.dateTime)
@@ -121,6 +125,8 @@ describe("GET /api/events", () => {
       .get("/api/events?gameType=Board Games")
       .then(({ body }) => {
         let onlyGameNotFullEvents = [...events]
+        onlyGameNotFullEvents = onlyGameNotFullEvents
+        .filter((event) => event.completed === "false")
         onlyGameNotFullEvents = onlyGameNotFullEvents.filter((event) => event.gameType === "Board Games")
         onlyGameNotFullEvents = onlyGameNotFullEvents.sort(function (a, b) {
           return new Date(a.dateTime) - new Date(b.dateTime)
@@ -133,6 +139,8 @@ describe("GET /api/events", () => {
       .get("/api/events?gameType=Card Games")
       .then(({ body }) => {
         let onlyGameNotFullEvents = [...events]
+        onlyGameNotFullEvents = onlyGameNotFullEvents
+        .filter((event) => event.completed === "false")
         onlyGameNotFullEvents = onlyGameNotFullEvents.filter((event) => event.gameType === "Card Games")
         onlyGameNotFullEvents = onlyGameNotFullEvents.sort(function (a, b) {
           return new Date(a.dateTime) - new Date(b.dateTime)
@@ -145,6 +153,8 @@ describe("GET /api/events", () => {
       .get("/api/events?sortBy=dateTime&order=1")
       .then(({ body }) => {
         let onlyGameNotFullEvents = [...events]
+        onlyGameNotFullEvents = onlyGameNotFullEvents
+        .filter((event) => event.completed === "false")
         onlyGameNotFullEvents = onlyGameNotFullEvents.sort(function (a, b) {
           return new Date(a.dateTime) - new Date(b.dateTime)
         })
@@ -156,6 +166,8 @@ describe("GET /api/events", () => {
       .get("/api/events?sortBy=dateTime&order=-1")
       .then(({ body }) => {
         let onlyGameNotFullEvents = [...events]
+        onlyGameNotFullEvents = onlyGameNotFullEvents
+        .filter((event) => event.completed === "false")
         onlyGameNotFullEvents = onlyGameNotFullEvents.sort(function (a, b) {
           return new Date(b.dateTime) - new Date(a.dateTime)
         })
