@@ -1,16 +1,16 @@
-[
+exports.collections = [
     {
-        "id": 1,
+        "_id": "1",
         "name": "grass",
         "img_url": "url"
     },
     {
-        "id": 2,
+        "_id": "2",
         "name": "water",
         "img_url": "url"
     },
     {
-        "id": 3,
+        "_id": "3",
         "name": "fire",
         "img_url": "url"
     }
