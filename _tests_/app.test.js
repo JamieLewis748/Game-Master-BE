@@ -310,7 +310,7 @@ describe("POST /api/users/:user_id", () => {
     });
 })
 
-describe("200: GET /users with  queries", () => {
+describe.only("200: GET /users with  queries", () => {
   test("200: GET /users?topics=BoardGame", () => {
     return request(app).get("/api/users?topics=BoardGames").expect(200);
   })
@@ -322,5 +322,40 @@ describe("200: GET /users with  queries", () => {
           expect(user.topics.includes('Board Games')).toBe(true)
         })
       })
+  })
+  test("200: GET /users?topics=CardGames", () => {
+    return request(app).get("/api/users?topics=CardGames").expect(200);
+  });
+  test("200: should only return users with topic specified in query", () => {
+    return request(app).get("/api/users?topics=CardGames")
+      .expect(200)
+      .then(({ body }) => {
+        body.map((user) => {
+          expect(user.topics.includes('Card Games')).toBe(true)
+        })
+      })
+  })
+  test("200: GET /users?characterStats.level", () => {
+    return request(app).get("/api/users?characterStats.level").expect(200);
+  });
+  test("200: should return all users", () => {
+    return request(app)
+      .get("/api/users?characterStats.level")
+      .expect(200)
+      .then(({ body }) => {
+          expect(body.length).toBe(users.length);
+      });
+  })
+  test.only("200: users array should be ordered by level", () => {
+    return request(app)
+      .get("/api/users?characterStats")
+      .expect(200)
+      .then(({ body }) => {
+        console.log("🚀 ~ file: app.test.js:360 ~ .then ~ body:", body)
+        const levelsOnly = body.map((user) => {
+            return user.characterStats.level
+          })
+          expect(levelsOnly).toBeSorted({ descending: true });
+      });
   })
 })

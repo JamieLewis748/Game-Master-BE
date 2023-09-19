@@ -1,16 +1,24 @@
 const { client } = require('../seed')
 const { ObjectId } = require('mongodb');
 
-function getAllUsers(query = undefined) {
+function getAllUsers(query = undefined, characterStats=undefined) {
   const db = client.db("game-master-test");
   const usersCollection = db.collection("users");
   let searchQuery = {};
+  let orderQuery = {};
   if (query !== undefined) {
     searchQuery["topics"] = query;
   }
+  if (characterStats !== undefined) {
+    orderQuery = { 'characterStats.level': 1 }; 
+  }
+  console.log("🚀 ~ file: users.model.js:14 ~ getAllUsers ~ orderQuery:", orderQuery)
 
+  console.log("🚀 ~ file: users.model.js:19 ~ getAllUsers ~ .aggregate({ $sort: orderQuery }):", ({ $sort: orderQuery }))
   return usersCollection
     .find(searchQuery)
+    .aggregate()
+    .sort(orderQuery)
     .toArray()
     .then((userArray) => {
       return userArray;
