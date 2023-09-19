@@ -309,3 +309,18 @@ describe("POST /api/users/:user_id", () => {
         });
     });
 })
+
+describe("200: GET /users with  queries", () => {
+  test("200: GET /users?topics=BoardGame", () => {
+    return request(app).get("/api/users?topics=BoardGames").expect(200);
+  })
+  test("200: should only return users with topic specified in query", () => {
+    return request(app).get("/api/users?topics=BoardGames")
+      .expect(200)
+      .then(({ body }) => {
+        body.map((user) => {
+          expect(user.topics.includes('Board Games')).toBe(true)
+        })
+      })
+  })
+})
