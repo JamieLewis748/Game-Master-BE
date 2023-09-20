@@ -34,8 +34,6 @@ describe("GET /api/users", () => {
   });
 });
 
-
-
 describe("GET /api/users/:user_id", () => {
   test("200: Should return status 200 if successfully accessed", () => {
     return request(app).get("/api/users/1").send({userWhoRequested:"2"}).expect(200);
@@ -622,6 +620,33 @@ describe("200: GET /users with  queries", () => {
         });
     });   
   }) 
-   
+  
+describe.only
+  ("200: GET /users/user_id/myCreatures", () => {
+    test("200: Return status 200 on successful get", () => {
+      return request(app).get("/api/users/1/myCreatures").expect(200);
+    });
+    test("200: should return users myCreatures array", () => {
+      return request(app)
+        .get("/api/users/1/myCreatures")
+        .expect(200)
+        .then(({ body }) => {
+          expect(body).toEqual(users[0].myCreatures);
+        });
+    })
+  })
 
-
+describe("200: PATCH /api/events/:event_id", () => {
+  test("200: should return 200 when successfully patched", () => {
+    return request(app).patch("/api/events/2").expect(200);
+  });
+  test("200: should return acknowledgement upon successful patch", async ()=>{
+    await request(app).patch("/api/events/2")
+    return await request(app)
+      .get("/api/events/2")
+      .expect(200)
+      .then(({ body }) => {
+        expect(body[0].isCompleted).toBe("true");
+      });
+  });
+});

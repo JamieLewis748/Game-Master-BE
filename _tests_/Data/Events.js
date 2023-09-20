@@ -12,6 +12,7 @@ exports.events = [
     requestedToParticipate: [],
     prizeCollection_id: "1",
     isCompleted: "false",
+    hostedBy: "1",
   },
   {
     _id: "2",
@@ -26,6 +27,7 @@ exports.events = [
     requestedToParticipate: [],
     prizeCollection_id: "2",
     isCompleted: "false",
+    hostedBy: "1",
   },
   {
     _id: "3",
@@ -40,6 +42,7 @@ exports.events = [
     requestedToParticipate: [],
     prizeCollection_id: "3",
     isCompleted: "false",
+    hostedBy: "2",
   },
   {
     _id: "4",
@@ -54,6 +57,7 @@ exports.events = [
     requestedToParticipate: [],
     prizeCollection_id: "1",
     isCompleted: "false",
+    hostedBy: "2",
   },
   {
     _id: "5",
@@ -68,6 +72,7 @@ exports.events = [
     requestedToParticipate: [],
     prizeCollection_id: "2",
     isCompleted: "false",
+    hostedBy: "2"
   },
   {
     _id: "6",
@@ -82,6 +87,7 @@ exports.events = [
     requestedToParticipate: [],
     prizeCollection_id: "3",
     isCompleted: "false",
+    hostedBy: "3",
   },
   {
     _id: "7",
@@ -96,6 +102,7 @@ exports.events = [
     requestedToParticipate: [],
     prizeCollection_id: "2",
     isCompleted: "true",
+    hostedBy: "3",
   },
   {
     _id: "8",
@@ -110,6 +117,7 @@ exports.events = [
     requestedToParticipate: ["1"],
     prizeCollection_id: "3",
     isCompleted: "false",
+    hostedBy: "3",
   },
   {
     _id: "9",
@@ -124,5 +132,6 @@ exports.events = [
     requestedToParticipate: [],
     prizeCollection_id: "1",
     isCompleted: "false",
+    hostedBy: "4",
   }
 ];
