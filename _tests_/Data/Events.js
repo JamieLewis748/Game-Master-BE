@@ -10,6 +10,7 @@ exports.events = [
     capacity: 5,
     participants: ["1", "2"],
     requestedToParticipate:[],
+    collection_id: "1"
     completed: "false"
   },
   {
@@ -23,6 +24,7 @@ exports.events = [
     capacity: 2,
     participants: ["1", "3"],
     requestedToParticipate:[],
+    collection_id: "2"
     completed: "false"
   },
   {
@@ -36,6 +38,7 @@ exports.events = [
     capacity: 5,
     participants: ["2", "4"],
     requestedToParticipate:[],
+    collection_id: "3"
     completed: "false"
   },
   {
@@ -49,6 +52,7 @@ exports.events = [
     capacity: 8,
     participants: ["1", "3", "5"],
     requestedToParticipate: [],
+    collection_id: "1"
     completed: "false"
   },
   {
@@ -62,6 +66,7 @@ exports.events = [
     capacity: 4,
     participants: ["2", "4"],
     requestedToParticipate: [],
+    collection_id: "2"
     completed: "false"
   },
   {
@@ -75,6 +80,7 @@ exports.events = [
     capacity: 6,
     participants: ["1", "3"],
     requestedToParticipate: [],
+    collection_id: "3"
     completed: "false"
   },
   {

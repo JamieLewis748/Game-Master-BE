@@ -50,15 +50,15 @@ describe("GET /api/users/:user_id", () => {
 
 describe("PATCH /api/users/characterStats/:user_id", () => {
   test("200: Should return status 200 if successfully accessed", () => {
-    return request(app).patch("/api/users/characterStats/1").send({exp: 80}).expect(200);
+    return request(app).patch("/api/users/characterStats/1").send({ exp: 80 }).expect(200);
   });
 
   test("200: Should update the characterStats.level of the user", async () => {
-    await request(app).patch("/api/users/characterStats/1").send({exp: 80})
+    await request(app).patch("/api/users/characterStats/1").send({ exp: 80 })
     return await request(app).get("/api/users/1").expect(200)
-    .then(({body}) => {
-      expect(body[0].characterStats.level).toBe("8")
-    })
+      .then(({ body }) => {
+        expect(body[0].characterStats.level).toBe("8")
+      })
   });
 });
 
@@ -198,7 +198,12 @@ describe("POST /api/events", () => {
       gameInfo: 'Event 2 - Family Board Games',
       isGameFull: false,
       gameType: 'Board Games',
-      dateTime: '2023-09-21 19:30:00'
+      dateTime: '2023-09-21 19:30:00',
+      duration: '2:00:00',
+      capacity: 6,
+      participants: ["1", "3"],
+      requestedToParticipate: [],
+      collection_id: "1"
     }).expect(200)
       .then(({ body }) => {
         expect(body.acknowledged).toBe(true)
@@ -210,7 +215,10 @@ describe("POST /api/events", () => {
       gameInfo: 'Event 2 - Family Board Games',
       isGameFull: false,
       gameType: 'Board Games',
-      dateTime: '2023-09-21 19:30:00'
+      dateTime: '2023-09-21 19:30:00',
+      duration: '2:00:00',
+      capacity: "6",
+      collection_id: "1"
     }
 
     const event = (await request(app).post("/api/events").send(data)).body
@@ -289,6 +297,36 @@ describe("POST /api/users/:user_id", () => {
       .then(({ body }) => {
         expect(body.acknowledged).toBe(true);
       });
+    test("201: Should return msg object with modifiedCount: 1 if successful", () => {
+    return request(app)
+      .post("/api/users/1")
+      .send({
+        _id: 5,
+        username: "henry1234",
+        img_url: "",
+        topics: ["RPGs", "Tabletop"],
+      })
+      .expect(201)
+      .then(({ body }) => {
+        expect(typeof body === "object").toBe(true);
+        expect(body.modifiedCount === 1).toBe(true);
+      });
+  });
+  test("201: Should be unable to friend request self and recieve message instead", () => {
+    return request(app)
+      .post("/api/users/5")
+      .send({
+        _id: 5,
+        username: "henry1234",
+        img_url: "",
+        topics: ["RPGs", "Tabletop"],
+      })
+      .expect(200)
+      .then(({ body }) => {
+        expect(typeof body === "object").toBe(true);
+        expect(body.msg === "can not send friend request to self").toBe(true);
+      });
+  });
   });
     test("201: Should return msg object with modifiedCount: 1 if successful", () => {
       return request(app)
