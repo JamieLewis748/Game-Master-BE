@@ -1,4 +1,9 @@
-const {getAllEvents, getEvent, addNewEvent} = require('../models/events.model.js')
+const {
+  getAllEvents,
+  getEvent,
+  addNewEvent,
+  updateCompleted,
+} = require("../models/events.model.js");
 
 const returnAllEvents = (req, res) => {
     const {isGameFull, gameType, sortBy, order} = req.query
@@ -22,6 +27,16 @@ const postNewEvent = (req,res) => {
     })
 }
 
+const patchCompletedStatus = (req, res) => {
+    const { event_id } = req.params;
+    updateCompleted(event_id).then((data) => {
+      res.status(200).json(data);
+    });
+}
 
-
-module.exports = { returnAllEvents, returnEvent, postNewEvent }
+module.exports = {
+  returnAllEvents,
+  returnEvent,
+  postNewEvent,
+  patchCompletedStatus,
+};

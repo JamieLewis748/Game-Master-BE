@@ -50,5 +50,14 @@ function addNewEvent(image, gameInfo, isGameFull, gameType, dateTime, duration, 
         })
 };
 
+const updateCompleted = (event_id) => {
+    const db = client.db("game-master-test");
+    const eventsCollection = db.collection("events");
+    return eventsCollection
+        .findOneAndUpdate({ _id: event_id }, { $set: { isCompleted: "true" } })
+      .then((msg) => {
+        return msg;
+      });
+};
 
-module.exports = { getAllEvents, getEvent, addNewEvent }
+module.exports = { getAllEvents, getEvent, addNewEvent, updateCompleted };
