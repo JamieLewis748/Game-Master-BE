@@ -5,6 +5,9 @@ const returnAllEvents = (req, res) => {
     getAllEvents(isGameFull, gameType, sortBy, order).then((data)=>{
         res.status(200).json(data)
     })
+    .catch((error) => {
+        res.status(error.status).json(error.msg);
+    });
 };
 
 const returnEvent = (req, res) => {
@@ -12,6 +15,9 @@ const returnEvent = (req, res) => {
     getEvent(event_id).then((data)=>{
         res.status(200).json(data)
     })
+    .catch((error) => {
+        res.status(error.status).json(error.msg);
+    });
 };
 
 const postNewEvent = (req,res) => {
@@ -20,6 +26,9 @@ const postNewEvent = (req,res) => {
     .then((userArray)=> {
         res.status(200).json(userArray);
     })
+    .catch((error) => {
+        res.status(error.status).json(error.msg);
+    });
 }
 
 

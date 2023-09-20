@@ -26,12 +26,12 @@ exports.users = [
         "friendRequestsReceived": [],
         "friendRequestsSent": [],
         "blocked": [],
-        "characterStats": [{
+        "characterStats": {
             "name": "Character2",
             "level": "5",
             "experience": "20",
             "experienceToLevelUp": "50"
-        }]
+        }
     },
     {
         "_id": "3",
@@ -42,7 +42,7 @@ exports.users = [
         "friends": ["1", "8", "9", "10"],
         "friendRequestsReceived": [],
         "friendRequestsSent": [],
-        "blocked": [],
+        "blocked": ["2"],
         "characterStats": [{
             "name": "Character3",
             "level": "6",
