@@ -2,9 +2,10 @@ const { getAllUsers, getUser, addNewUser, modifyStats, requestNewFriend } = requ
 
 
 const returnAllUsers = (req, res) => {
-    const { topics } = req.query;
-    const { sortBy } = req.query;
-  getAllUsers(topics, sortBy)
+  const { topics } = req.query;
+  const { sortBy } = req.query;
+  const { orderBy } = req.query;
+  getAllUsers(topics, sortBy, orderBy)
     .then((userArray) => {
       res.status(200).json(userArray);
     })

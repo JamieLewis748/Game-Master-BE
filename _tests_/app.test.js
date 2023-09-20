@@ -60,6 +60,13 @@ describe("PATCH /api/users/characterStats/:user_id", () => {
       expect(body[0].characterStats.level).toBe("8")
     })
   });
+  // test.only("200: Should update the characterStats.level of the user", async () => {
+  //   await request(app).patch("/api/users/characterStats/2").send({exp: 40})
+  //   return await request(app).get("/api/users/2").expect(200)
+  //   .then(({body}) => {
+  //     expect(body[0].characterStats.level).toBe("6")
+  //   })
+  // });
 });
 
 describe("POST /api/users", () => {
@@ -310,53 +317,109 @@ describe("POST /api/users/:user_id", () => {
     });
 })
 
-describe.only("200: GET /users with  queries", () => {
-  test("200: GET /users?topics=BoardGame", () => {
-    return request(app).get("/api/users?topics=BoardGames").expect(200);
+
+
+describe
+  ("200: GET /users with  queries", () => {
+    test("200: GET /users?topics=BoardGame", () => {
+      return request(app).get("/api/users?topics=BoardGames").expect(200);
+    });
+    test("200: should only return users with topic specified in query", () => {
+      return request(app)
+        .get("/api/users?topics=BoardGames")
+        .expect(200)
+        .then(({ body }) => {
+          body.map((user) => {
+            expect(user.topics.includes("Board Games")).toBe(true);
+          });
+        });
+    });
+    test("200: GET /users?topics=CardGames", () => {
+      return request(app).get("/api/users?topics=CardGames").expect(200);
+    });
+    test("200: should only return users with topic specified in query", () => {
+      return request(app)
+        .get("/api/users?topics=CardGames")
+        .expect(200)
+        .then(({ body }) => {
+          body.map((user) => {
+            expect(user.topics.includes("Card Games")).toBe(true);
+          });
+        });
+    });
+    test("200: GET /users?sortBy=characterStats.level", () => {
+      return request(app)
+        .get("/api/users?sortBy=characterStats.level")
+        .expect(200);
+    });
+    test("200: should return all users", () => {
+      return request(app)
+        .get("/api/users?sortBy=characterStats.level")
+        .expect(200)
+        .then(({ body }) => {
+          expect(body.length).toBe(users.length);
+        });
+    });
+    test("200: users array should be ordered by level", () => {
+      return request(app)
+        .get("/api/users?sortBy=characterStats.level")
+        .expect(200)
+        .then(({ body }) => {
+          levelsOnly = body.map((user) => {
+            return user.characterStats.level;
+          });
+          expect(levelsOnly).toBeSorted({ descending: true });
+        });
+    });
+    test("200: users array should be ordered by experience", () => {
+      return request(app)
+        .get("/api/users?sortBy=characterStats.experience")
+        .expect(200)
+        .then(({ body }) => {
+          expOnly = body.map((user) => {
+            return user.characterStats.experience;
+          });
+          expect(expOnly).toBeSorted({ descending: true });
+        });
+    });
+    test("200: users array should be ordered by experience to level up ascending", () => {
+      return request(app)
+        .get(
+          "/api/users?sortBy=characterStats.experienceToLevelUp&&orderBy=asc"
+        )
+        .expect(200)
+        .then(({ body }) => {
+          expToLvlOnly = body.map((user) => {
+            return user.characterStats.experienceToLevelUp;
+          });
+          expect(expToLvlOnly).toBeSorted({ ascending: true });
+        });
+    });
+    test("200: users array should be ordered by alphabetical username ascending", () => {
+      return request(app)
+        .get("/api/users?sortBy=username&&orderBy=asc")
+        .expect(200)
+        .then(({ body }) => {
+          usernamesOnly = body.map((user) => {
+            return user.username;
+          });
+          expect(usernamesOnly).toBeSorted({ ascending: true });
+        });
+    });
+    test.only("200: returns user array always containing Board Game topic ordered by alphabetical username ascending", () => {
+      return request(app)
+        .get("/api/users?topic=BoardGame&&sortBy=username&&orderBy=asc")
+        .expect(200)
+        .then(({ body }) => {
+          usernamesOnly = body.map((user) => {
+            expect(user.topics.includes("Board Games")).toBe(true);
+            return user.username});
+          expect(usernamesOnly).toBeSorted({ ascending: true });
+        });
+    });
   })
-  test("200: should only return users with topic specified in query", () => {
-    return request(app).get("/api/users?topics=BoardGames")
-      .expect(200)
-      .then(({ body }) => {
-        body.map((user) => {
-          expect(user.topics.includes('Board Games')).toBe(true)
-        })
-      })
-  })
-  test("200: GET /users?topics=CardGames", () => {
-    return request(app).get("/api/users?topics=CardGames").expect(200);
-  });
-  test("200: should only return users with topic specified in query", () => {
-    return request(app).get("/api/users?topics=CardGames")
-      .expect(200)
-      .then(({ body }) => {
-        body.map((user) => {
-          expect(user.topics.includes('Card Games')).toBe(true)
-        })
-      })
-  })
-  test("200: GET /users?sortBy=characterStats.level", () => {
-    return request(app)
-      .get("/api/users?sortBy=characterStats.level")
-      .expect(200);
-  });
-  test("200: should return all users", () => {
-    return request(app)
-      .get("/api/users?sortBy=characterStats.level")
-      .expect(200)
-      .then(({ body }) => {
-        expect(body.length).toBe(users.length);
-      });
-  });
-  test("200: users array should be ordered by level", () => {
-    return request(app)
-      .get("/api/users?sortBy=characterStats.level")
-      .expect(200)
-      .then(({ body }) => {
-         levelsOnly = body.map((user) => {
-          return user.characterStats.level;
-         });
-        expect(levelsOnly).toBeSorted({ descending: true });
-      });
-  })
-})
+
+
+  //some tests false positive due to missing topics key in Users data (on other branch)
+
+
