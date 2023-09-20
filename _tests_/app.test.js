@@ -169,7 +169,7 @@ describe("PATCH /api/users/block/:user_id", () => {
   test("204: User able to block single user", async () => {
     await request(app).patch("/api/users/block/7").send({ userIdToGetBlocked: "6" }).expect(204);
 
-    return request(app).get("/api/users/7").expect(200).then(({body}) => {
+    return request(app).get("/api/users/7").send({userWhoRequested: adminCode}).expect(200).then(({body}) => {
       expect(body[0].blocked).toEqual(["6"])
     })
   });
@@ -179,7 +179,7 @@ describe("PATCH /api/users/block/:user_id", () => {
     await request(app).patch("/api/users/block/7").send({ userIdToGetBlocked: "2" }).expect(204);
     await request(app).patch("/api/users/block/7").send({ userIdToGetBlocked: "9" }).expect(204);
 
-    return request(app).get("/api/users/7").expect(200).then(({body}) => {
+    return request(app).get("/api/users/7").send({userWhoRequested: adminCode}).expect(200).then(({body}) => {
       expect(body[0].blocked).toEqual(["1","2","9"])
     })
   });
@@ -657,8 +657,7 @@ describe("200: GET /users with  queries", () => {
     });   
   }) 
   
-describe.only
-  ("200: GET /users/user_id/myCreatures", () => {
+describe("200: GET /users/user_id/myCreatures", () => {
     test("200: Return status 200 on successful get", () => {
       return request(app).get("/api/users/1/myCreatures").expect(200);
     });
