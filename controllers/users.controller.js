@@ -1,4 +1,4 @@
-const { getAllUsers, getUser, addNewUser, modifyStats, requestNewFriend } = require('../models/users.model.js')
+const { getAllUsers, getUser, addNewUser, modifyStats, requestNewFriend, userBlockRequest } = require('../models/users.model.js')
 
 
 const returnAllUsers = (req, res) => {
@@ -61,4 +61,18 @@ const postFriendRequest = (req, res) => {
   }
 };
 
-module.exports = {returnAllUsers, returnUser, postNewUser, patchCharacterStats, postFriendRequest }
+const blockUser = (req, res) => {
+  const { user_id } = req.params;
+  const { userIdToGetBlocked } = req.body
+
+  userBlockRequest(user_id, userIdToGetBlocked)
+  .then((response) => {
+    res.status(204).json(response)
+  })
+  .catch((err) => {
+    res.status(err.status).json(err.msg)
+  })
+  
+}
+
+module.exports = {returnAllUsers, returnUser, postNewUser, patchCharacterStats, postFriendRequest, blockUser }

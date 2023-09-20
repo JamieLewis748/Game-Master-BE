@@ -44,7 +44,7 @@ exports.users = [
     friends: ["1", "8", "9", "10"],
     friendRequestsReceived: [],
     friendRequestsSent: [],
-    blocked: [],
+    blocked: ["2"],
     topics: ["Tabletop"],
     characterStats: {
       name: "Character3",

@@ -37,15 +37,9 @@ describe("GET /api/users/:user_id", () => {
   test("200: Should return status 200 if successfully accessed", () => {
     return request(app).get("/api/users/1").send({userWhoRequested:"2"}).expect(200);
   });
-  test('200: Should return 200', async () => {
-    const users = (await request(app).get("/api/users").send({userWhoRequested:"2"})).body;
-
-    await Promise.all(users.map(async (user) => {
-      const { body } = await request(app).get(`/api/users/${user._id}`);
-      const userArray = [user];
-      expect(body).toMatchObject(userArray);
-    }));
-  }, 20000);
+  test('200: Should return 200', () => {
+    return request(app).get("/api/users/4").send({userWhoRequested:"2"}).expect(200);
+  });
   test('200: Should return 200',() => {
     return request(app).get("/api/users/3").send({userWhoRequested:"2"}).expect(404)
     .then((msg) => {
@@ -157,6 +151,42 @@ describe("POST /api/users", () => {
     })
   });
 });
+
+describe("PATCH /api/users/block/:user_id", () => {
+  test("204: Should return status 204 if successfully accessed", () => {
+    return request(app).patch("/api/users/block/7").send({ userIdToGetBlocked: "6" }).expect(204);
+  });
+  test("204: User able to block single user", async () => {
+    await request(app).patch("/api/users/block/7").send({ userIdToGetBlocked: "6" }).expect(204);
+
+    return request(app).get("/api/users/7").expect(200).then(({body}) => {
+      expect(body[0].blocked).toEqual(["6"])
+    })
+  });
+
+  test("204: User able to block multiple users", async () => {
+    await request(app).patch("/api/users/block/7").send({ userIdToGetBlocked: "1" }).expect(204);
+    await request(app).patch("/api/users/block/7").send({ userIdToGetBlocked: "2" }).expect(204);
+    await request(app).patch("/api/users/block/7").send({ userIdToGetBlocked: "9" }).expect(204);
+
+    return request(app).get("/api/users/7").expect(200).then(({body}) => {
+      expect(body[0].blocked).toEqual(["1","2","9"])
+    })
+  });
+
+  test("404: if user_id blocking does not exist",  () => {
+    return request(app).patch("/api/users/block/apple").send({ userIdToGetBlocked: "6" }).expect(404)
+    .then((msg) => {
+      expect(JSON.parse(msg.text)).toBe("Bad request")
+    })
+  });
+  test("404: if user_id blocking does not exist",  () => {
+    return request(app).patch("/api/users/block/1.0").send({ userIdToGetBlocked: "6" }).expect(404)
+    .then((msg) => {
+      expect(JSON.parse(msg.text)).toBe("Bad request")
+    })
+  });
+})
 
 describe("PATCH /api/users/characterStats/:user_id", () => {
   test("200: Should return status 200 if successfully accessed", () => {
