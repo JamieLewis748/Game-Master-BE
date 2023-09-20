@@ -256,7 +256,7 @@ describe("PATCH /api/users/characterStats/:user_id", () => {
 
 
 
-describe("GET /api/events", () => {
+describe.only("GET /api/events", () => {
   test("200: Should return status 200 if successfully accessed", () => {
     return request(app).get("/api/events").expect(200);
   });
@@ -264,9 +264,10 @@ describe("GET /api/events", () => {
     return request(app)
       .get("/api/events").expect(200)
       .then(({ body }) => {
+        expect(body.length > 0).toBe(true)
         let onlyGameNotFullEvents = [...events]
         onlyGameNotFullEvents = onlyGameNotFullEvents
-        .filter((event) => event.completed === "false")
+        .filter((event) => event.isCompleted === "false")
         onlyGameNotFullEvents = onlyGameNotFullEvents.sort(function (a, b) {
           return new Date(a.dateTime) - new Date(b.dateTime)
         })
@@ -277,9 +278,10 @@ describe("GET /api/events", () => {
     return request(app)
       .get("/api/events?isGameFull=false").expect(200)
       .then(({ body }) => {
+        expect(body.length > 0).toBe(true)
         let onlyGameNotFullEvents = [...events]
         onlyGameNotFullEvents = onlyGameNotFullEvents
-        .filter((event) => event.completed === "false")
+        .filter((event) => event.isCompleted === "false")
         onlyGameNotFullEvents = onlyGameNotFullEvents.filter((event) => event.isGameFull === "false")
         onlyGameNotFullEvents = onlyGameNotFullEvents.sort(function (a, b) {
           return new Date(a.dateTime) - new Date(b.dateTime)
@@ -291,9 +293,10 @@ describe("GET /api/events", () => {
     return request(app)
       .get("/api/events?gameType=Board Games").expect(200)
       .then(({ body }) => {
+        expect(body.length > 0).toBe(true)
         let onlyGameNotFullEvents = [...events]
         onlyGameNotFullEvents = onlyGameNotFullEvents
-        .filter((event) => event.completed === "false")
+        .filter((event) => event.isCompleted === "false")
         onlyGameNotFullEvents = onlyGameNotFullEvents.filter((event) => event.gameType === "Board Games")
         onlyGameNotFullEvents = onlyGameNotFullEvents.sort(function (a, b) {
           return new Date(a.dateTime) - new Date(b.dateTime)
@@ -305,9 +308,10 @@ describe("GET /api/events", () => {
     return request(app)
       .get("/api/events?gameType=Card Games").expect(200)
       .then(({ body }) => {
+        expect(body.length > 0).toBe(true)
         let onlyGameNotFullEvents = [...events]
         onlyGameNotFullEvents = onlyGameNotFullEvents
-        .filter((event) => event.completed === "false")
+        .filter((event) => event.isCompleted === "false")
         onlyGameNotFullEvents = onlyGameNotFullEvents.filter((event) => event.gameType === "Card Games")
         onlyGameNotFullEvents = onlyGameNotFullEvents.sort(function (a, b) {
           return new Date(a.dateTime) - new Date(b.dateTime)
@@ -319,9 +323,10 @@ describe("GET /api/events", () => {
     return request(app)
       .get("/api/events?sortBy=dateTime&order=1").expect(200)
       .then(({ body }) => {
+        expect(body.length > 0).toBe(true)
         let onlyGameNotFullEvents = [...events]
         onlyGameNotFullEvents = onlyGameNotFullEvents
-        .filter((event) => event.completed === "false")
+        .filter((event) => event.isCompleted === "false")
         onlyGameNotFullEvents = onlyGameNotFullEvents.sort(function (a, b) {
           return new Date(a.dateTime) - new Date(b.dateTime)
         })
@@ -334,7 +339,7 @@ describe("GET /api/events", () => {
       .then(({ body }) => {
         let onlyGameNotFullEvents = [...events]
         onlyGameNotFullEvents = onlyGameNotFullEvents
-        .filter((event) => event.completed === "false")
+        .filter((event) => event.isCompleted === "false")
         onlyGameNotFullEvents = onlyGameNotFullEvents.sort(function (a, b) {
           return new Date(b.dateTime) - new Date(a.dateTime)
         })
