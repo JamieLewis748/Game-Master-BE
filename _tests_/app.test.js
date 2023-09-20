@@ -366,10 +366,8 @@ describe('GET /api/events/:event_id', () => {
   test("200: Should return status 200 if successfully accessed", () => {
     return request(app).get("/api/events/1").expect(200);
   });
-  test('200: Should return 200', async () => {
-    const events = (await request(app).get("/api/events")).body;
-
-    await Promise.all(events.map(async (event) => {
+  test('200: Should return 200', () => {
+    return Promise.all(events.map(async (event) => {
       const { body } = await request(app).get(`/api/events/${event._id}`);
       expect(body).toMatchObject({ event: event });
     }));
@@ -409,7 +407,6 @@ describe("POST /api/events", () => {
 
     return await request(app).get(`/api/events/${event.insertedId}`).expect(200)
       .then(({ body }) => {
-        console.log(body)
         expect(body).toMatchObject({ event: data })
       })
   });
@@ -687,7 +684,6 @@ describe("200: PATCH /api/events/:event_id", () => {
       .get("/api/events/2")
       .expect(200)
       .then(({ body }) => {
-        console.log(body)
         expect(body.event.isCompleted).toBe("true");
       });
   });
