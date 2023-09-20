@@ -26,12 +26,12 @@ exports.users = [
         "friendRequestsReceived": [],
         "friendRequestsSent": [],
         "blocked": [],
-        "characterStats": [{
+        "characterStats": {
             "name": "Character2",
             "level": "5",
             "experience": "20",
             "experienceToLevelUp": "50"
-        }]
+        }
     },
     {
         "_id": "3",
@@ -43,12 +43,12 @@ exports.users = [
         "friendRequestsReceived": [],
         "friendRequestsSent": [],
         "blocked": [],
-        "characterStats": [{
+        "characterStats": {
             "name": "Character3",
             "level": "6",
             "experience": "19",
             "experienceToLevelUp": "60"
-        }]
+        }
     },
     {
         "_id": "4",
@@ -60,12 +60,12 @@ exports.users = [
         "friendRequestsReceived": [],
         "friendRequestsSent": [],
         "blocked": [],
-        "characterStats": [{
+        "characterStats": {
             "name": "Character4",
             "level": "5",
             "experience": "30",
             "experienceToLevelUp": "50"
-        }]
+        }
     },
     {
         "_id": "5",
@@ -77,12 +77,12 @@ exports.users = [
         "friendRequestsReceived": [],
         "friendRequestsSent": [],
         "blocked": [],
-        "characterStats": [{
+        "characterStats": {
             "name": "Character5",
             "level": "10",
             "experience": "50",
             "experienceToLevelUp": "100"
-        }]
+        }
     },
     {
         "_id": "6",
@@ -94,12 +94,12 @@ exports.users = [
         "friendRequestsReceived": [],
         "friendRequestsSent": [],
         "blocked": [],
-        "characterStats": [{
+        "characterStats": {
             "name": "Character6",
             "level": "19",
             "experience": "70",
             "experienceToLevelUp": "190"
-        }]
+        }
     },
     {
         "_id": "7",
@@ -111,12 +111,12 @@ exports.users = [
         "friendRequestsReceived": [],
         "friendRequestsSent": [],
         "blocked": [],
-        "characterStats": [{
+        "characterStats": {
             "name": "Character7",
             "level": "1",
             "experience": "5",
             "experienceToLevelUp": "10"
-        }]
+        }
     },
     {
         "_id": "8",
@@ -128,12 +128,12 @@ exports.users = [
         "friendRequestsReceived": [],
         "friendRequestsSent": [],
         "blocked": [],
-        "characterStats": [{
+        "characterStats": {
             "name": "Character8",
             "level": "2",
             "experience": "12",
             "experienceToLevelUp": "20"
-        }]
+        }
     },
     {
         "_id": "9",
@@ -145,12 +145,12 @@ exports.users = [
         "friendRequestsReceived": [],
         "friendRequestsSent": [],
         "blocked": [],
-        "characterStats": [{
+        "characterStats": {
             "name": "Character9",
             "level": "9",
             "experience": "29",
             "experienceToLevelUp": "90"
-        }]
+        }
     },
     {
         "_id": "10",
@@ -162,12 +162,12 @@ exports.users = [
         "friendRequestsReceived": [],
         "friendRequestsSent": [],
         "blocked": [],
-        "characterStats": [{
+        "characterStats": {
             "name": "Character10",
             "level": "7",
             "experience": "50",
             "experienceToLevelUp": "70",
-        }]
+        }
     },
     {
         "_id": "11",
@@ -179,11 +179,11 @@ exports.users = [
         "friendRequestsReceived": [],
         "friendRequestsSent": [],
         "blocked": [],
-        "characterStats": [{
+        "characterStats": {
             "name": "Character11",
             "level": "15",
             "experience": "29",
             "experienceToLevelUp": "80"
-        }]
+        }
     }
   ]
