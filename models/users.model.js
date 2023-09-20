@@ -1,15 +1,21 @@
 const { client } = require('../seed')
 const { ObjectId } = require('mongodb');
 
-function getAllUsers() {
-    const db = client.db('game-master-test');
-    const usersCollection = db.collection('users');
+function getAllUsers(query = undefined) {
+  const db = client.db("game-master-test");
+  const usersCollection = db.collection("users");
+  let searchQuery = {};
+  if (query !== undefined) {
+    searchQuery["topics"] = query;
+  }
 
-    return usersCollection.find().toArray()
-        .then((userArray) => {
-            return userArray
-        })
-};
+  return usersCollection
+    .find(searchQuery)
+    .toArray()
+    .then((userArray) => {
+      return userArray;
+    });
+} 
 
 
 function getUser(user_id) {

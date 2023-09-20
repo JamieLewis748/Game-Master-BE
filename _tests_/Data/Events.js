@@ -11,6 +11,7 @@ exports.events = [
     participants: ["1", "2"],
     requestedToParticipate:[],
     collection_id: "1"
+    completed: "false"
   },
   {
     _id: "2",
@@ -24,6 +25,7 @@ exports.events = [
     participants: ["1", "3"],
     requestedToParticipate:[],
     collection_id: "2"
+    completed: "false"
   },
   {
     _id: "3",
@@ -37,6 +39,7 @@ exports.events = [
     participants: ["2", "4"],
     requestedToParticipate:[],
     collection_id: "3"
+    completed: "false"
   },
   {
     _id: "4",
@@ -50,6 +53,7 @@ exports.events = [
     participants: ["1", "3", "5"],
     requestedToParticipate: [],
     collection_id: "1"
+    completed: "false"
   },
   {
     _id: "5",
@@ -63,6 +67,7 @@ exports.events = [
     participants: ["2", "4"],
     requestedToParticipate: [],
     collection_id: "2"
+    completed: "false"
   },
   {
     _id: "6",
@@ -76,5 +81,19 @@ exports.events = [
     participants: ["1", "3"],
     requestedToParticipate: [],
     collection_id: "3"
+    completed: "false"
+  },
+  {
+    _id: "7",
+    image: 'https://example.com/event7.jpg',
+    gameInfo: 'Event 7 - Uno Championship',
+    isGameFull: "false",
+    gameType: 'Card Games',
+    dateTime: '2023-09-9 15:00:00',
+    duration: '2:00:00',
+    capacity: 6,
+    participants: ["1", "3"],
+    requestedToParticipate: [],
+    completed: "true"
   }
 ];
