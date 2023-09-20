@@ -1,3 +1,4 @@
+const { users } = require('../_tests_/Data/Users');
 const { client } = require('../seed')
 const { ObjectId } = require('mongodb');
 const  adminCode = require("../AdminCode")
@@ -126,4 +127,34 @@ function fetchMyCollection(user_id) {
        });
 }
 
-module.exports = { getAllUsers, getUser, addNewUser, requestNewFriend, modifyStats, fetchMyCollection };
+async function userBlockRequest(user_id = undefined, userIdToGetBlocked) {
+  const objectIdHexRegExp = /^[0-9a-fA-F]{24}$/
+  if (objectIdHexRegExp.test(user_id) || isNaN(user_id) || user_id === undefined || user_id === userIdToGetBlocked){
+    return Promise.reject({ status: 404, msg: "Bad request" })
+  }
+  if (userIdToGetBlocked === undefined || isNaN(userIdToGetBlocked) || objectIdHexRegExp.test(userIdToGetBlocked)){
+    return Promise.reject({ status: 404, msg: "Bad request" })
+  }
+
+  const db = client.db("game-master-test");
+  const usersCollection = db.collection("users");
+
+  const user = (await usersCollection.find({ _id: user_id }).toArray())
+  if (user.length === 0) {
+    return Promise.reject({ status: 404, msg: "Bad request" })
+  }
+
+  const userToGetBlocked = (await usersCollection.find({ _id: userIdToGetBlocked }).toArray())
+  if (userToGetBlocked.length === 0) {
+    return Promise.reject({ status: 400, msg: "User not found" })
+  }
+
+  user[0].blocked.push(userIdToGetBlocked)
+
+  return usersCollection.findOneAndUpdate({ _id: user_id }, { $set: { "blocked": user[0].blocked }})
+  .then((msg) => {
+    return msg
+  })
+}
+
+module.exports = { getAllUsers, getUser, addNewUser, requestNewFriend, modifyStats, fetchMyCollection, userBlockRequest  };
