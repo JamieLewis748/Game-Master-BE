@@ -1,6 +1,7 @@
 //IMPORTS
 
-const { app, server } = require("../app")
+const { app} = require("../app")
+const {server } = require("../listen")
 const db = require("../connection");
 const request = require("supertest");
 const endpointsJSON = require("../endpoints.json")
@@ -656,8 +657,9 @@ describe("200: GET /users with  queries", () => {
         });
     });   
   }) 
-  
-describe("200: GET /users/user_id/myCreatures", () => {
+
+describe
+  ("200: GET /users/user_id/myCreatures", () => {
     test("200: Return status 200 on successful get", () => {
       return request(app).get("/api/users/1/myCreatures").expect(200);
     });

@@ -6,7 +6,7 @@ const {returnAllEvents, returnEvent, postNewEvent, patchCompletedStatus} = requi
 const {returnAllCollections, returnCollection, postNewCollection} = require('./controllers/collections.controller')
 
 
-const server = app.listen(9095, () => console.log("App listening on port 9095!"));
+
 app.use(express.json());
 
 app.get("/api/users", returnAllUsers)
@@ -31,4 +31,4 @@ app.use((err, req, res, next) => {
   res.status(500).send({ msg: err });
 });
 
-module.exports = {app, server};
+module.exports = { app }
