@@ -7,9 +7,12 @@
     "test": "jest --detectOpenHandles"
   },
   "devDependencies": {
-    "nodemon": "^3.0.1",
     "jest": "^29.7.0",
     "jest-sorted": "^1.0.14",
+    "nodemon": "^3.0.1",
     "supertest": "^6.3.3"
-  }
+  },
+  "jest": {
+  "setupFilesAfterEnv": ["jest-sorted"]
+}
 }

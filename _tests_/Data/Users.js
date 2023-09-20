@@ -1,19 +1,19 @@
 exports.users = [
     {
-        "_id": "1",
-        "name": "Jamie",
-        "username": "jamie1234",
-        "email": "jamie@gmail.com",
-        "img_url": "",
-        "friends": ["2", "3", "4"],
-        "friendRequestsReceived": [],
-        "friendRequestsSent": [],
-        "blocked": [],
-        "characterStats": {
-            "name": "Character1",
-            "level": "7",
-            "experience": "29",
-            "experienceToLevelUp": "70"
+        _id: 1,
+        name: "Jamie",
+        username: "jamie1234",
+        email: "jamie@gmail.com",
+        img_url: "",
+        friends: ["2", "3", "4"],
+        friendRequestsReceived: [],
+        friendRequestsSent: [],
+        blocked: [],
+        characterStats: {
+            name: "Character1",
+            level: 7,
+            experience: "29",
+            experienceToLevelUp: "70"
         }
     },
     {
@@ -28,7 +28,7 @@ exports.users = [
         "blocked": [],
         "characterStats": {
             "name": "Character2",
-            "level": "5",
+            "level": 5,
             "experience": "20",
             "experienceToLevelUp": "50"
         }
@@ -45,7 +45,7 @@ exports.users = [
         "blocked": [],
         "characterStats": {
             "name": "Character3",
-            "level": "6",
+            "level": 6,
             "experience": "19",
             "experienceToLevelUp": "60"
         }
@@ -62,7 +62,7 @@ exports.users = [
         "blocked": [],
         "characterStats": {
             "name": "Character4",
-            "level": "5",
+            "level": 5,
             "experience": "30",
             "experienceToLevelUp": "50"
         }
@@ -79,7 +79,7 @@ exports.users = [
         "blocked": [],
         "characterStats": {
             "name": "Character5",
-            "level": "10",
+            "level": 10,
             "experience": "50",
             "experienceToLevelUp": "100"
         }
@@ -96,8 +96,8 @@ exports.users = [
         "blocked": [],
         "characterStats": {
             "name": "Character6",
-            "level": "19",
-            "experience": "70",
+            "level": 19,
+            "experience": 70,
             "experienceToLevelUp": "190"
         }
     },
@@ -113,7 +113,7 @@ exports.users = [
         "blocked": [],
         "characterStats": {
             "name": "Character7",
-            "level": "1",
+            "level": 1,
             "experience": "5",
             "experienceToLevelUp": "10"
         }
@@ -130,7 +130,7 @@ exports.users = [
         "blocked": [],
         "characterStats": {
             "name": "Character8",
-            "level": "2",
+            "level": 2,
             "experience": "12",
             "experienceToLevelUp": "20"
         }
@@ -147,7 +147,7 @@ exports.users = [
         "blocked": [],
         "characterStats": {
             "name": "Character9",
-            "level": "9",
+            "level": 9,
             "experience": "29",
             "experienceToLevelUp": "90"
         }
@@ -164,7 +164,7 @@ exports.users = [
         "blocked": [],
         "characterStats": {
             "name": "Character10",
-            "level": "7",
+            "level": 7,
             "experience": "50",
             "experienceToLevelUp": "70",
         }
@@ -181,7 +181,7 @@ exports.users = [
         "blocked": [],
         "characterStats": {
             "name": "Character11",
-            "level": "15",
+            "level": 15,
             "experience": "29",
             "experienceToLevelUp": "80"
         }

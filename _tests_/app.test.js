@@ -335,27 +335,28 @@ describe.only("200: GET /users with  queries", () => {
         })
       })
   })
-  test("200: GET /users?characterStats.level", () => {
-    return request(app).get("/api/users?characterStats.level").expect(200);
+  test("200: GET /users?sortBy=characterStats.level", () => {
+    return request(app)
+      .get("/api/users?sortBy=characterStats.level")
+      .expect(200);
   });
   test("200: should return all users", () => {
     return request(app)
-      .get("/api/users?characterStats.level")
+      .get("/api/users?sortBy=characterStats.level")
       .expect(200)
       .then(({ body }) => {
-          expect(body.length).toBe(users.length);
+        expect(body.length).toBe(users.length);
       });
-  })
-  test.only("200: users array should be ordered by level", () => {
+  });
+  test("200: users array should be ordered by level", () => {
     return request(app)
-      .get("/api/users?characterStats")
+      .get("/api/users?sortBy=characterStats.level")
       .expect(200)
       .then(({ body }) => {
-        console.log("🚀 ~ file: app.test.js:360 ~ .then ~ body:", body)
-        const levelsOnly = body.map((user) => {
-            return user.characterStats.level
-          })
-          expect(levelsOnly).toBeSorted({ descending: true });
+         levelsOnly = body.map((user) => {
+          return user.characterStats.level;
+         });
+        expect(levelsOnly).toBeSorted({ descending: true });
       });
   })
 })
