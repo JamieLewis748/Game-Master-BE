@@ -12,12 +12,13 @@ function getAllUsers(query = undefined, sortBy = undefined, orderBy = undefined)
   if (
     (sortBy !== undefined && orderBy === undefined) ||
     (sortBy !== undefined && orderBy === 'desc')
-  ) {
-    orderQuery = { [sortBy]: -1 };
-} else {
-    orderQuery = { [sortBy]: 1 };
+    ) {
+      orderQuery = { [sortBy]: -1 };
   }
-
+  if(orderBy ==='asc') {
+      orderQuery = { [sortBy]: 1 };
+    }
+    
   return usersCollection
     .find(searchQuery)
     .sort(orderQuery)

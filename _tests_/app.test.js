@@ -362,11 +362,11 @@ describe("POST /api/users/:user_id", () => {
 })   
   
 describe("200: GET /users with  queries", () => {
-  test("200: GET /users?topics=BoardGame", () => {
-    return request(app).get("/api/users?topics=BoardGames").expect(200);
+  test("200: GET /users?topics=Board+Games", () => {
+    return request(app).get("/api/users?topics=Board+Games").expect(200);
   })
   test("200: should only return users with topic specified in query", () => {
-    return request(app).get("/api/users?topics=BoardGames")
+    return request(app).get("/api/users?topics=Board+Games")
       .expect(200)
       .then(({ body }) => {
         body.map((user) => {
@@ -378,11 +378,11 @@ describe("200: GET /users with  queries", () => {
 describe
   ("200: GET /users with  queries", () => {
     test("200: GET /users?topics=BoardGame", () => {
-      return request(app).get("/api/users?topics=BoardGames").expect(200);
+      return request(app).get("/api/users?topics=Board+Games").expect(200);
     });
     test("200: should only return users with topic specified in query", () => {
       return request(app)
-        .get("/api/users?topics=BoardGames")
+        .get("/api/users?topics=Board+Games")
         .expect(200)
         .then(({ body }) => {
           body.map((user) => {
@@ -391,13 +391,13 @@ describe
         });
     });
     test("200: GET /users?topics=CardGames", () => {
-      return request(app).get("/api/users?topics=CardGames").expect(200);
+      return request(app).get("/api/users?topics=Card+Games").expect(200);
     });
     test("200: should only return users with topic specified in query", () => {
       return request(app)
-        .get("/api/users?topics=CardGames")
+        .get("/api/users?topics=Card+Games")
         .expect(200)
-        .then(({ body }) => {
+        .then(({ body }) => {          
           body.map((user) => {
             expect(user.topics.includes("Card Games")).toBe(true);
           });
@@ -464,10 +464,10 @@ describe
     });
     test("200: returns user array always containing Board Game topic ordered by alphabetical username ascending", () => {
       return request(app)
-        .get("/api/users?topic=BoardGame&&sortBy=username&&orderBy=asc")
+        .get("/api/users?topics=Board+Games&&sortBy=username&&orderBy=asc")
         .expect(200)
         .then(({ body }) => {
-          usernamesOnly = body.map((user) => {
+          const usernamesOnly = body.map((user) => {
             expect(user.topics.includes("Board Games")).toBe(true);
             return user.username});
           expect(usernamesOnly).toBeSorted({ ascending: true });
@@ -475,6 +475,5 @@ describe
     });   
   }) 
    
-  //some tests false positive due to missing topics key in Users data (on other branch)
 
 
