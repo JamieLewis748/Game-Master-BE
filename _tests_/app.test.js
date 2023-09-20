@@ -163,6 +163,42 @@ describe("POST /api/users", () => {
   });
 });
 
+describe("PATCH /api/users/block/:user_id", () => {
+  test("204: Should return status 204 if successfully accessed", () => {
+    return request(app).patch("/api/users/block/7").send({ userIdToGetBlocked: "6" }).expect(204);
+  });
+  test("204: User able to block single user", async () => {
+    await request(app).patch("/api/users/block/7").send({ userIdToGetBlocked: "6" }).expect(204);
+
+    return request(app).get("/api/users/7").send({userWhoRequested: adminCode}).expect(200).then(({body}) => {
+      expect(body[0].blocked).toEqual(["6"])
+    })
+  });
+
+  test("204: User able to block multiple users", async () => {
+    await request(app).patch("/api/users/block/7").send({ userIdToGetBlocked: "1" }).expect(204);
+    await request(app).patch("/api/users/block/7").send({ userIdToGetBlocked: "2" }).expect(204);
+    await request(app).patch("/api/users/block/7").send({ userIdToGetBlocked: "9" }).expect(204);
+
+    return request(app).get("/api/users/7").send({userWhoRequested: adminCode}).expect(200).then(({body}) => {
+      expect(body[0].blocked).toEqual(["1","2","9"])
+    })
+  });
+
+  test("404: if user_id blocking does not exist",  () => {
+    return request(app).patch("/api/users/block/apple").send({ userIdToGetBlocked: "6" }).expect(404)
+    .then((msg) => {
+      expect(JSON.parse(msg.text)).toBe("Bad request")
+    })
+  });
+  test("404: if user_id blocking does not exist",  () => {
+    return request(app).patch("/api/users/block/1.0").send({ userIdToGetBlocked: "6" }).expect(404)
+    .then((msg) => {
+      expect(JSON.parse(msg.text)).toBe("Bad request")
+    })
+  });
+})
+
 describe("PATCH /api/users/characterStats/:user_id", () => {
   test("200: Should return status 200 if successfully accessed", () => {
     return request(app).patch("/api/users/characterStats/1").send({ exp: 80 }).expect(200);
@@ -621,7 +657,7 @@ describe("200: GET /users with  queries", () => {
         });
     });   
   }) 
-  
+
 describe
   ("200: GET /users/user_id/myCreatures", () => {
     test("200: Return status 200 on successful get", () => {
