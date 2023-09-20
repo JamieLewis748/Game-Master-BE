@@ -98,16 +98,18 @@ function requestNewFriend(user_id, friendToAdd) {
     });
 }  
 
-function respondFriendReq(user_id, sentFrom, isAccepted) {
+async function respondFriendReq(user_id, sentFrom, isAccepted) {
   const db = client.db("game-master-test");
   const usersCollection = db.collection("users");
+await usersCollection.find( { _id: user_id }) 
 
-  return (
-    usersCollection.remove(
-      { _id: user_id },
-      { friendRequestsReceived: sentFrom }
-    ),
-    (isAccepted === true)?usersCollection.updateOne({ _id: user_id }, { $push: { friends: sentFrom } }):(null))
+
+  // return (
+  //   usersCollection.remove(
+  //     { _id: user_id },
+  //     { friendRequestsReceived: sentFrom }
+  //   )
+    // if (isAccepted === true) { usersCollection.updateOne({ _id: user_id }, { $push: { friends: sentFrom } }) }
 
 }
   
