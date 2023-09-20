@@ -10,8 +10,8 @@ exports.events = [
     capacity: 5,
     participants: ["1", "2"],
     requestedToParticipate: [],
-    collection_id: "1",
-    completed: "false",
+    prizeCollection_id: "1",
+    isCompleted: "false",
   },
   {
     _id: "2",
@@ -24,8 +24,8 @@ exports.events = [
     capacity: 2,
     participants: ["1", "3"],
     requestedToParticipate: [],
-    collection_id: "2",
-    completed: "false",
+    prizeCollection_id: "2",
+    isCompleted: "false",
   },
   {
     _id: "3",
@@ -38,8 +38,8 @@ exports.events = [
     capacity: 5,
     participants: ["2", "4"],
     requestedToParticipate: [],
-    collection_id: "3",
-    completed: "false",
+    prizeCollection_id: "3",
+    isCompleted: "false",
   },
   {
     _id: "4",
@@ -52,8 +52,8 @@ exports.events = [
     capacity: 8,
     participants: ["1", "3", "5"],
     requestedToParticipate: [],
-    collection_id: "1",
-    completed: "false",
+    prizeCollection_id: "1",
+    isCompleted: "false",
   },
   {
     _id: "5",
@@ -66,8 +66,8 @@ exports.events = [
     capacity: 4,
     participants: ["2", "4"],
     requestedToParticipate: [],
-    collection_id: "2",
-    completed: "false",
+    prizeCollection_id: "2",
+    isCompleted: "false",
   },
   {
     _id: "6",
@@ -80,8 +80,8 @@ exports.events = [
     capacity: 6,
     participants: ["1", "3"],
     requestedToParticipate: [],
-    collection_id: "3",
-    completed: "false",
+    prizeCollection_id: "3",
+    isCompleted: "false",
   },
   {
     _id: "7",
@@ -94,8 +94,8 @@ exports.events = [
     capacity: 6,
     participants: ["1", "3"],
     requestedToParticipate: [],
-    collection_id: "2",
-    completed: "true",
+    prizeCollection_id: "2",
+    isCompleted: "true",
   },
   {
     _id: "8",
@@ -108,8 +108,8 @@ exports.events = [
     capacity: 4,
     participants: ["2", "4"],
     requestedToParticipate: ["1"],
-    collection_id: "3",
-    completed: "false",
+    prizeCollection_id: "3",
+    isCompleted: "false",
   },
   {
     _id: "9",
@@ -122,7 +122,7 @@ exports.events = [
     capacity: 6,
     participants: ["2", "4", "1", "6"],
     requestedToParticipate: [],
-    collection_id: "1",
-    completed: "false",
+    prizeCollection_id: "1",
+    isCompleted: "false",
   }
 ];
