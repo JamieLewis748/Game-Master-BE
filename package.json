@@ -16,5 +16,8 @@
     "setupFilesAfterEnv": [
       "jest-sorted"
     ]
+  },
+    "engines": {
+    "node": ">=18"
   }
 }
