@@ -1,22 +1,32 @@
 const { client } = require('../seed')
 const { ObjectId } = require('mongodb');
 
-function getAllUsers(query = undefined) {
+function getAllUsers(query = undefined, sortBy = undefined, orderBy = undefined) {
   const db = client.db("game-master-test");
   const usersCollection = db.collection("users");
   let searchQuery = {};
+  let orderQuery = {};
   if (query !== undefined) {
     searchQuery["topics"] = query;
   }
-
+  if (
+    (sortBy !== undefined && orderBy === undefined) ||
+    (sortBy !== undefined && orderBy === 'desc')
+    ) {
+      orderQuery = { [sortBy]: -1 };
+  }
+  if(orderBy ==='asc') {
+      orderQuery = { [sortBy]: 1 };
+    }
+    
   return usersCollection
     .find(searchQuery)
+    .sort(orderQuery)
     .toArray()
     .then((userArray) => {
       return userArray;
     });
 }
-
 
 function getUser(user_id, userWhoRequested) {
   const db = client.db('game-master-test');
