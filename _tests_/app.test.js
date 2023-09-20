@@ -360,37 +360,6 @@ describe("POST /api/users/:user_id", () => {
         });
     });
 })   
-    test("201: Should return msg object with modifiedCount: 1 if successful", () => {
-      return request(app)
-        .post("/api/users/1")
-        .send({
-          _id: 5,
-          username: "henry1234",
-          img_url: "",
-          topics: ["RPGs", "Tabletop"],
-        })
-        .expect(201)
-        .then(({ body }) => {
-          expect(typeof body === "object").toBe(true);
-          expect(body.modifiedCount === 1).toBe(true);
-        });
-    });
-    test("201: Should be unable to friend request self and recieve message instead", () => {
-      return request(app)
-        .post("/api/users/5")
-        .send({
-          _id: 5,
-          username: "henry1234",
-          img_url: "",
-          topics: ["RPGs", "Tabletop"],
-        })
-        .expect(200)
-        .then(({ body }) => {
-          expect(typeof body === "object").toBe(true);
-          expect(body.msg === "can not send friend request to self").toBe(true);
-        });
-    });
-  }) 
   
 describe("200: GET /users with  queries", () => {
   test("200: GET /users?topics=BoardGame", () => {
@@ -405,7 +374,7 @@ describe("200: GET /users with  queries", () => {
         })
       })
   })
-
+})
 describe
   ("200: GET /users with  queries", () => {
     test("200: GET /users?topics=BoardGame", () => {
@@ -504,7 +473,8 @@ describe
           expect(usernamesOnly).toBeSorted({ ascending: true });
         });
     });   
-  
+  }) 
+   
   //some tests false positive due to missing topics key in Users data (on other branch)
 
 
