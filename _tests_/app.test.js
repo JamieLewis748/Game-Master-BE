@@ -60,13 +60,6 @@ describe("PATCH /api/users/characterStats/:user_id", () => {
       expect(body[0].characterStats.level).toBe("8")
     })
   });
-  // test.only("200: Should update the characterStats.level of the user", async () => {
-  //   await request(app).patch("/api/users/characterStats/2").send({exp: 40})
-  //   return await request(app).get("/api/users/2").expect(200)
-  //   .then(({body}) => {
-  //     expect(body[0].characterStats.level).toBe("6")
-  //   })
-  // });
 });
 
 describe("POST /api/users", () => {
@@ -406,7 +399,7 @@ describe
           expect(usernamesOnly).toBeSorted({ ascending: true });
         });
     });
-    test.only("200: returns user array always containing Board Game topic ordered by alphabetical username ascending", () => {
+    test("200: returns user array always containing Board Game topic ordered by alphabetical username ascending", () => {
       return request(app)
         .get("/api/users?topic=BoardGame&&sortBy=username&&orderBy=asc")
         .expect(200)
