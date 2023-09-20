@@ -13,5 +13,10 @@ exports.collections = [
         "_id": "3",
         "name": "fire",
         "img_url": "url"
+    },
+    {
+        "_id": "4",
+        "name": "tree",
+        "img_url": "url"
     }
 ]
