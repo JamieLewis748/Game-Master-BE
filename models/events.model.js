@@ -4,7 +4,7 @@ const { ObjectId } = require('mongodb');
 function getAllEvents(isGameFull = undefined, gameType = undefined, sortBy = "dateTime", order = 1) {
     const db = client.db('game-master-test');
     const eventsCollection = db.collection('events');
-    let searchBy = {}
+    let searchBy = {completed: "false"}
     if(isGameFull !== undefined){
         searchBy["isGameFull"] = isGameFull
     }
@@ -27,7 +27,7 @@ function getEvent(event_id) {
         })
 };
 
-function addNewEvent(image, gameInfo, isGameFull, gameType, dateTime) {
+function addNewEvent(image, gameInfo, isGameFull, gameType, dateTime, duration, capacity, collection_id) {
     const db = client.db('game-master-test');
     const eventsCollection = db.collection('events');
     const eventToAdd = {
@@ -37,7 +37,11 @@ function addNewEvent(image, gameInfo, isGameFull, gameType, dateTime) {
         isGameFull:isGameFull,
         gameType:gameType,
         dateTime: dateTime,
-        participants: []
+        duration: duration,
+        capacity: capacity,
+        participants: [],
+        requestedToParticipate: [],
+        collection_id: collection_id
     }
 
     return eventsCollection.insertOne(eventToAdd)

@@ -11,7 +11,10 @@ const returnCollection = (req, res) => {
     const {collection_id} = req.params
     getCollection(collection_id).then((data)=>{
         res.status(200).json(data)
+    }).catch((error) => {
+        res.status(error.status).json(error.msg)
     })
+
 };
 
 const postNewCollection = (req,res) => {
@@ -19,6 +22,8 @@ const postNewCollection = (req,res) => {
     addNewCollection(name, img_url)
     .then((data)=> {
         res.status(200).json(data);
+    }).catch((error) => {
+        res.status(error.status).json(error.msg)
     })
 }
 
