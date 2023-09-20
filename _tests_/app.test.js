@@ -602,7 +602,22 @@ describe
     });   
   }) 
   
-describe.only("200: PATCH /api/events/:event_id", () => {
+describe.only
+  ("200: GET /users/user_id/myCreatures", () => {
+    test("200: Return status 200 on successful get", () => {
+      return request(app).get("/api/users/1/myCreatures").expect(200);
+    });
+    test("200: should return users myCreatures array", () => {
+      return request(app)
+        .get("/api/users/1/myCreatures")
+        .expect(200)
+        .then(({ body }) => {
+          expect(body).toEqual(users[0].myCreatures);
+        });
+    })
+  })
+
+describe("200: PATCH /api/events/:event_id", () => {
   test("200: should return 200 when successfully patched", () => {
     return request(app).patch("/api/events/2").expect(200);
   });
@@ -617,5 +632,3 @@ describe.only("200: PATCH /api/events/:event_id", () => {
 
   });
 });
-
-

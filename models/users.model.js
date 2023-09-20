@@ -110,6 +110,17 @@ function requestNewFriend(user_id, friendToAdd) {
     .then((msg) => {
       return msg;
     });
+}  
+
+function fetchMyCollection(user_id) {
+  const db = client.db("game-master-test");
+  const usersCollection = db.collection("users");
+     return usersCollection
+       .find({ _id: user_id})
+       .toArray()
+       .then((userArray) => {
+         return userArray[0].myCreatures;
+       });
 }
 
-module.exports = { getAllUsers, getUser, addNewUser, requestNewFriend, modifyStats };
+module.exports = { getAllUsers, getUser, addNewUser, requestNewFriend, modifyStats, fetchMyCollection };
