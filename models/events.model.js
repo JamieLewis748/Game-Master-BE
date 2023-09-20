@@ -4,7 +4,7 @@ const { ObjectId } = require('mongodb');
 function getAllEvents(isGameFull = undefined, gameType = undefined, sortBy = "dateTime", order = "1") {
     const db = client.db('game-master-test');
     const eventsCollection = db.collection('events');
-    let searchBy = {completed: "false"}
+    let searchBy = {isCompleted: "false"}
     if(isGameFull !== undefined){
         if(isGameFull !== "false" && isGameFull !== "true") return Promise.reject({status:400, msg:"Bad Request"})
         searchBy["isGameFull"] = isGameFull
