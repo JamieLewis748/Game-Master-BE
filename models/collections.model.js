@@ -51,4 +51,6 @@ function addNewCollection(name, img_url) {
 };
 
 
-module.exports = { getAllCollections, getCollection, addNewCollection }
+
+module.exports = { getAllCollections, getCollection, addNewCollection
+};

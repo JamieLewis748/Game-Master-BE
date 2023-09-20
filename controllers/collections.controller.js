@@ -1,5 +1,6 @@
 const { client } = require('../seed')
-const {getAllCollections, getCollection, addNewCollection } = require('../models/collections.model.js')
+const {getAllCollections, getCollection, addNewCollection
+} = require("../models/collections.model.js");
 
 const returnAllCollections = (req, res) => {
     getAllCollections().then((data)=>{
@@ -29,4 +30,5 @@ const postNewCollection = (req,res) => {
 
 
 
-module.exports = { returnAllCollections, returnCollection, postNewCollection }
+module.exports = {returnAllCollections, returnCollection, postNewCollection
+};

@@ -1,6 +1,7 @@
 const { users } = require('../_tests_/Data/Users');
 const { client } = require('../seed')
 const { ObjectId } = require('mongodb');
+const  adminCode = require("../AdminCode")
 
 function getAllUsers(query = undefined, sortBy = undefined, orderBy = undefined) {
   const db = client.db("game-master-test");
@@ -29,9 +30,11 @@ function getAllUsers(query = undefined, sortBy = undefined, orderBy = undefined)
     });
 }
 
-function getUser(user_id, userWhoRequested) {
+function getUser(user_id, userWhoRequested = undefined) {
   const db = client.db('game-master-test');
   const usersCollection = db.collection('users');
+
+  if (userWhoRequested === undefined && userWhoRequested !== adminCode) return Promise.reject({status:400, msg:"Bad Request"})
 
   return usersCollection.find({ _id: user_id }).toArray()
     .then((userArray) => {
@@ -76,12 +79,13 @@ function addNewUser(name = undefined, username = undefined, email = undefined, i
 
 const modifyStats = async (user_id, exp = undefined) => {
   if (exp === undefined) return Promise.reject({ status: 400, msg: "Missing exp" })
-
+  if (isNaN(exp)) return Promise.reject({ status: 404, msg: "Bad Request" })
 
   const db = client.db('game-master-test');
   const usersCollection = db.collection('users');
 
   const userBeforeUpdate = (await usersCollection.find({ _id: user_id }).toArray())
+  if(userBeforeUpdate.length === 0) return Promise.reject({ status: 400, msg: "User not found" })
 
   let totalExp = Number(userBeforeUpdate[0].characterStats.experience) + exp
 
@@ -94,7 +98,6 @@ const modifyStats = async (user_id, exp = undefined) => {
     .then((msg) => {
       return msg
     }).catch((err) => {
-      console.log(err);
       return err
     })
 }
@@ -111,6 +114,17 @@ function requestNewFriend(user_id, friendToAdd) {
     .then((msg) => {
       return msg;
     });
+}  
+
+function fetchMyCollection(user_id) {
+  const db = client.db("game-master-test");
+  const usersCollection = db.collection("users");
+     return usersCollection
+       .find({ _id: user_id})
+       .toArray()
+       .then((userArray) => {
+         return userArray[0].myCreatures;
+       });
 }
 
 async function userBlockRequest(user_id = undefined, userIdToGetBlocked) {
@@ -143,4 +157,4 @@ async function userBlockRequest(user_id = undefined, userIdToGetBlocked) {
   })
 }
 
-module.exports = { getAllUsers, getUser, addNewUser, requestNewFriend, modifyStats, userBlockRequest };
+module.exports = { getAllUsers, getUser, addNewUser, requestNewFriend, modifyStats, fetchMyCollection, userBlockRequest  };

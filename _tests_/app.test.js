@@ -8,6 +8,7 @@ const { testSeed, closeConnection } = require("../seed")
 const { users } = require("./Data/Users")
 const { events } = require("./Data/Events")
 const { collections } = require("./Data/Collections")
+const adminCode  = require("../AdminCode")
 
 beforeEach(async () => {
   await testSeed({ users, events, collections });
@@ -38,18 +39,27 @@ describe("GET /api/users/:user_id", () => {
     return request(app).get("/api/users/1").send({userWhoRequested:"2"}).expect(200);
   });
   test('200: Should return 200', () => {
-    return request(app).get("/api/users/4").send({userWhoRequested:"2"}).expect(200);
+    return request(app).get("/api/users/5").send({userWhoRequested:"2"}).expect(200)
+    .then(({body}) => {
+      expect(body).toEqual([users[4]])
+    })
   });
-  test('200: Should return 200',() => {
+  test('404 : user exists but it returns User not found when user is blocked',() => {
     return request(app).get("/api/users/3").send({userWhoRequested:"2"}).expect(404)
     .then((msg) => {
       expect(JSON.parse(msg.text)).toBe("User not found")
     })
   });
-  test('200: Should return 200',() => {
+  test('404 : user with that id does not exist',() => {
     return request(app).get("/api/users/100").send({userWhoRequested:"2"}).expect(404)
     .then((msg) => {
       expect(JSON.parse(msg.text)).toBe("User not found")
+    })
+  });
+  test('400 : missing userWhoRequested',() => {
+    return request(app).get("/api/users/1").expect(400)
+    .then((msg) => {
+      expect(JSON.parse(msg.text)).toBe("Bad Request")
     })
   });
 });
@@ -80,7 +90,7 @@ describe("POST /api/users", () => {
     data.characterStats = [{name:"Bam", level:"1", experience:"0", experienceToLevelup:"10"}]
     delete data.characterName
 
-    return await request(app).get(`/api/users/${event.insertedId}`)
+    return request(app).get(`/api/users/${event.insertedId}`).send({userWhoRequested: adminCode})
       .then((response) => {
         expect(response.body).toMatchObject([data])
       })
@@ -195,29 +205,45 @@ describe("PATCH /api/users/characterStats/:user_id", () => {
 
   test("200: Should update the characterStats.level of the user", async () => {
     await request(app).patch("/api/users/characterStats/1").send({ exp: 80 })
-    return await request(app).get("/api/users/1").expect(200)
+
+    return await request(app).get("/api/users/1").send({userWhoRequested: adminCode}).expect(200)
       .then(({ body }) => {
         expect(body[0].characterStats.level).toBe("8")
       })
   });
   test("200: Should update the characterStats.level of the user", async () => {
     await request(app).patch("/api/users/characterStats/2").send({ exp: 40})
-    return await request(app).get("/api/users/2").expect(200)
+    return await request(app).get("/api/users/2").send({userWhoRequested: adminCode}).expect(200)
       .then(({ body }) => {
         expect(body[0].characterStats.level).toBe("6")
       })
   });
   test("200: Should update the characterStats.level of the user", async () => {
     await request(app).patch("/api/users/characterStats/2").send({ exp: 100})
-    return await request(app).get("/api/users/2").expect(200)
+    return await request(app).get("/api/users/2").send({userWhoRequested: adminCode}).expect(200)
       .then(({ body }) => {
         expect(body[0].characterStats.level).toBe("7")
       })
   });
+  test("200: Should update the characterStats.level of the user", async () => {
+    return request(app).patch("/api/users/characterStats/100").send({ exp: 100}).expect(400)
+  });
   test("404: Should update the characterStats.level of the user", () => {
-    request(app).patch("/api/users/characterStats/1").expect(400)
+    return request(app).patch("/api/users/characterStats/1").expect(400)
     .then((msg) => {
       expect(JSON.parse(msg.text)).toBe("Missing exp")
+    })
+  });
+  test("404: Should update the characterStats.level of the user", () => {
+    return request(app).patch("/api/users/characterStats/1").send({ exp: "abanana" }).expect(404)
+    .then((msg) => {
+      expect(JSON.parse(msg.text)).toBe("Bad Request")
+    })
+  });
+  test("404: Should update the characterStats.level of the user", () => {
+    return request(app).patch("/api/users/characterStats/100").send({ exp: "100" }).expect(400)
+    .then((msg) => {
+      expect(JSON.parse(msg.text)).toBe("User not found")
     })
   });
 });
@@ -532,8 +558,7 @@ describe("200: GET /users with  queries", () => {
       })
   })
 })
-describe
-  ("200: GET /users with  queries", () => {
+describe("200: GET /users with  queries", () => {
     test("200: GET /users?topics=BoardGame", () => {
       return request(app).get("/api/users?topics=Board+Games").expect(200);
     });
@@ -631,6 +656,33 @@ describe
         });
     });   
   }) 
-   
+  
+describe.only
+  ("200: GET /users/user_id/myCreatures", () => {
+    test("200: Return status 200 on successful get", () => {
+      return request(app).get("/api/users/1/myCreatures").expect(200);
+    });
+    test("200: should return users myCreatures array", () => {
+      return request(app)
+        .get("/api/users/1/myCreatures")
+        .expect(200)
+        .then(({ body }) => {
+          expect(body).toEqual(users[0].myCreatures);
+        });
+    })
+  })
 
-
+describe("200: PATCH /api/events/:event_id", () => {
+  test("200: should return 200 when successfully patched", () => {
+    return request(app).patch("/api/events/2").expect(200);
+  });
+  test("200: should return acknowledgement upon successful patch", async ()=>{
+    await request(app).patch("/api/events/2")
+    return await request(app)
+      .get("/api/events/2")
+      .expect(200)
+      .then(({ body }) => {
+        expect(body[0].isCompleted).toBe("true");
+      });
+  });
+});

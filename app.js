@@ -1,9 +1,10 @@
 const express = require("express");
 const app = express();
 
-const {returnAllUsers, returnUser, postNewUser, patchCharacterStats, postFriendRequest, blockUser } = require('./controllers/users.controller')
-const { returnAllEvents, returnEvent, postNewEvent } = require('./controllers/events.controller')
+const {returnAllUsers, returnUser, postNewUser, patchCharacterStats, postFriendRequest, getOwnedCollections, blockUser} = require('./controllers/users.controller')
+const {returnAllEvents, returnEvent, postNewEvent, patchCompletedStatus} = require("./controllers/events.controller");
 const {returnAllCollections, returnCollection, postNewCollection} = require('./controllers/collections.controller')
+
 
 const server = app.listen(9095, () => console.log("App listening on port 9095!"));
 app.use(express.json());
@@ -12,13 +13,15 @@ app.get("/api/users", returnAllUsers)
 app.get("/api/users/:user_id", returnUser)
 app.post("/api/users", postNewUser)
 app.patch("/api/users/characterStats/:user_id", patchCharacterStats)
+app.post("/api/users/:user_id", postFriendRequest)
+app.get("/api/users/:user_id/myCreatures", getOwnedCollections)
 
 app.patch("/api/users/block/:user_id", blockUser)
 
 app.get("/api/events", returnAllEvents)
 app.get("/api/events/:event_id", returnEvent)
 app.post("/api/events", postNewEvent)
-app.post("/api/users/:user_id", postFriendRequest)
+app.patch("/api/events/:event_id", patchCompletedStatus);
 
 app.get("/api/collections", returnAllCollections)
 app.get("/api/collections/:collection_id", returnCollection)

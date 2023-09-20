@@ -1,5 +1,5 @@
-const { getAllUsers, getUser, addNewUser, modifyStats, requestNewFriend, userBlockRequest } = require('../models/users.model.js')
 
+const { getAllUsers, getUser, addNewUser, modifyStats, requestNewFriend, fetchMyCollection, userBlockRequest } = require('../models/users.model.js')
 
 const returnAllUsers = (req, res) => {
   const { topics } = req.query;
@@ -75,4 +75,23 @@ const blockUser = (req, res) => {
   
 }
 
-module.exports = {returnAllUsers, returnUser, postNewUser, patchCharacterStats, postFriendRequest, blockUser }
+const getOwnedCollections = (req, res) => {
+  const { user_id } = req.params;
+  fetchMyCollection(user_id)
+    .then((data) => {
+      return res.status(200).json(data);
+    })
+    .catch((error) => {
+      res.status(error.status).json(error.msg);
+    });
+};
+
+module.exports = {
+  returnAllUsers,
+  returnUser,
+  postNewUser,
+  patchCharacterStats,
+  postFriendRequest,
+  getOwnedCollections,
+  blockUser
+};
