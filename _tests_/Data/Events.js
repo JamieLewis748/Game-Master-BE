@@ -11,7 +11,8 @@ exports.events = [
     participants: ["1", "2"],
     requestedToParticipate: [],
     collection_id: "1",
-    completed: "false",
+    isisCompleted: "false",
+    hostedBy: "1",
   },
   {
     _id: "2",
@@ -25,7 +26,8 @@ exports.events = [
     participants: ["1", "3"],
     requestedToParticipate: [],
     collection_id: "2",
-    completed: "false",
+    isCompleted: "false",
+    hostedBy: "1",
   },
   {
     _id: "3",
@@ -39,7 +41,8 @@ exports.events = [
     participants: ["2", "4"],
     requestedToParticipate: [],
     collection_id: "3",
-    completed: "false",
+    isCompleted: "false",
+    hostedBy: "2",
   },
   {
     _id: "4",
@@ -53,7 +56,8 @@ exports.events = [
     participants: ["1", "3", "5"],
     requestedToParticipate: [],
     collection_id: "1",
-    completed: "false",
+    isCompleted: "false",
+    hostedBy: "2",
   },
   {
     _id: "5",
@@ -67,7 +71,8 @@ exports.events = [
     participants: ["2", "4"],
     requestedToParticipate: [],
     collection_id: "2",
-    completed: "false",
+    isCompleted: "false",
+    hostedBy: "2",
   },
   {
     _id: "6",
@@ -81,7 +86,8 @@ exports.events = [
     participants: ["1", "3"],
     requestedToParticipate: [],
     collection_id: "3",
-    completed: "false",
+    isCompleted: "false",
+    hostedBy: "3",
   },
   {
     _id: "7",
@@ -95,7 +101,8 @@ exports.events = [
     participants: ["1", "3"],
     requestedToParticipate: [],
     collection_id: "2",
-    completed: "true",
+    isCompleted: "true",
+    hostedBy: "3",
   },
   {
     _id: "8",
@@ -109,7 +116,8 @@ exports.events = [
     participants: ["2", "4"],
     requestedToParticipate: ["1"],
     collection_id: "3",
-    completed: "false",
+    isCompleted: "false",
+    hostedBy: "3",
   },
   {
     _id: "9",
@@ -123,6 +131,7 @@ exports.events = [
     participants: ["2", "4", "1", "6"],
     requestedToParticipate: [],
     collection_id: "1",
-    completed: "false",
-  }
+    isCompleted: "false",
+    hostedBy: "4",
+  },
 ];

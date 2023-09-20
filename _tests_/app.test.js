@@ -7,7 +7,7 @@ const endpointsJSON = require("../endpoints.json")
 const { testSeed, closeConnection } = require("../seed")
 const { users } = require("./Data/Users")
 const { events } = require("./Data/Events")
-const { collections } = require("./Data/Collections")
+const { collections } = require("./Data/Collections");
 
 beforeEach(async () => {
   await testSeed({ users, events, collections });
@@ -601,6 +601,21 @@ describe
         });
     });   
   }) 
-   
+  
+describe.only("200: PATCH /api/events/:event_id", () => {
+  test("200: should return 200 when successfully patched", () => {
+    return request(app).patch("/api/events/2").expect(200);
+  });
+  test("200: should return acknowledgement upon successful patch", async ()=>{
+    await request(app).patch("/api/events/2")
+    return await request(app)
+      .get("/api/events/2")
+      .expect(200)
+      .then(({ body }) => {
+        expect(body[0].isCompleted).toBe("true");
+      });
+
+  });
+});
 
 
