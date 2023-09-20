@@ -1,4 +1,4 @@
-const { getAllUsers, getUser, addNewUser, modifyStats, requestNewFriend } = require('../models/users.model.js')
+const { getAllUsers, getUser, addNewUser, modifyStats, requestNewFriend, respondFriendReq} = require('../models/users.model.js')
 
 
 const returnAllUsers = (req, res) => {
@@ -55,4 +55,14 @@ const postFriendRequest = (req, res) => {
   }
 };
 
-module.exports = {returnAllUsers, returnUser, postNewUser, patchCharacterStats, postFriendRequest }
+const handleFriendReq = (req, res) => {
+  const { user_id } = req.params;
+  const { sentFrom } = req.body;
+  const { isAccepted } = req.body;
+  respondFriendReq(user_id, sentFrom, isAccepted).then((msg) => {
+    res.status(201).json(msg);
+  });
+}
+
+module.exports = { returnAllUsers, returnUser, postNewUser, patchCharacterStats, postFriendRequest, handleFriendReq
+};

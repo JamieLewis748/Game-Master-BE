@@ -1,3 +1,4 @@
+const { users } = require('../_tests_/Data/Users');
 const { client } = require('../seed')
 const { ObjectId } = require('mongodb');
 
@@ -96,5 +97,27 @@ function requestNewFriend(user_id, friendToAdd) {
       return msg;
     });
 }  
-    
-module.exports = { getAllUsers, getUser, addNewUser, requestNewFriend, modifyStats };
+
+function respondFriendReq(user_id, sentFrom, isAccepted) {
+  const db = client.db("game-master-test");
+  const usersCollection = db.collection("users");
+
+  return (
+    usersCollection.remove(
+      { _id: user_id },
+      { friendRequestsReceived: sentFrom }
+    ),
+    (isAccepted === true)?usersCollection.updateOne({ _id: user_id }, { $push: { friends: sentFrom } }):(null))
+
+}
+  
+
+//always
+  //remove from my friendRequestsReceived
+  //remove from their friendRequestsSent
+
+  //isAccepted === true
+  //add to friends
+
+
+module.exports = { getAllUsers, getUser, addNewUser, requestNewFriend, modifyStats, respondFriendReq };

@@ -475,5 +475,16 @@ describe
     });   
   }) 
    
-
+describe.only("POST /api/users/:user_id", () => {
+  test("201: Should return status 201 if successfully posted", () => {
+    return request(app)
+      .post("/api/users/1")
+      .send({
+        user_id: 1,
+        sentFrom: 6,
+        isAccepted: true
+      })
+      .expect(201);
+  })
+})
 
