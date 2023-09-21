@@ -6,8 +6,8 @@ exports.users = [
     email: "jamie@gmail.com",
     img_url: "",
     friends: ["2", "3", "4"],
-    friendRequestsReceived: [],
-    friendRequestsSent: [],
+    friendRequestsReceived: ["6", "10", "11", "9", "7"],
+    friendRequestsSent: ["5"],
     blocked: [],
     topics: ["Card Games", "RPG"],
     characterStats: {
@@ -32,7 +32,7 @@ exports.users = [
     img_url: "",
     friends: ["1", "5", "6", "7"],
     friendRequestsReceived: [],
-    friendRequestsSent: [],
+    friendRequestsSent: ["3"],
     blocked: [],
     topics: ["Card Games"],
     characterStats: {
@@ -56,7 +56,7 @@ exports.users = [
     email: "jack@gmail.com",
     img_url: "",
     friends: ["1", "8", "9", "10"],
-    friendRequestsReceived: [],
+    friendRequestsReceived: ["2"],
     friendRequestsSent: [],
     blocked: ["2"],
     topics: ["Tabletop"],
@@ -111,7 +111,7 @@ exports.users = [
     email: "henry@gmail.com",
     img_url: "",
     friends: ["2"],
-    friendRequestsReceived: [],
+    friendRequestsReceived: ["1"],
     friendRequestsSent: [],
     blocked: [],
     topics: ["RPG", "Tabletop"],
@@ -142,7 +142,7 @@ exports.users = [
     img_url: "",
     friends: ["2"],
     friendRequestsReceived: [],
-    friendRequestsSent: [],
+    friendRequestsSent: ["1"],
     blocked: [],
     topics: ["Tabletop"],
     characterStats: {
@@ -167,7 +167,7 @@ exports.users = [
     img_url: "",
     friends: ["2"],
     friendRequestsReceived: [],
-    friendRequestsSent: [],
+    friendRequestsSent: ["1"],
     blocked: [],
     topics: ["Card Games"],
     characterStats: {
@@ -222,7 +222,7 @@ exports.users = [
     img_url: "",
     friends: ["3"],
     friendRequestsReceived: [],
-    friendRequestsSent: [],
+    friendRequestsSent: ["1"],
     blocked: [],
     topics: ["Board Games", "RPG", "Tabletop"],
     characterStats: {
@@ -252,7 +252,7 @@ exports.users = [
     img_url: "",
     friends: ["3"],
     friendRequestsReceived: [],
-    friendRequestsSent: [],
+    friendRequestsSent: ["1"],
     blocked: [],
     topics: ["RPG"],
     characterStats: {
@@ -282,7 +282,7 @@ exports.users = [
     img_url: "",
     friends: ["4"],
     friendRequestsReceived: [],
-    friendRequestsSent: [],
+    friendRequestsSent: ["1"],
     blocked: [],
     topics: ["Board Games", "Card Games"],
     characterStats: {

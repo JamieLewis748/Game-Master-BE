@@ -1,5 +1,4 @@
-
-const { getAllUsers, getUser, addNewUser, modifyStats, requestNewFriend, fetchMyCollection, userBlockRequest } = require('../models/users.model.js')
+const { getAllUsers, getUser, addNewUser, modifyStats, requestNewFriend, fetchMyCollection, userBlockRequest, respondFriendReq } = require('../models/users.model.js')
 
 const returnAllUsers = (req, res) => {
   const { topics } = req.query;
@@ -61,6 +60,17 @@ const postFriendRequest = (req, res) => {
   }
 };
 
+const handleFriendReq = (req, res) => {
+  const { user_id } = req.params;
+  const { sentFrom } = req.body;
+  const { isAccepted } = req.body;
+  respondFriendReq(user_id, sentFrom, isAccepted).then((msg) => {
+    res.status(201).json(msg)
+  }).catch((err) => {
+    res.status(err.status).json(err.msg)
+  })
+}
+
 const blockUser = (req, res) => {
   const { user_id } = req.params;
   const { userIdToGetBlocked } = req.body
@@ -93,5 +103,6 @@ module.exports = {
   patchCharacterStats,
   postFriendRequest,
   getOwnedCollections,
-  blockUser
+  blockUser,
+  handleFriendReq
 };

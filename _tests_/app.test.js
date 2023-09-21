@@ -492,10 +492,10 @@ describe("POST /api/collections", () => {
   });
 });
 
-describe("POST /api/users/:user_id", () => {
-  test("201: Should return status 201 on successful user modification", () => {
+describe("POST /api/users/:user_id/inviteFriend", () => {
+  test("201: Should return status 201 if successfully posted", () => {
     return request(app)
-      .post("/api/users/1")
+      .post("/api/users/1/inviteFriend")
       .send({
         _id: 5,
         username: "henry1234",
@@ -506,10 +506,10 @@ describe("POST /api/users/:user_id", () => {
       .then(({ body }) => {
         expect(body.acknowledged).toBe(true);
       });
-  })
-  test("201: Should return an object with 'modifiedCount: 1' on successful user modification", () => {
+  });
+  test("201: Should return msg object with modifiedCount: 1 if successful", () => {
     return request(app)
-      .post("/api/users/1")
+      .post("/api/users/1/inviteFriend")
       .send({
         _id: 5,
         username: "henry1234",
@@ -524,7 +524,7 @@ describe("POST /api/users/:user_id", () => {
   });
   test("201: Should be unable to friend request self and recieve message instead", () => {
     return request(app)
-      .post("/api/users/5")
+      .post("/api/users/5/inviteFriend")
       .send({
         _id: 5,
         username: "henry1234",
@@ -537,7 +537,7 @@ describe("POST /api/users/:user_id", () => {
         expect(body.msg === "can not send friend request to self").toBe(true);
       });
   });
-})
+});   
 
 describe("200: GET /users with  queries", () => {
   test("200: GET /users?topics=Board+Games", () => {
@@ -656,8 +656,101 @@ describe("200: GET /users/user_id/myCreatures", () => {
         .then(({ body }) => {
           expect(body).toEqual(users[0].myCreatures);
         });
-    })
-  })
+    });   
+  }) 
+   
+describe("POST /api/users/:user_id/friends", () => {
+  test("201: Should return status 201 if successfully posted", () => {
+    return request(app)
+      .post("/api/users/1/friends")
+      .send({
+        user_id: "1",
+        sentFrom: "6",
+        isAccepted: true,
+      })
+      .expect(201);
+  });
+  test("201: Should remove id from from requests recieved when posted", async () => {
+    const event = await request(app)
+      .post("/api/users/1/friends")
+      .send({
+        user_id: "1",
+        sentFrom: "10",
+        isAccepted: true,
+      })
+      .expect(201);
+    return request(app)
+      .get("/api/users/1")
+      .then(({ body }) => {
+        expect(body[0].friendRequestsReceived).toEqual(["6", "11", "9", "7"]);
+      });
+  });
+  test("201: only handles friend request from id inside friendRequestsReceived", async () => {
+    const event = await request(app)
+      .get("/api/users/1")
+      .then(({ body }) => {
+        expect(body[0].friendRequestsReceived.includes("7")).toBe(true);
+      });
+    await request(app)
+      .post("/api/users/1/friends")
+      .send({
+        user_id: "1",
+        sentFrom: "7",
+        isAccepted: true,
+      })
+      .expect(201);
+    return request(app)
+      .get("/api/users/1")
+      .then(({ body }) => {
+        expect(body[0].friendRequestsReceived).toEqual(["6", "10", "11", "9"]);
+      });
+  });
+  test("201: Should remove id from from requests sent when posted", async () => {
+    const event = await request(app)
+      .post("/api/users/1/friends")
+      .send({
+        user_id: "1",
+        sentFrom: "10",
+        isAccepted: true,
+      })
+      .expect(201);
+    return request(app)
+      .get("/api/users/10")
+      .then(({ body }) => {
+        expect(body[0].friendRequestsSent).toEqual([]);
+      });
+  });
+  test("201: Should add id to friends if isAccepted is posted", async () => {
+    const event = await request(app)
+      .post("/api/users/1/friends")
+      .send({
+        user_id: "1",
+        sentFrom: "10",
+        isAccepted: true,
+      })
+      .expect(201);
+    return request(app)
+      .get("/api/users/1")
+      .then(({ body }) => {
+        expect(body[0].friends).toEqual(["2", "3", "4", "10"]);
+      });
+  });
+  test("201: Should add id to friends of sender if isAccepted is posted", async () => {
+    const event = await request(app)
+      .post("/api/users/1/friends")
+      .send({
+        user_id: "1",
+        sentFrom: "10",
+        isAccepted: true,
+      })
+      .expect(201);
+    return request(app)
+      .get("/api/users/10")
+      .then(({ body }) => {
+        expect(body[0].friends).toEqual(["3","1"]);
+      });
+  });
+});
 
 describe("200: PATCH /api/events/:event_id", () => {
   test("200: should return 200 when successfully patched", () => {

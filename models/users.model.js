@@ -117,6 +117,78 @@ function requestNewFriend(user_id, friendToAdd) {
     });
 }  
 
+async function respondFriendReq(user_id, sentFrom, isAccepted) {
+  const db = client.db("game-master-test");
+  const usersCollection = db.collection("users");
+
+  const respondingUser = await usersCollection.findOne({ _id: user_id });
+  if (!respondingUser) {
+    return Promise.reject({ status: 404, msg: "Bad request" });
+  }
+
+  const requestingUser = await usersCollection.findOne({ _id: sentFrom });
+  if (!requestingUser) {
+    return Promise.reject({ status: 404, msg: "Bad request" });
+  }
+  const updatedRecieved = await respondingUser.friendRequestsReceived.filter(
+    (requestsReceived) => {
+      if (requestsReceived !== sentFrom.toString()) {
+        return requestsReceived;
+      }
+    }
+  );
+   
+  const updatedRequested = await requestingUser.friendRequestsSent.filter(
+    (requestsSent) => {
+      if (requestsSent !== user_id.toString()) {
+        return requestsSent;
+      }
+    }
+  );
+   
+  if (isAccepted === true) {
+    try {
+      await usersCollection
+        .findOneAndUpdate(
+          { _id: user_id },
+          { $set: { friendRequestsReceived: updatedRecieved } }
+        )
+      await usersCollection
+        .findOneAndUpdate(
+          { _id: sentFrom },
+          { $set: { friendRequestsSent: updatedRequested } }
+        )
+      await usersCollection
+        .updateOne({ _id: user_id }, { $push: { friends: sentFrom } })
+      return usersCollection
+        .updateOne({ _id: sentFrom }, { $push: { friends: user_id } })
+        .then((msg) => {
+          return msg;
+        });
+    } catch (err) {
+      return err
+    }
+  } else {
+    try {
+      await usersCollection
+        .findOneAndUpdate(
+          { _id: user_id },
+          { $set: { friendRequestsReceived: updatedRecieved } }
+        )
+      return usersCollection
+        .findOneAndUpdate(
+          { _id: sentFrom },
+          { $set: { friendRequestsSent: updatedRequested } }
+        )
+        .then((msg) => {
+          return msg;
+        })
+    } catch (err) {
+      return err
+    }
+  }
+}
+
 function fetchMyCollection(user_id) {
   const db = client.db("game-master-test");
   const usersCollection = db.collection("users");
@@ -158,4 +230,4 @@ async function userBlockRequest(user_id = undefined, userIdToGetBlocked) {
   })
 }
 
-module.exports = { getAllUsers, getUser, addNewUser, requestNewFriend, modifyStats, fetchMyCollection, userBlockRequest  };
+module.exports = { getAllUsers, getUser, addNewUser, requestNewFriend, modifyStats, fetchMyCollection, userBlockRequest, respondFriendReq };
