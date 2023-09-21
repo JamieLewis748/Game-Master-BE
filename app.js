@@ -12,12 +12,12 @@ app.get("/api/users", returnAllUsers)
 app.get("/api/users/:user_id", returnUser)
 app.post("/api/users", postNewUser)
 app.patch("/api/users/characterStats/:user_id", patchCharacterStats)
-app.post("/api/users/:user_id", handleFriendReq);
+app.post("/api/users/:user_id/friends", handleFriendReq);
+app.post("/api/users/:user_id/inviteFriend", postFriendRequest);
 
 app.get("/api/events", returnAllEvents)
 app.get("/api/events/:event_id", returnEvent)
 app.post("/api/events", postNewEvent)
-app.post("/api/users/:user_id", postFriendRequest)
 
 app.get("/api/collections", returnAllCollections)
 app.get("/api/collections/:collection_id", returnCollection)

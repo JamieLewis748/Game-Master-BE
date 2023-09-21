@@ -6,7 +6,7 @@ exports.users = [
     email: "jamie@gmail.com",
     img_url: "",
     friends: ["2", "3", "4"],
-    friendRequestsReceived: ["6"],
+    friendRequestsReceived: ["6", "10", "11", "9", "7"],
     friendRequestsSent: ["5"],
     blocked: [],
     topics: ["Card Games", "RPG"],
@@ -115,7 +115,7 @@ exports.users = [
     img_url: "",
     friends: ["2"],
     friendRequestsReceived: [],
-    friendRequestsSent: [],
+    friendRequestsSent: ["1"],
     blocked: [],
     topics: ["Card Games"],
     characterStats: {
@@ -151,7 +151,7 @@ exports.users = [
     img_url: "",
     friends: ["3"],
     friendRequestsReceived: [],
-    friendRequestsSent: [],
+    friendRequestsSent: ["1"],
     blocked: [],
     topics: ["Board Games", "RPG", "Tabletop"],
     characterStats: {
@@ -169,7 +169,7 @@ exports.users = [
     img_url: "",
     friends: ["3"],
     friendRequestsReceived: [],
-    friendRequestsSent: [],
+    friendRequestsSent: ["1"],
     blocked: [],
     topics: ["RPG"],
     characterStats: {
@@ -187,7 +187,7 @@ exports.users = [
     img_url: "",
     friends: ["4"],
     friendRequestsReceived: [],
-    friendRequestsSent: [],
+    friendRequestsSent: ["1"],
     blocked: [],
     topics: ["Board Games", "Card Games"],
     characterStats: {

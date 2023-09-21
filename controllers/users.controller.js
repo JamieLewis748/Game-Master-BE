@@ -60,8 +60,10 @@ const handleFriendReq = (req, res) => {
   const { sentFrom } = req.body;
   const { isAccepted } = req.body;
   respondFriendReq(user_id, sentFrom, isAccepted).then((msg) => {
-    res.status(201).json(msg);
-  });
+    res.status(201).json(msg)
+  }).catch((err) => {
+    res.status(err.status).json(err.msg)
+  })
 }
 
 module.exports = { returnAllUsers, returnUser, postNewUser, patchCharacterStats, postFriendRequest, handleFriendReq
