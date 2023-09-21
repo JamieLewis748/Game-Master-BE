@@ -682,14 +682,14 @@ describe("POST /api/users/:user_id/friends", () => {
     return request(app)
       .get("/api/users/1")
       .then(({ body }) => {
-        expect(body[0].friendRequestsReceived).toEqual(["6", "11", "9", "7"]);
+        expect(body.user.friendRequestsReceived).toEqual(["6", "11", "9", "7"]);
       });
   });
   test("201: only handles friend request from id inside friendRequestsReceived", async () => {
     const event = await request(app)
       .get("/api/users/1")
       .then(({ body }) => {
-        expect(body[0].friendRequestsReceived.includes("7")).toBe(true);
+        expect(body.user.friendRequestsReceived.includes("7")).toBe(true);
       });
     await request(app)
       .post("/api/users/1/friends")
@@ -702,7 +702,12 @@ describe("POST /api/users/:user_id/friends", () => {
     return request(app)
       .get("/api/users/1")
       .then(({ body }) => {
-        expect(body[0].friendRequestsReceived).toEqual(["6", "10", "11", "9"]);
+        expect(body.user.friendRequestsReceived).toEqual([
+          "6",
+          "10",
+          "11",
+          "9",
+        ]);
       });
   });
   test("201: Should remove id from from requests sent when posted", async () => {
@@ -717,7 +722,7 @@ describe("POST /api/users/:user_id/friends", () => {
     return request(app)
       .get("/api/users/10")
       .then(({ body }) => {
-        expect(body[0].friendRequestsSent).toEqual([]);
+        expect(body.user.friendRequestsSent).toEqual([]);
       });
   });
   test("201: Should add id to friends if isAccepted is posted", async () => {
@@ -732,7 +737,7 @@ describe("POST /api/users/:user_id/friends", () => {
     return request(app)
       .get("/api/users/1")
       .then(({ body }) => {
-        expect(body[0].friends).toEqual(["2", "3", "4", "10"]);
+        expect(body.user.friends).toEqual(["2", "3", "4", "10"]);
       });
   });
   test("201: Should add id to friends of sender if isAccepted is posted", async () => {
@@ -747,7 +752,7 @@ describe("POST /api/users/:user_id/friends", () => {
     return request(app)
       .get("/api/users/10")
       .then(({ body }) => {
-        expect(body[0].friends).toEqual(["3","1"]);
+        expect(body.user.friends).toEqual(["3", "1"]);
       });
   });
 });
