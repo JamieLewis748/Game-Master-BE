@@ -1,11 +1,12 @@
 const express = require("express");
 const app = express();
+const cors = require('cors');
 
 const {returnAllUsers, returnUser, postNewUser, patchCharacterStats, postFriendRequest, getOwnedCollections, blockUser} = require('./controllers/users.controller')
 const {returnAllEvents, returnEvent, postNewEvent, patchCompletedStatus} = require("./controllers/events.controller");
 const {returnAllCollections, returnCollection, postNewCollection} = require('./controllers/collections.controller')
 
-
+app.use(cors());
 
 app.use(express.json());
 

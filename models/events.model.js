@@ -1,5 +1,6 @@
 const { client } = require('../seed')
 const { ObjectId } = require('mongodb');
+const { modifyStats } = require('./users.model')
 
 function getAllEvents(isGameFull = undefined, gameType = undefined, sortBy = "dateTime", order = "1") {
     const db = client.db('game-master-test');
@@ -62,9 +63,33 @@ function addNewEvent(image, gameInfo, isGameFull, gameType, dateTime, duration, 
         })
 };
 
-const updateCompleted = (event_id) => {
+const updateCompleted = async (event_id, host_id, participants, winner, duration) => {
     const db = client.db("game-master-test");
     const eventsCollection = db.collection("events");
+
+    const eventInDatabase = (await eventsCollection.findOne({ _id: event_id }))
+    if (host_id !== eventInDatabase.hostedBy) return Promise.reject({ status: 400, msg: "Not Host" })
+
+    await Promise.all(participants.map(async (participant) => {
+        if (participant === host_id) return
+        else {
+            try {
+                if(winner === participant){
+                    const creatureCollection = db.collection("collections");
+                    const prizeCollection =  (await creatureCollection.findOne({_id : eventInDatabase.prizeCollection_id}))
+                    const usersCollection = db.collection("users");
+                    await usersCollection.findOneAndUpdate({_id : winner}, { $push: { "myCreatures": prizeCollection} })
+                }
+                await modifyStats(participant, "50")
+            }
+            catch(error) {
+
+            }
+        }
+    }))
+
+    await modifyStats(eventInDatabase.hostedBy, "75")
+
     return eventsCollection
         .findOneAndUpdate({ _id: event_id }, { $set: { isCompleted: "true" } })
         .then((msg) => {

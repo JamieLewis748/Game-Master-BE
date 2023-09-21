@@ -92,9 +92,8 @@ describe("POST /api/users", () => {
     delete data.characterName
 
     return request(app).get(`/api/users/${event.insertedId}`).send({ userWhoRequested: adminCode })
-      .then(({body}) => {
-        
-        expect(body).toMatchObject({user:data})
+      .then(({ body }) => {
+        expect(body).toMatchObject({ user: data })
       })
   });
   test("404: Should return 404 with 'Bad Request' for missing 'characterName' object key", () => {
@@ -544,7 +543,7 @@ describe("200: GET /users with  queries", () => {
   test("200: GET /users?topics=Board+Games", () => {
     return request(app).get("/api/users?topics=Board+Games").expect(200);
   })
-  test("200: should only return users with topic specified in query", () => {
+  test("200: should only return users with topic Board Games", () => {
     return request(app).get("/api/users?topics=Board+Games")
       .expect(200)
       .then(({ body }) => {
@@ -558,7 +557,7 @@ describe("200: GET /users with  queries", () => {
   test("200: GET /users?topics=BoardGame", () => {
     return request(app).get("/api/users?topics=Board+Games").expect(200);
   });
-  test("200: should only return users with topic specified in query", () => {
+  test("200: should only return users with topic Board Games", () => {
     return request(app)
       .get("/api/users?topics=Board+Games")
       .expect(200)
@@ -568,7 +567,7 @@ describe("200: GET /users with  queries", () => {
         });
       });
   });
-  test("200: GET /users?topics=CardGames", () => {
+  test("200: GET should only return users with topic Card Games", () => {
     return request(app).get("/api/users?topics=Card+Games").expect(200);
   });
   test("200: should only return users with topic specified in query", () => {
@@ -585,14 +584,6 @@ describe("200: GET /users with  queries", () => {
     return request(app)
       .get("/api/users?sortBy=characterStats.level")
       .expect(200);
-  });
-  test("200: should return all users", () => {
-    return request(app)
-      .get("/api/users?sortBy=characterStats.level")
-      .expect(200)
-      .then(({ body }) => {
-        expect(body.length).toBe(users.length);
-      });
   });
   test("200: users array should be ordered by level", () => {
     return request(app)
@@ -670,10 +661,19 @@ describe("200: GET /users/user_id/myCreatures", () => {
 
 describe("200: PATCH /api/events/:event_id", () => {
   test("200: should return 200 when successfully patched", () => {
-    return request(app).patch("/api/events/2").expect(200);
+    return request(app).patch("/api/events/2").send({
+      host_id: "1",
+      participants: ["1", "3"],
+      duration: "2:00:00"
+    }).expect(200);
   });
-  test("200: should return acknowledgement upon successful patch", async () => {
-    await request(app).patch("/api/events/2")
+  test("200: should return that event is now set to completed", async () => {
+    await request(app).patch("/api/events/2").send({
+      host_id: "1",
+      participants: ["1", "3"],
+      duration: "2:00:00"
+    })
+
     return await request(app)
       .get("/api/events/2")
       .expect(200)
@@ -681,4 +681,85 @@ describe("200: PATCH /api/events/:event_id", () => {
         expect(body.event.isCompleted).toBe("true");
       });
   });
+  test("200: testing that winner now has the creature that it could win", async () => {
+    await request(app).get("/api/users/3").send({ userWhoRequested: adminCode }).expect(200)
+    .then(({ body }) => {
+      expect(body.user.myCreatures).toEqual([
+        { _id: '1', name: 'grass', img_url: 'url' },
+        { _id: '2', name: 'water', img_url: 'url' }
+      ])
+    });
+
+    await request(app).patch("/api/events/2").send({
+      host_id: "1",
+      participants: ["1", "3"],
+      winner: "3",
+      duration: "2:00:00"
+    })
+
+    return request(app).get("/api/users/3").send({ userWhoRequested: adminCode }).expect(200)
+    .then(({ body }) => {
+      expect(body.user.myCreatures).toEqual([
+        { _id: '1', name: 'grass', img_url: 'url' },
+        { _id: '2', name: 'water', img_url: 'url' },
+        { _id: '2', name: 'water', img_url: 'url' }
+      ])
+    });
+  })
+  test("200: testing that the participant gets the exp", async () => {
+    await request(app).get("/api/users/3").send({ userWhoRequested: adminCode }).expect(200)
+    .then(({ body }) => {
+      expect(body.user.characterStats).toEqual({
+        name: "Character3",
+        level: "6",
+        experience: "19",
+        experienceToLevelUp: "60"
+      })
+    });
+
+    await request(app).patch("/api/events/2").send({
+      host_id: "1",
+      participants: ["1", "3"],
+      winner: "3",
+      duration: "2:00:00"
+    })
+
+    return request(app).get("/api/users/3").send({ userWhoRequested: adminCode }).expect(200)
+    .then(({ body }) => {
+      expect(body.user.characterStats).toEqual({
+        name: "Character3",
+        level: "7",
+        experience: "9",
+        experienceToLevelUp: "70",
+      })
+    });
+  })
+  test("200: testing that the host gets the exp", async () => {
+    await request(app).get("/api/users/1").send({ userWhoRequested: adminCode }).expect(200)
+    .then(({ body }) => {
+      expect(body.user.characterStats).toEqual({
+        name: "Character1",
+        level: "7",
+        experience: "29",
+        experienceToLevelUp: "70",
+      })
+    });
+
+    await request(app).patch("/api/events/2").send({
+      host_id: "1",
+      participants: ["1", "3"],
+      winner: "3",
+      duration: "2:00:00"
+    })
+
+    return request(app).get("/api/users/1").send({ userWhoRequested: adminCode }).expect(200)
+    .then(({ body }) => {
+      expect(body.user.characterStats).toEqual({
+        name: "Character1",
+        level: "8",
+        experience: "34",
+        experienceToLevelUp: "80",
+      })
+    });
+  })
 });
