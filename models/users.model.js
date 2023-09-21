@@ -36,11 +36,11 @@ function getUser(user_id, userWhoRequested = undefined) {
 
   if (userWhoRequested === undefined && userWhoRequested !== adminCode) return Promise.reject({status:400, msg:"Bad Request"})
 
-  return usersCollection.find({ _id: user_id }).toArray()
+  return usersCollection.findOne({ _id: user_id })
     .then((userArray) => {
-      if (userArray.length === 0) throw { status: 404, msg: "User not found" }
-      if (userArray[0].blocked.includes(userWhoRequested)) throw { status: 404, msg: "User not found" }
-      else return userArray
+      if (!userArray) throw { status: 404, msg: "User not found" }
+      if (userArray.blocked.includes(userWhoRequested)) throw { status: 404, msg: "User not found" }
+      else return {user:userArray}
     })
 };
 

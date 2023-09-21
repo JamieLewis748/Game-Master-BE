@@ -24,10 +24,10 @@ function getCollection(collection_id) {
 
     const db = client.db('game-master-test');
     const collectionCreaturesCollection = db.collection('collections');
-    return collectionCreaturesCollection.find(query).toArray()
-        .then((userArray) => {
-            if(userArray.length === 0) throw {status: 400,msg:"User does not exist"}
-            return userArray
+    return collectionCreaturesCollection.findOne(query)
+        .then((collection) => {
+            if(!collection) throw {status: 400,msg:"User does not exist"}
+            return {collections:collection}
         })
 };
 
