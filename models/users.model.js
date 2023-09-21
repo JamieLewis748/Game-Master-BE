@@ -117,10 +117,15 @@ function requestNewFriend(user_id, friendToAdd) {
     });
 }  
 
-async function respondFriendReq(user_id, sentFrom, isAccepted) {
+async function respondFriendReq(user_id = undefined, sentFrom = undefined, isAccepted = undefined) {
   const db = client.db("game-master-test");
   const usersCollection = db.collection("users");
 
+  if (user_id === '' || user_id === undefined) {
+    return Promise.reject({ status: 404, msg: "Bad request"})
+  }
+  
+  
   const respondingUser = await usersCollection.findOne({ _id: user_id });
   if (!respondingUser) {
     return Promise.reject({ status: 404, msg: "Bad request" });

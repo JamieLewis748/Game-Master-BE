@@ -659,7 +659,7 @@ describe("200: GET /users/user_id/myCreatures", () => {
     });   
   }) 
    
-describe("POST /api/users/:user_id/friends", () => {
+describe.only("POST /api/users/:user_id/friends", () => {
   test("201: Should return status 201 if successfully posted", () => {
     return request(app)
       .post("/api/users/1/friends")
@@ -740,7 +740,7 @@ describe("POST /api/users/:user_id/friends", () => {
         expect(body.user.friends).toEqual(["2", "3", "4", "10"]);
       });
   });
-  test("201: Should add id to friends of sender if isAccepted is posted", async () => {
+  test.only("201: Should add id to friends of sender if isAccepted is posted", async () => {
     const event = await request(app)
       .post("/api/users/1/friends")
       .send({
@@ -752,8 +752,42 @@ describe("POST /api/users/:user_id/friends", () => {
     return request(app)
       .get("/api/users/10").send({userWhoRequested: adminCode})
       .then(({ body }) => {
+        console.log(body);
         expect(body.user.friends).toEqual(["3", "1"]);
       });
+  });
+  test("404: Should return status 404 for invalid 'user_id'", () => {
+    const data = {
+      "user_id": "1",
+      "sentFrom": "6",
+      "isAccepted": true,
+    }
+    return request(app).post("/api/users/apple/friends").send(data).expect(404)
+    .then((msg) => {
+      console.log(msg);
+      expect(JSON.parse(msg.text)).toBe("Bad request")
+    })
+  });
+  test("404: Should return status 404 for missing 'sentFrom' object key", () => {
+    const data = {
+      "user_id": "1",
+      "isAccepted": true,
+    }
+    return request(app).post("/api/users/1/friends").send(data).expect(404)
+    .then((msg) => {
+      expect(JSON.parse(msg.text)).toBe("Bad request")
+    })
+  });
+  test.only("404: Should return status 404 for missing 'user_id' object key", () => {
+    const data = {
+      "user_id": "1",
+      "sentFrom": "6",
+    }
+    return request(app).post("/api/users/1/friends").send(data).expect(404)
+    .then((msg) => {
+      console.log(msg);
+      expect(JSON.parse(msg.text)).toBe("Bad request")
+    })
   });
 });
 
