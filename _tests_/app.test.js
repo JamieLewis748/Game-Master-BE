@@ -680,14 +680,14 @@ describe("POST /api/users/:user_id/friends", () => {
       })
       .expect(201);
     return request(app)
-      .get("/api/users/1")
+      .get("/api/users/1").send({userWhoRequested: adminCode})
       .then(({ body }) => {
         expect(body.user.friendRequestsReceived).toEqual(["6", "11", "9", "7"]);
       });
   });
   test("201: only handles friend request from id inside friendRequestsReceived", async () => {
     const event = await request(app)
-      .get("/api/users/1")
+      .get("/api/users/1").send({userWhoRequested: adminCode})
       .then(({ body }) => {
         expect(body.user.friendRequestsReceived.includes("7")).toBe(true);
       });
@@ -700,7 +700,7 @@ describe("POST /api/users/:user_id/friends", () => {
       })
       .expect(201);
     return request(app)
-      .get("/api/users/1")
+      .get("/api/users/1").send({userWhoRequested: adminCode})
       .then(({ body }) => {
         expect(body.user.friendRequestsReceived).toEqual([
           "6",
@@ -720,7 +720,7 @@ describe("POST /api/users/:user_id/friends", () => {
       })
       .expect(201);
     return request(app)
-      .get("/api/users/10")
+      .get("/api/users/10").send({userWhoRequested: adminCode})
       .then(({ body }) => {
         expect(body.user.friendRequestsSent).toEqual([]);
       });
@@ -735,7 +735,7 @@ describe("POST /api/users/:user_id/friends", () => {
       })
       .expect(201);
     return request(app)
-      .get("/api/users/1")
+      .get("/api/users/1").send({userWhoRequested: adminCode})
       .then(({ body }) => {
         expect(body.user.friends).toEqual(["2", "3", "4", "10"]);
       });
@@ -750,7 +750,7 @@ describe("POST /api/users/:user_id/friends", () => {
       })
       .expect(201);
     return request(app)
-      .get("/api/users/10")
+      .get("/api/users/10").send({userWhoRequested: adminCode})
       .then(({ body }) => {
         expect(body.user.friends).toEqual(["3", "1"]);
       });
