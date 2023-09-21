@@ -16,6 +16,13 @@ exports.users = [
       experience: "29",
       experienceToLevelUp: "70",
     },
+    myCreatures: [
+      {
+        _id: "1",
+        name: "grass",
+        img_url: "url",
+      },
+    ],
   },
   {
     _id: "2",
@@ -34,6 +41,13 @@ exports.users = [
       experience: "20",
       experienceToLevelUp: "50",
     },
+    myCreatures: [
+      {
+        _id: "3",
+        name: "fire",
+        img_url: "url",
+      },
+    ],
   },
   {
     _id: "3",
@@ -44,7 +58,7 @@ exports.users = [
     friends: ["1", "8", "9", "10"],
     friendRequestsReceived: ["2"],
     friendRequestsSent: [],
-    blocked: [],
+    blocked: ["2"],
     topics: ["Tabletop"],
     characterStats: {
       name: "Character3",
@@ -52,6 +66,18 @@ exports.users = [
       experience: "19",
       experienceToLevelUp: "60",
     },
+    myCreatures: [
+      {
+        _id: "1",
+        name: "grass",
+        img_url: "url",
+      },
+      {
+        _id: "2",
+        name: "water",
+        img_url: "url",
+      },
+    ],
   },
   {
     _id: "4",
@@ -70,6 +96,13 @@ exports.users = [
       experience: "30",
       experienceToLevelUp: "50",
     },
+    myCreatures: [
+      {
+        _id: "1",
+        name: "grass",
+        img_url: "url",
+      },
+    ],
   },
   {
     _id: "5",
@@ -88,6 +121,18 @@ exports.users = [
       experience: "50",
       experienceToLevelUp: "100",
     },
+    myCreatures: [
+      {
+        _id: "3",
+        name: "fire",
+        img_url: "url",
+      },
+      {
+        _id: "2",
+        name: "water",
+        img_url: "url",
+      },
+    ],
   },
   {
     _id: "6",
@@ -106,6 +151,13 @@ exports.users = [
       experience: "70",
       experienceToLevelUp: "190",
     },
+    myCreatures: [
+      {
+        _id: "3",
+        name: "fire",
+        img_url: "url",
+      },
+    ],
   },
   {
     _id: "7",
@@ -124,6 +176,18 @@ exports.users = [
       experience: "5",
       experienceToLevelUp: "10",
     },
+    myCreatures: [
+      {
+        _id: "3",
+        name: "fire",
+        img_url: "url",
+      },
+      {
+        _id: "2",
+        name: "water",
+        img_url: "url",
+      },
+    ],
   },
   {
     _id: "8",
@@ -142,6 +206,13 @@ exports.users = [
       experience: "12",
       experienceToLevelUp: "20",
     },
+    myCreatures: [
+      {
+        _id: "3",
+        name: "fire",
+        img_url: "url",
+      },
+    ],
   },
   {
     _id: "9",
@@ -160,6 +231,18 @@ exports.users = [
       experience: "29",
       experienceToLevelUp: "90",
     },
+    myCreatures: [
+      {
+        _id: "3",
+        name: "fire",
+        img_url: "url",
+      },
+      {
+        _id: "2",
+        name: "water",
+        img_url: "url",
+      },
+    ],
   },
   {
     _id: "10",
@@ -178,6 +261,18 @@ exports.users = [
       experience: "50",
       experienceToLevelUp: "70",
     },
+    myCreatures: [
+      {
+        _id: "1",
+        name: "grass",
+        img_url: "url",
+      },
+      {
+        _id: "2",
+        name: "water",
+        img_url: "url",
+      },
+    ],
   },
   {
     _id: "11",
@@ -196,5 +291,12 @@ exports.users = [
       experience: "29",
       experienceToLevelUp: "80",
     },
+    myCreatures: [
+      {
+        _id: "3",
+        name: "fire",
+        img_url: "url",
+      },
+    ],
   },
 ];

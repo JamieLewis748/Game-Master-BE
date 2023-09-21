@@ -1,5 +1,4 @@
-const { getAllUsers, getUser, addNewUser, modifyStats, requestNewFriend, respondFriendReq} = require('../models/users.model.js')
-
+const { getAllUsers, getUser, addNewUser, modifyStats, requestNewFriend, fetchMyCollection, userBlockRequest, respondFriendReq } = require('../models/users.model.js')
 
 const returnAllUsers = (req, res) => {
   const { topics } = req.query;
@@ -17,22 +16,25 @@ const returnAllUsers = (req, res) => {
 
 const returnUser = (req, res) => {
     const {user_id} = req.params
-    getUser(user_id)
+    const {userWhoRequested} = req.body
+    getUser(user_id, userWhoRequested)
         .then((msg) => {
             res.status(200).json(msg);
         })
         .catch((error) => {
-            console.error('Error fetching users:', error);
-            res.status(500).json({ error: 'Internal Server Error' });
+            res.status(error.status).json(error.msg);
         });
 };
 
 const postNewUser = (req,res) => {
-    const {name, username, email, img_url} = req.body
-    addNewUser(name,username, email, img_url)
+    const {name, username, email, img_url, characterName} = req.body
+    addNewUser(name,username, email, img_url, characterName)
     .then((userArray)=> {
         res.status(200).json(userArray);
     })
+    .catch((error) => {
+      res.status(error.status).json(error.msg);
+  });
 };
 
 const patchCharacterStats = (req, res) => {
@@ -42,6 +44,9 @@ const patchCharacterStats = (req, res) => {
     .then((msg) => {
         res.status(200).json(msg);
     })    
+    .catch((error) => {
+      res.status(error.status).json(error.msg);
+  });
 }
 
 const postFriendRequest = (req, res) => {
@@ -66,5 +71,38 @@ const handleFriendReq = (req, res) => {
   })
 }
 
-module.exports = { returnAllUsers, returnUser, postNewUser, patchCharacterStats, postFriendRequest, handleFriendReq
+const blockUser = (req, res) => {
+  const { user_id } = req.params;
+  const { userIdToGetBlocked } = req.body
+
+  userBlockRequest(user_id, userIdToGetBlocked)
+  .then((response) => {
+    res.status(204).json(response)
+  })
+  .catch((err) => {
+    res.status(err.status).json(err.msg)
+  })
+  
+}
+
+const getOwnedCollections = (req, res) => {
+  const { user_id } = req.params;
+  fetchMyCollection(user_id)
+    .then((data) => {
+      return res.status(200).json(data);
+    })
+    .catch((error) => {
+      res.status(error.status).json(error.msg);
+    });
+};
+
+module.exports = {
+  returnAllUsers,
+  returnUser,
+  postNewUser,
+  patchCharacterStats,
+  postFriendRequest,
+  getOwnedCollections,
+  blockUser,
+  handleFriendReq
 };

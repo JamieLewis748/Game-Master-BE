@@ -1,10 +1,12 @@
 {
   "dependencies": {
+    "cors": "^2.8.5",
     "express": "^4.18.2",
     "mongodb": "^6.1.0"
   },
   "scripts": {
-    "test": "jest --detectOpenHandles"
+    "test": "jest --detectOpenHandles",
+    "start": "node app.js"
   },
   "devDependencies": {
     "jest": "^29.7.0",
@@ -16,5 +18,8 @@
     "setupFilesAfterEnv": [
       "jest-sorted"
     ]
+  },
+  "engines": {
+    "node": ">=18"
   }
 }
