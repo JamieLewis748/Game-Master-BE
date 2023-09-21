@@ -87,14 +87,15 @@ const modifyStats = async (user_id, exp = undefined) => {
   const userBeforeUpdate = (await usersCollection.find({ _id: user_id }).toArray())
   if(userBeforeUpdate.length === 0) return Promise.reject({ status: 400, msg: "User not found" })
 
-  let totalExp = Number(userBeforeUpdate[0].characterStats.experience) + exp
+  let totalExp = (Number(userBeforeUpdate[0].characterStats.experience)) + Number(exp)
 
   while (totalExp >= Number(userBeforeUpdate[0].characterStats.experienceToLevelUp)) {
     totalExp -= Number(userBeforeUpdate[0].characterStats.experienceToLevelUp)
     userBeforeUpdate[0].characterStats.level = (Number(userBeforeUpdate[0].characterStats.level) + 1).toString()
     userBeforeUpdate[0].characterStats.experienceToLevelUp = (Number(userBeforeUpdate[0].characterStats.experienceToLevelUp) + 10).toString()
   }
-  return usersCollection.findOneAndUpdate({ _id: user_id }, { $set: { "characterStats.level": userBeforeUpdate[0].characterStats.level } })
+  userBeforeUpdate[0].characterStats.experience = totalExp.toString()
+  return usersCollection.findOneAndUpdate({ _id: user_id }, { $set: { "characterStats": userBeforeUpdate[0].characterStats } })
     .then((msg) => {
       return msg
     }).catch((err) => {
