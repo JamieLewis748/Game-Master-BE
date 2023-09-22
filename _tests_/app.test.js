@@ -342,7 +342,7 @@ describe("PATCH /api/users/characterStats/:user_id", () => {
 });
 
 
-describe.only("GET /api/events ", () => {
+describe("GET /api/events ", () => {
   test("200: Should return status 200 on successful access", () => {
     return request(app).get("/api/events").expect(200);
   });
