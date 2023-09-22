@@ -26,8 +26,8 @@ const returnEvent = (req, res) => {
 };
 
 const postNewEvent = (req, res) => {
-    const { image, gameInfo, isGameFull, gameType, dateTime, duration, capacity, prizeCollection_id } = req.body
-    addNewEvent(image, gameInfo, isGameFull, gameType, dateTime, duration, capacity, prizeCollection_id)
+    const { image, gameInfo, isGameFull, gameType, dateTime, duration, capacity, prizeCollection_id, prize } = req.body
+    addNewEvent(image, gameInfo, isGameFull, gameType, dateTime, duration, capacity, prizeCollection_id, prize)
         .then((userArray) => {
             res.status(200).json(userArray);
         })
