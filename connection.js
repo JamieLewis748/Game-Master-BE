@@ -2,7 +2,6 @@ const { MongoClient } = require("mongodb");
 const { password } = require("./db_password")
 const { Pool } = require("pg");
 
-
 const ENV = process.env.NODE_ENV || "test";
 require("dotenv").config({ path: `${__dirname}/.env.${ENV}` });
 

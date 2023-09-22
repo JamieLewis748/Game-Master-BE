@@ -7,7 +7,7 @@ exports.events = [
     gameType: "Board Games",
     dateTime: "2023-09-27 19:00:00",
     duration: "2:00:00",
-    capacity: 5,
+    capacity: 4,
     participants: ["00000020f51bb4362eee2a01", "00000020f51bb4362eee2a02"],
     requestedToParticipate: [],
     prizeCollection_id: "00000020f61bb4362eee2c01",

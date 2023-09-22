@@ -1,7 +1,7 @@
 const { client } = require('../seed')
 const { ObjectId } = require('mongodb');
 const { modifyStats } = require('./users.model')
-const ENV = require("../connection");
+const {ENV} = require("../connection");
 
 function getAllEvents(isGameFull = undefined, gameType = undefined, sortBy = "dateTime", order = "1") {
     const db = client.db(`game-master-${ENV}`);
@@ -33,7 +33,7 @@ function getEvent(event_id) {
     const objectIdHexRegExp = /^[0-9a-fA-F]{24}$/
     if (isNaN(event_id) && objectIdHexRegExp.test(event_id) === false) return Promise.reject({ status: 400, msg: "Bad Request" })
 
-    const db = client.db(`game-master-${ENV}`);
+    const db = client.db(`game-master-live`);
     const eventsCollection = db.collection('events');
     return eventsCollection.findOne({ _id: event_id })
         .then((event) => {
@@ -43,7 +43,7 @@ function getEvent(event_id) {
 
 
 function addNewEvent(image, gameInfo, isGameFull, gameType, dateTime, duration, capacity, prizeCollection_id) {
-    const db = client.db(`game-master-${ENV}`);
+    const db = client.db(`game-master-live`);
     const eventsCollection = db.collection('events');
     const eventToAdd = {
         _id: new ObjectId().toHexString(),
@@ -66,7 +66,7 @@ function addNewEvent(image, gameInfo, isGameFull, gameType, dateTime, duration, 
 };
 
 const updateCompleted = async (event_id, host_id, participants, winner, duration) => {
-    const db = client.db(`game-master-${ENV}`);
+    const db = client.db(`game-master-live`);
     const eventsCollection = db.collection("events");
 
     const eventInDatabase = (await eventsCollection.findOne({ _id: event_id }))

@@ -20,7 +20,7 @@ const closeConnection = (req, res) => {
 // you will still need to connect to the db with mongoDB extention or in terminal to get up and running
 
 const testSeed = (data) => {
-    const db = client.db("game-master-live")
+    const db = client.db('game-master-live')
     return dbConnection()
     .then(() => {
         return db.collection("users").deleteMany({})
