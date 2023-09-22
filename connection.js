@@ -24,7 +24,7 @@ if (!process.env.PGDATABASE) {
 const client = new MongoClient(uri);
 
 
-exports.dbConnection = (req, res) => {
+const dbConnection = (req, res) => {
   return client.connect()
     // .then(() => {
     // return client.db();
