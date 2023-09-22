@@ -1,5 +1,5 @@
 const { users } = require('../_tests_/Data/Users');
-const { client } = require('../seed')
+const { client } = require('../connection')
 const { ObjectId } = require('mongodb');
 const  adminCode = require("../AdminCode")
 const ENV = require("../connection");

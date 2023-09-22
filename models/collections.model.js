@@ -1,4 +1,4 @@
-const { client } = require('../seed')
+const { client } = require('../connection')
 const { ObjectId } = require('mongodb');
 const ENV = require('../connection')
 
