@@ -30,216 +30,308 @@ describe("GET /api/users", () => {
     return request(app)
       .get("/api/users")
       .then(({ body }) => {
-        expect(body).toMatchObject(users)
+        expect(body).toMatchObject(users);
       });
   });
 });
 
 describe("GET /api/users/:user_id", () => {
   test("200: Should return status 200 for a valid user ID and userWhoRequested", () => {
-    return request(app).get("/api/users/1").send({ userWhoRequested: "2" }).expect(200);
+    return request(app)
+      .get("/api/users/00000020f51bb4362eee2a01")
+      .send({ userWhoRequested: "00000020f51bb4362eee2a02" })
+      .expect(200);
   });
-  test('200: Should return status 200 and the expected user data for a valid user ID', () => {
-    return request(app).get("/api/users/5").send({ userWhoRequested: "2" }).expect(200)
+  test("200: Should return status 200 and the expected user data for a valid user ID", () => {
+    return request(app)
+      .get("/api/users/00000020f51bb4362eee2a05")
+      .send({ userWhoRequested: "00000020f51bb4362eee2a02" })
+      .expect(200)
       .then(({ body }) => {
-        expect(body).toEqual({ user: users[4] })
-      })
+        expect(body).toEqual({ user: users[4] });
+      });
   });
-  test('404 : Should return 404 when the user exists but is blocked', () => {
-    return request(app).get("/api/users/3").send({ userWhoRequested: "2" }).expect(404)
+  test("404 : Should return 404 when the user exists but is blocked", () => {
+    return request(app)
+      .get("/api/users/00000020f51bb4362eee2a03")
+      .send({ userWhoRequested: "00000020f51bb4362eee2a02" })
+      .expect(404)
       .then((msg) => {
-        expect(JSON.parse(msg.text)).toBe("User not found")
-      })
+        expect(JSON.parse(msg.text)).toBe("User not found");
+      });
   });
   test('404 : Should return 404 with "User not found" for a non-existent user ID', () => {
-    return request(app).get("/api/users/100").send({ userWhoRequested: "2" }).expect(404)
+    return request(app)
+      .get("/api/users/100")
+      .send({ userWhoRequested: "00000020f51bb4362eee2a02" })
+      .expect(404)
       .then((msg) => {
-        expect(JSON.parse(msg.text)).toBe("User not found")
-      })
+        expect(JSON.parse(msg.text)).toBe("User not found");
+      });
   });
   test('400 : Should return 400 with "Bad Request" for a missing userWhoRequested parameter', () => {
-    return request(app).get("/api/users/1").expect(400)
+    return request(app)
+      .get("/api/users/00000020f51bb4362eee2a01")
+      .expect(400)
       .then((msg) => {
-        expect(JSON.parse(msg.text)).toBe("Bad Request")
-      })
+        expect(JSON.parse(msg.text)).toBe("Bad Request");
+      });
   });
 });
 
 
 describe("POST /api/users", () => {
   test("200: Should return status 200 on successful user creation", () => {
-    return request(app).post("/api/users").send({
-      "name": "Jamie",
-      "username": "jamie1234",
-      "email": "jamie@gmail.com",
-      "img_url": "",
-      "characterName": "Bomb"
-    }).expect(200)
+    return request(app)
+      .post("/api/users")
+      .send({
+        name: "Jamie",
+        username: "jamie1234",
+        email: "jamie@gmail.com",
+        img_url: "",
+        characterName: "Bomb",
+      })
+      .expect(200);
   });
   test("200: Should create a user and retrieve it with the expected data", async () => {
     const data = {
-      "name": "newUser",
-      "username": "newUser1234",
-      "email": "newUser@gmail.com",
-      "img_url": "",
-      "characterName": "Bam"
-    }
+      name: "newUser",
+      username: "newUser1234",
+      email: "newUser@gmail.com",
+      img_url: "",
+      characterName: "Bam",
+    };
 
-    const event = (await request(app).post("/api/users").send(data)).body
-    expect(event.acknowledged).toBe(true)
+    const event = (await request(app).post("/api/users").send(data)).body;
+    expect(event.acknowledged).toBe(true);
 
-    data.characterStats = [{ name: "Bam", level: "1", experience: "0", experienceToLevelup: "10" }]
-    delete data.characterName
+    data.characterStats = [
+      { name: "Bam", level: "1", experience: "0", experienceToLevelup: "10" },
+    ];
+    delete data.characterName;
 
-    return request(app).get(`/api/users/${event.insertedId}`).send({ userWhoRequested: adminCode })
+    return request(app)
+      .get(`/api/users/${event.insertedId}`)
+      .send({ userWhoRequested: adminCode })
       .then(({ body }) => {
-        expect(body).toMatchObject({ user: data })
-      })
+        expect(body).toMatchObject({ user: data });
+      });
   });
   test("404: Should return 404 with 'Bad Request' for missing 'characterName' object key", () => {
     const data = {
-      "name": "newUser",
-      "username": "newUser1234",
-      "email": "newUser@gmail.com",
-      "img_url": ""
-    }
+      name: "newUser",
+      username: "newUser1234",
+      email: "newUser@gmail.com",
+      img_url: "",
+    };
 
-    return request(app).post("/api/users").send(data).expect(404)
+    return request(app)
+      .post("/api/users")
+      .send(data)
+      .expect(404)
       .then((msg) => {
-        expect(JSON.parse(msg.text)).toBe("Bad Request")
-      })
+        expect(JSON.parse(msg.text)).toBe("Bad Request");
+      });
   });
   test("404: Should return 404 with 'Bad Request' for missing 'img_url' object key", () => {
     const data = {
-      "name": "newUser",
-      "username": "newUser1234",
-      "email": "newUser@gmail.com",
-      "characterName": "Bam"
-    }
+      name: "newUser",
+      username: "newUser1234",
+      email: "newUser@gmail.com",
+      characterName: "Bam",
+    };
 
-    return request(app).post("/api/users").send(data).expect(404)
+    return request(app)
+      .post("/api/users")
+      .send(data)
+      .expect(404)
       .then((msg) => {
-        expect(JSON.parse(msg.text)).toBe("Bad Request")
-      })
+        expect(JSON.parse(msg.text)).toBe("Bad Request");
+      });
   });
   test("404: Should return 404 with 'Bad Request' for missing 'email' object key", () => {
     const data = {
-      "name": "newUser",
-      "username": "newUser1234",
-      "img_url": "",
-      "characterName": "Bam"
-    }
+      name: "newUser",
+      username: "newUser1234",
+      img_url: "",
+      characterName: "Bam",
+    };
 
-    return request(app).post("/api/users").send(data).expect(404)
+    return request(app)
+      .post("/api/users")
+      .send(data)
+      .expect(404)
       .then((msg) => {
-        expect(JSON.parse(msg.text)).toBe("Bad Request")
-      })
+        expect(JSON.parse(msg.text)).toBe("Bad Request");
+      });
   });
   test("404: Should return 404 with 'Bad Request' for missing 'username' object key", () => {
     const data = {
-      "name": "newUser",
-      "email": "newUser@gmail.com",
-      "img_url": "",
-      "characterName": "Bam"
-    }
+      name: "newUser",
+      email: "newUser@gmail.com",
+      img_url: "",
+      characterName: "Bam",
+    };
 
-    return request(app).post("/api/users").send(data).expect(404)
+    return request(app)
+      .post("/api/users")
+      .send(data)
+      .expect(404)
       .then((msg) => {
-        expect(JSON.parse(msg.text)).toBe("Bad Request")
-      })
+        expect(JSON.parse(msg.text)).toBe("Bad Request");
+      });
   });
   test("404: Should return 404 with 'Bad Request' for missing 'name' object key", () => {
     const data = {
-      "username": "newUser1234",
-      "email": "newUser@gmail.com",
-      "img_url": "",
-      "characterName": "Bam"
-    }
+      username: "newUser1234",
+      email: "newUser@gmail.com",
+      img_url: "",
+      characterName: "Bam",
+    };
 
-    return request(app).post("/api/users").send(data).expect(404)
+    return request(app)
+      .post("/api/users")
+      .send(data)
+      .expect(404)
       .then((msg) => {
-        expect(JSON.parse(msg.text)).toBe("Bad Request")
-      })
+        expect(JSON.parse(msg.text)).toBe("Bad Request");
+      });
   });
 });
 
 describe("PATCH /api/users/block/:user_id", () => {
   test("204: Should return status 204 on successful user blocking", () => {
-    return request(app).patch("/api/users/block/7").send({ userIdToGetBlocked: "6" }).expect(204);
+    return request(app)
+      .patch("/api/users/block/00000020f51bb4362eee2a07")
+      .send({ userIdToGetBlocked: "00000020f51bb4362eee2a06" })
+      .expect(204);
   });
   test("204: Should allow blocking a single user and return 204", async () => {
-    await request(app).patch("/api/users/block/7").send({ userIdToGetBlocked: "6" }).expect(204);
+    await request(app)
+      .patch("/api/users/block/00000020f51bb4362eee2a07")
+      .send({ userIdToGetBlocked: "00000020f51bb4362eee2a06" })
+      .expect(204);
 
-    return request(app).get("/api/users/7").send({ userWhoRequested: adminCode }).expect(200).then(({ body }) => {
-      expect(body.user.blocked).toEqual(["6"])
-    })
+    return request(app)
+      .get("/api/users/00000020f51bb4362eee2a07")
+      .send({ userWhoRequested: adminCode })
+      .expect(200)
+      .then(({ body }) => {
+        expect(body.user.blocked).toEqual(["00000020f51bb4362eee2a06"]);
+      });
   });
 
   test("204: Should allow blocking multiple users and return 204", async () => {
-    await request(app).patch("/api/users/block/7").send({ userIdToGetBlocked: "1" }).expect(204);
-    await request(app).patch("/api/users/block/7").send({ userIdToGetBlocked: "2" }).expect(204);
-    await request(app).patch("/api/users/block/7").send({ userIdToGetBlocked: "9" }).expect(204);
+    await request(app)
+      .patch("/api/users/block/00000020f51bb4362eee2a07")
+      .send({ userIdToGetBlocked: "00000020f51bb4362eee2a01" })
+      .expect(204);
+    await request(app)
+      .patch("/api/users/block/00000020f51bb4362eee2a07")
+      .send({ userIdToGetBlocked: "00000020f51bb4362eee2a02" })
+      .expect(204);
+    await request(app)
+      .patch("/api/users/block/00000020f51bb4362eee2a07")
+      .send({ userIdToGetBlocked: "00000020f51bb4362eee2a09" })
+      .expect(204);
 
-    return request(app).get("/api/users/7").send({ userWhoRequested: adminCode }).expect(200).then(({ body }) => {
-      expect(body.user.blocked).toEqual(["1", "2", "9"])
-    })
+    return request(app)
+      .get("/api/users/00000020f51bb4362eee2a07")
+      .send({ userWhoRequested: adminCode })
+      .expect(200)
+      .then(({ body }) => {
+        expect(body.user.blocked).toEqual([
+          "00000020f51bb4362eee2a01",
+          "00000020f51bb4362eee2a02",
+          "00000020f51bb4362eee2a09",
+        ]);
+      });
   });
 
   test("404: Should return 404 for an invalid user_id format", () => {
-    return request(app).patch("/api/users/block/apple").send({ userIdToGetBlocked: "6" }).expect(404)
+    return request(app)
+      .patch("/api/users/block/apple")
+      .send({ userIdToGetBlocked: "00000020f51bb4362eee2a06" })
+      .expect(404)
       .then((msg) => {
-        expect(JSON.parse(msg.text)).toBe("Bad request")
-      })
+        expect(JSON.parse(msg.text)).toBe("Bad request");
+      });
   });
   test("404: Should return 404 for a non-existent user_id", () => {
-    return request(app).patch("/api/users/block/1.0").send({ userIdToGetBlocked: "6" }).expect(404)
+    return request(app)
+      .patch("/api/users/block/1.0")
+      .send({ userIdToGetBlocked: "00000020f51bb4362eee2a06" })
+      .expect(404)
       .then((msg) => {
-        expect(JSON.parse(msg.text)).toBe("Bad request")
-      })
+        expect(JSON.parse(msg.text)).toBe("Bad request");
+      });
   });
 });
 
 describe("PATCH /api/users/characterStats/:user_id", () => {
   test("200: Should return status 200 on successful exp/experience update", () => {
-    return request(app).patch("/api/users/characterStats/1").send({ exp: 80 }).expect(200);
+    return request(app)
+      .patch("/api/users/characterStats/00000020f51bb4362eee2a01")
+      .send({ exp: 80 })
+      .expect(200);
   });
 
   test("200: Should return status 200 on successful characterStats.level update", async () => {
-    await request(app).patch("/api/users/characterStats/1").send({ exp: 80 })
+    await request(app)
+      .patch("/api/users/characterStats/00000020f51bb4362eee2a01")
+      .send({ exp: 80 });
 
-    return await request(app).get("/api/users/1").send({ userWhoRequested: adminCode }).expect(200)
+    return await request(app)
+      .get("/api/users/00000020f51bb4362eee2a01")
+      .send({ userWhoRequested: adminCode })
+      .expect(200)
       .then(({ body }) => {
-        expect(body.user.characterStats.level).toBe("8")
-      })
+        expect(body.user.characterStats.level).toBe("8");
+      });
   });
   test("200: Should return status 200 on different user's successful characterStats.level update", async () => {
-    await request(app).patch("/api/users/characterStats/2").send({ exp: 40 })
-    return await request(app).get("/api/users/2").send({ userWhoRequested: adminCode }).expect(200)
+    await request(app)
+      .patch("/api/users/characterStats/00000020f51bb4362eee2a02")
+      .send({ exp: 40 });
+    return await request(app)
+      .get("/api/users/00000020f51bb4362eee2a02")
+      .send({ userWhoRequested: adminCode })
+      .expect(200)
       .then(({ body }) => {
-        expect(body.user.characterStats.level).toBe("6")
-      })
+        expect(body.user.characterStats.level).toBe("6");
+      });
   });
   test("200: Should return status 200 on different user's successful characterStats.level update", async () => {
-    await request(app).patch("/api/users/characterStats/2").send({ exp: 100 })
-    return await request(app).get("/api/users/2").send({ userWhoRequested: adminCode }).expect(200)
+    await request(app)
+      .patch("/api/users/characterStats/00000020f51bb4362eee2a02")
+      .send({ exp: 100 });
+    return await request(app)
+      .get("/api/users/00000020f51bb4362eee2a02")
+      .send({ userWhoRequested: adminCode })
+      .expect(200)
       .then(({ body }) => {
-        expect(body.user.characterStats.level).toBe("7")
-      })
+        expect(body.user.characterStats.level).toBe("7");
+      });
   });
   test("400: Should return 400 for an invalid user ID", async () => {
     return request(app).patch("/api/users/characterStats/100").send({ exp: 100 }).expect(400)
   });
   test("400: Should return 400 with 'Missing exp' for missing exp/experience", () => {
-    return request(app).patch("/api/users/characterStats/1").expect(400)
+    return request(app)
+      .patch("/api/users/characterStats/00000020f51bb4362eee2a01")
+      .expect(400)
       .then((msg) => {
-        expect(JSON.parse(msg.text)).toBe("Missing exp")
-      })
+        expect(JSON.parse(msg.text)).toBe("Missing exp");
+      });
   });
   test("404: Should return 404 with 'Bad Request' for an invalid exp/experience", () => {
-    return request(app).patch("/api/users/characterStats/1").send({ exp: "abanana" }).expect(404)
+    return request(app)
+      .patch("/api/users/characterStats/00000020f51bb4362eee2a01")
+      .send({ exp: "abanana" })
+      .expect(404)
       .then((msg) => {
-        expect(JSON.parse(msg.text)).toBe("Bad Request")
-      })
+        expect(JSON.parse(msg.text)).toBe("Bad Request");
+      });
   });
   test("400: Should return 400 with 'User not found' for a non-existent user", () => {
     return request(app).patch("/api/users/characterStats/100").send({ exp: "100" }).expect(400)
@@ -256,115 +348,137 @@ describe("GET /api/events ", () => {
   });
   test("200: Should return status 200 and an array of events in asc order by dateTime when 'isCompleted' is false", () => {
     return request(app)
-      .get("/api/events").expect(200)
+      .get("/api/events")
+      .expect(200)
       .then(({ body }) => {
-        expect(body.length > 0).toBe(true)
-        let onlyGameNotFullEvents = [...events]
-        onlyGameNotFullEvents = onlyGameNotFullEvents
-          .filter((event) => event.isCompleted === "false")
+        expect(body.length > 0).toBe(true);
+        let onlyGameNotFullEvents = [...events];
+        onlyGameNotFullEvents = onlyGameNotFullEvents.filter(
+          (event) => event.isCompleted === "false"
+        );
         onlyGameNotFullEvents = onlyGameNotFullEvents.sort(function (a, b) {
-          return new Date(a.dateTime) - new Date(b.dateTime)
-        })
-        expect(body).toMatchObject(onlyGameNotFullEvents)
+          return new Date(a.dateTime) - new Date(b.dateTime);
+        });
+        expect(body).toMatchObject(onlyGameNotFullEvents);
       });
   });
   test("200: Should return status 200 and an array of events when 'isGameFull' is false", () => {
     return request(app)
-      .get("/api/events?isGameFull=false").expect(200)
+      .get("/api/events?isGameFull=false")
+      .expect(200)
       .then(({ body }) => {
-        expect(body.length > 0).toBe(true)
-        let onlyGameNotFullEvents = [...events]
-        onlyGameNotFullEvents = onlyGameNotFullEvents
-          .filter((event) => event.isCompleted === "false")
-        onlyGameNotFullEvents = onlyGameNotFullEvents.filter((event) => event.isGameFull === "false")
+        expect(body.length > 0).toBe(true);
+        let onlyGameNotFullEvents = [...events];
+        onlyGameNotFullEvents = onlyGameNotFullEvents.filter(
+          (event) => event.isCompleted === "false"
+        );
+        onlyGameNotFullEvents = onlyGameNotFullEvents.filter(
+          (event) => event.isGameFull === "false"
+        );
         onlyGameNotFullEvents = onlyGameNotFullEvents.sort(function (a, b) {
-          return new Date(a.dateTime) - new Date(b.dateTime)
-        })
-        expect(body).toMatchObject(onlyGameNotFullEvents)
+          return new Date(a.dateTime) - new Date(b.dateTime);
+        });
+        expect(body).toMatchObject(onlyGameNotFullEvents);
       });
   });
   test("200: Should return status 200 and events of the specified 'game type' Board Games", () => {
     return request(app)
-      .get("/api/events?gameType=Board Games").expect(200)
+      .get("/api/events?gameType=Board Games")
+      .expect(200)
       .then(({ body }) => {
-        expect(body.length > 0).toBe(true)
-        let onlyGameNotFullEvents = [...events]
-        onlyGameNotFullEvents = onlyGameNotFullEvents
-          .filter((event) => event.isCompleted === "false")
-        onlyGameNotFullEvents = onlyGameNotFullEvents.filter((event) => event.gameType === "Board Games")
+        expect(body.length > 0).toBe(true);
+        let onlyGameNotFullEvents = [...events];
+        onlyGameNotFullEvents = onlyGameNotFullEvents.filter(
+          (event) => event.isCompleted === "false"
+        );
+        onlyGameNotFullEvents = onlyGameNotFullEvents.filter(
+          (event) => event.gameType === "Board Games"
+        );
         onlyGameNotFullEvents = onlyGameNotFullEvents.sort(function (a, b) {
-          return new Date(a.dateTime) - new Date(b.dateTime)
-        })
-        expect(body).toMatchObject(onlyGameNotFullEvents)
+          return new Date(a.dateTime) - new Date(b.dateTime);
+        });
+        expect(body).toMatchObject(onlyGameNotFullEvents);
       });
   });
   test("200: Should return status 200 and events of the specified 'game type' Card Games", () => {
     return request(app)
-      .get("/api/events?gameType=Card Games").expect(200)
+      .get("/api/events?gameType=Card Games")
+      .expect(200)
       .then(({ body }) => {
-        expect(body.length > 0).toBe(true)
-        let onlyGameNotFullEvents = [...events]
-        onlyGameNotFullEvents = onlyGameNotFullEvents
-          .filter((event) => event.isCompleted === "false")
-        onlyGameNotFullEvents = onlyGameNotFullEvents.filter((event) => event.gameType === "Card Games")
+        expect(body.length > 0).toBe(true);
+        let onlyGameNotFullEvents = [...events];
+        onlyGameNotFullEvents = onlyGameNotFullEvents.filter(
+          (event) => event.isCompleted === "false"
+        );
+        onlyGameNotFullEvents = onlyGameNotFullEvents.filter(
+          (event) => event.gameType === "Card Games"
+        );
         onlyGameNotFullEvents = onlyGameNotFullEvents.sort(function (a, b) {
-          return new Date(a.dateTime) - new Date(b.dateTime)
-        })
-        expect(body).toMatchObject(onlyGameNotFullEvents)
+          return new Date(a.dateTime) - new Date(b.dateTime);
+        });
+        expect(body).toMatchObject(onlyGameNotFullEvents);
       });
   });
   test("200: Should return status 200 and an array of onlyGameNotFullEvents in asc order by dateTime", () => {
     return request(app)
-      .get("/api/events?sortBy=dateTime&order=1").expect(200)
+      .get("/api/events?sortBy=dateTime&order=1")
+      .expect(200)
       .then(({ body }) => {
-        expect(body.length > 0).toBe(true)
-        let onlyGameNotFullEvents = [...events]
-        onlyGameNotFullEvents = onlyGameNotFullEvents
-          .filter((event) => event.isCompleted === "false")
+        expect(body.length > 0).toBe(true);
+        let onlyGameNotFullEvents = [...events];
+        onlyGameNotFullEvents = onlyGameNotFullEvents.filter(
+          (event) => event.isCompleted === "false"
+        );
         onlyGameNotFullEvents = onlyGameNotFullEvents.sort(function (a, b) {
-          return new Date(a.dateTime) - new Date(b.dateTime)
-        })
-        expect(body).toMatchObject(onlyGameNotFullEvents)
+          return new Date(a.dateTime) - new Date(b.dateTime);
+        });
+        expect(body).toMatchObject(onlyGameNotFullEvents);
       });
   });
   test("200: Should return status 200 and an array of onlyGameNotFullEvents in DEC order by dateTime", () => {
     return request(app)
-      .get("/api/events?sortBy=dateTime&order=-1").expect(200)
+      .get("/api/events?sortBy=dateTime&order=-1")
+      .expect(200)
       .then(({ body }) => {
-        let onlyGameNotFullEvents = [...events]
-        onlyGameNotFullEvents = onlyGameNotFullEvents
-          .filter((event) => event.isCompleted === "false")
+        let onlyGameNotFullEvents = [...events];
+        onlyGameNotFullEvents = onlyGameNotFullEvents.filter(
+          (event) => event.isCompleted === "false"
+        );
         onlyGameNotFullEvents = onlyGameNotFullEvents.sort(function (a, b) {
-          return new Date(b.dateTime) - new Date(a.dateTime)
-        })
-        expect(body).toMatchObject(onlyGameNotFullEvents)
+          return new Date(b.dateTime) - new Date(a.dateTime);
+        });
+        expect(body).toMatchObject(onlyGameNotFullEvents);
       });
   });
   test("400: Should return status 400 for invalid dateTime order", () => {
     return request(app)
-      .get("/api/events?sortBy=dateTime&order=banana").expect(400)
+      .get("/api/events?sortBy=dateTime&order=banana")
+      .expect(400)
       .then((msg) => {
-        expect(JSON.parse(msg.text)).toBe("Bad Request")
+        expect(JSON.parse(msg.text)).toBe("Bad Request");
       });
   });
   test("400: Should return status 400 for invalid isGameFull", () => {
     return request(app)
-      .get("/api/events?isGameFull=banana&sortBy=dateTime").expect(400)
+      .get("/api/events?isGameFull=banana&sortBy=dateTime")
+      .expect(400)
       .then((msg) => {
-        expect(JSON.parse(msg.text)).toBe("Bad Request")
+        expect(JSON.parse(msg.text)).toBe("Bad Request");
       });
   });
 });
 
-describe('GET /api/events/:event_id', () => {
+describe("GET /api/events/:event_id", () => {
   test("200: Should return status 200 on successful event retrieval", () => {
-    return request(app).get("/api/events/1").expect(200);
-  });
-  test('200: Should return 200 for each event retrieved by ID', () => {
-    return Promise.all(events.map(async (event) => {
-      const { body } = await request(app).get(`/api/events/${event._id}`);
-      expect(body).toMatchObject({ event: event });
-    }));
+    return request(app).get("/api/events/00000020f51bb4362eee2e01").expect(200);
+  })
+  test("200: Should return 200 for each event retrieved by ID", () => {
+    return Promise.all(
+      events.map(async (event) => {
+        const { body } = await request(app).get(`/api/events/${event._id}`);
+        expect(body).toMatchObject({ event: event });
+      })
+    );
   }, 20000);
 });
 

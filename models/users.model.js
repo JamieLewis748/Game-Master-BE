@@ -204,11 +204,13 @@ function fetchMyCollection(user_id) {
 
 async function userBlockRequest(user_id = undefined, userIdToGetBlocked) {
   const objectIdHexRegExp = /^[0-9a-fA-F]{24}$/
-  if (objectIdHexRegExp.test(user_id) || isNaN(user_id) || user_id === undefined || user_id === userIdToGetBlocked){
+  if (!objectIdHexRegExp.test(user_id) || user_id === undefined || user_id === userIdToGetBlocked) {
     return Promise.reject({ status: 404, msg: "Bad request" })
   }
-  if (userIdToGetBlocked === undefined || isNaN(userIdToGetBlocked) || objectIdHexRegExp.test(userIdToGetBlocked)){
-    return Promise.reject({ status: 404, msg: "Bad request" })
+  if (
+    userIdToGetBlocked === undefined || !objectIdHexRegExp.test(userIdToGetBlocked)
+  ) {
+    return Promise.reject({ status: 404, msg: "Bad request" });
   }
 
   const db = client.db(`game-master-${ENV}`);
