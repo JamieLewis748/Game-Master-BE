@@ -7,9 +7,12 @@ const ENV = require("../connection");
 
 
 async function getAllUsers(query = undefined, sortBy = undefined, orderBy = undefined) {
-  await client.connect()
+  await client.connect().then(() => {
+      return client.db()
+  })
   const db = client.db(`game-master-${ENV}`);
   const usersCollection = db.collection("users");
+  console.log("🚀 ~ file: users.model.js:15 ~ getAllUsers ~ `game-master-${ENV}`:", `game-master-${ENV}`)
   let searchQuery = {};
   let orderQuery = {};
   if (query !== undefined) {
