@@ -29,8 +29,9 @@ console.log("🚀 ~ file: connection.js:27 ~ uri:", uri)
 
 const dbConnection = (req, res) => {
   return client.connect()
-    // .then(() => {
-    // return client.db();
+    .then(() => {
+      return client.db()
+    })
   
 };
 
