@@ -1,6 +1,6 @@
 const { client } = require('../seed')
 const { ObjectId } = require('mongodb');
-const ENV = require('../connection')
+const {ENV} = require('../connection')
 
 function getAllCollections() {
     const db = client.db(`game-master-${ENV}`);

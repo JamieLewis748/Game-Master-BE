@@ -23,7 +23,6 @@ function getAllEvents(isGameFull = undefined, gameType = undefined, sortBy = "da
     sort[sortBy] = Number(order)
     return eventsCollection.find(searchBy).sort(sort).toArray()
         .then((userArray) => {
-            console.log("🚀 ~ file: events.model.js:28 ~ .then ~ userArray:", userArray)
             return userArray
         })
 };
