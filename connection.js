@@ -29,3 +29,4 @@ exports.dbConnection = (req, res) => {
 };
 
 module.exports = new Pool();
+module.exports = ENV;
