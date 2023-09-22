@@ -6,6 +6,7 @@ const ENV = require("../connection");
 function getAllEvents(isGameFull = undefined, gameType = undefined, sortBy = "dateTime", order = "1") {
     console.log('inside getAllEvents')
     const db = client.db(`game-master-${ENV}`);
+    console.log("🚀 ~ file: events.model.js:10 ~ getAllEvents ~ `game-master-${ENV}`:", `game-master-${ENV}`)
     const eventsCollection = db.collection('events');
     let searchBy = { isCompleted: "false" }
     if (isGameFull !== undefined) {

@@ -25,12 +25,6 @@ if (!process.env.PGDATABASE) {
 
 const client = new MongoClient(uri);
 
-if (client.isConnected()) {
-  console.log("Connected to MongoDB");
-} else {
-  console.log("Not connected to MongoDB");
-}
-
 
 exports.dbConnection = (req, res) => {
   return client.connect().then(() => {
