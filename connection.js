@@ -1,17 +1,31 @@
 const { MongoClient } = require("mongodb");
-const {password} = require("./db_password")
-const uri =
+const { password } = require("./db_password")
+const { Pool } = require("pg");
 
-  `mongodb+srv://emm__:${password}@cluster0.pfbhecj.mongodb.net`;
+
+const ENV = process.env.NODE_ENV || "test";
+require("dotenv").config({ path: `${__dirname}/.env.${ENV}` });
+
+
+let uri
+if (ENV === "test"){
+   uri = `mongodb+srv://emm__:${password}@cluster0.pfbhecj.mongodb.net`
+}
+
+if (ENV === "live") {
+  uri = `mongodb+srv://Emm:k89J6N7JN522M3Q3@cluster0.pdcei6g.mongodb.net/`;
+}
+
+if (!process.env.PGDATABASE) {
+  throw new Error("PGDATABASE not set");
+}
 
 const client = new MongoClient(uri);
+
 exports.dbConnection = (req, res) => {
   return client.connect().then(() => {
     return client.db();
   });
 };
 
-// you will need to create your own db_password.js function
-// make and export a function that just returns the password provided seperate to the repo
-// if you do not call the file db_password then ensure it is still added to .git.ignore
-// you will still need to connect to the db with mongoDB extention or in terminal to get up and running
+module.exports = new Pool();

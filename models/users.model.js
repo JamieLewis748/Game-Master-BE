@@ -3,6 +3,7 @@ const { client } = require('../seed')
 const { ObjectId } = require('mongodb');
 const  adminCode = require("../AdminCode")
 
+
 function getAllUsers(query = undefined, sortBy = undefined, orderBy = undefined) {
   const db = client.db("game-master-test");
   const usersCollection = db.collection("users");
