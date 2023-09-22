@@ -64,6 +64,7 @@ const handleFriendReq = (req, res) => {
   const { user_id } = req.params;
   const { sentFrom } = req.body;
   const { isAccepted } = req.body;
+  
   respondFriendReq(user_id, sentFrom, isAccepted).then((msg) => {
     res.status(201).json(msg)
   }).catch((err) => {

@@ -30,6 +30,7 @@ app.get("/api/collections/:collection_id", returnCollection)
 app.post("/api/collections", postNewCollection)
 
 app.use((err, req, res, next) => {
+  console.log(err);
   res.status(500).send({ msg: err });
 });
 
