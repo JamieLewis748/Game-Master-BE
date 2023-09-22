@@ -4,9 +4,7 @@ const { modifyStats } = require('./users.model')
 const ENV = require("../connection");
 
 function getAllEvents(isGameFull = undefined, gameType = undefined, sortBy = "dateTime", order = "1") {
-    console.log('inside getAllEvents')
     const db = client.db(`game-master-${ENV}`);
-    console.log("🚀 ~ file: events.model.js:10 ~ getAllEvents ~ `game-master-${ENV}`:", `game-master-${ENV}`)
     const eventsCollection = db.collection('events');
     let searchBy = { isCompleted: "false" }
     if (isGameFull !== undefined) {
@@ -23,7 +21,6 @@ function getAllEvents(isGameFull = undefined, gameType = undefined, sortBy = "da
     if (order !== "1" && order !== "-1") return Promise.reject({ status: 400, msg: "Bad Request" })
 
     sort[sortBy] = Number(order)
-    console.log("🚀 ~ file: events.model.js:29 ~ getAllEvents ~ eventsCollection:", eventsCollection)
     return eventsCollection.find(searchBy).sort(sort).toArray()
         .then((userArray) => {
             console.log("🚀 ~ file: events.model.js:28 ~ .then ~ userArray:", userArray)
