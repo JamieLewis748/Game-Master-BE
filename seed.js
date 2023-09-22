@@ -1,8 +1,8 @@
 const { MongoClient } = require("mongodb");
 const {password} = require("./db_password")
 const uri =
-  //   `mongodb+srv://emm__:${password}@cluster0.pfbhecj.mongodb.net`;
-  `mongodb+srv://Emm:k89J6N7JN522M3Q3@cluster0.pdcei6g.mongodb.net/`;
+    `mongodb+srv://emm__:${password}@cluster0.pfbhecj.mongodb.net`;
+//   `mongodb+srv://Emm:k89J6N7JN522M3Q3@cluster0.pdcei6g.mongodb.net/`;
 
 const client = new MongoClient(uri);
 const dbConnection = (req, res) => {
