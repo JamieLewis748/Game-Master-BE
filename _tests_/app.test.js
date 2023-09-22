@@ -40,6 +40,18 @@ describe("GET /api/users/:user_id", () => {
     return request(app).get("/api/users/1").send({ userWhoRequested: "2" }).expect(200);
   });
   test('200: Should return status 200 and the expected user data for a valid user ID', () => {
+    return request(app).get("/api/users/aiden@gmail.com").send({ userWhoRequested: "2" }).expect(200)
+      .then(({ body }) => {
+        expect(body).toEqual({ user: users[10] })
+      })
+  });
+  test('200: Should return status 200 and the expected user data for a valid user ID', () => {
+    return request(app).get("/api/users/noah@gmail.com").send({ userWhoRequested: "2" }).expect(200)
+      .then(({ body }) => {
+        expect(body).toEqual({ user: users[8] })
+      })
+  });
+  test('200: Should return status 200 and the expected user data for a valid user ID', () => {
     return request(app).get("/api/users/5").send({ userWhoRequested: "2" }).expect(200)
       .then(({ body }) => {
         expect(body).toEqual({ user: users[4] })

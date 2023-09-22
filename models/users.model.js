@@ -1,7 +1,7 @@
 const { users } = require('../_tests_/Data/Users');
 const { client } = require('../seed')
 const { ObjectId } = require('mongodb');
-const  adminCode = require("../AdminCode")
+const adminCode = require("../AdminCode")
 
 function getAllUsers(query = undefined, sortBy = undefined, orderBy = undefined) {
   const db = client.db("game-master-test");
@@ -14,13 +14,13 @@ function getAllUsers(query = undefined, sortBy = undefined, orderBy = undefined)
   if (
     (sortBy !== undefined && orderBy === undefined) ||
     (sortBy !== undefined && orderBy === 'desc')
-    ) {
-      orderQuery = { [sortBy]: -1 };
+  ) {
+    orderQuery = { [sortBy]: -1 };
   }
-  if(orderBy ==='asc') {
-      orderQuery = { [sortBy]: 1 };
-    }
-    
+  if (orderBy === 'asc') {
+    orderQuery = { [sortBy]: 1 };
+  }
+
   return usersCollection
     .find(searchQuery)
     .sort(orderQuery)
@@ -34,13 +34,22 @@ function getUser(user_id, userWhoRequested = undefined) {
   const db = client.db('game-master-test');
   const usersCollection = db.collection('users');
 
-  if (userWhoRequested === undefined && userWhoRequested !== adminCode) return Promise.reject({status:400, msg:"Bad Request"})
+  let query = {}
 
-  return usersCollection.findOne({ _id: user_id })
+  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+  if (emailRegex.test(user_id)) {
+    query = { email: user_id }
+  }
+  else if (userWhoRequested === undefined && userWhoRequested !== adminCode) return Promise.reject({ status: 400, msg: "Bad Request" })
+  else {
+    query = { _id: user_id }
+  }
+
+  return usersCollection.findOne(query)
     .then((userArray) => {
       if (!userArray) throw { status: 404, msg: "User not found" }
       if (userArray.blocked.includes(userWhoRequested)) throw { status: 404, msg: "User not found" }
-      else return {user:userArray}
+      else return { user: userArray }
     })
 };
 
@@ -85,7 +94,7 @@ const modifyStats = async (user_id, exp = undefined) => {
   const usersCollection = db.collection('users');
 
   const userBeforeUpdate = (await usersCollection.find({ _id: user_id }).toArray())
-  if(userBeforeUpdate.length === 0) return Promise.reject({ status: 400, msg: "User not found" })
+  if (userBeforeUpdate.length === 0) return Promise.reject({ status: 400, msg: "User not found" })
 
   let totalExp = (Number(userBeforeUpdate[0].characterStats.experience)) + Number(exp)
 
@@ -115,7 +124,7 @@ function requestNewFriend(user_id, friendToAdd) {
     .then((msg) => {
       return msg;
     });
-}  
+}
 
 async function respondFriendReq(user_id, sentFrom, isAccepted) {
   const db = client.db("game-master-test");
@@ -137,7 +146,7 @@ async function respondFriendReq(user_id, sentFrom, isAccepted) {
       }
     }
   );
-   
+
   const updatedRequested = await requestingUser.friendRequestsSent.filter(
     (requestsSent) => {
       if (requestsSent !== user_id.toString()) {
@@ -145,7 +154,7 @@ async function respondFriendReq(user_id, sentFrom, isAccepted) {
       }
     }
   );
-   
+
   if (isAccepted === true) {
     try {
       await usersCollection
@@ -192,20 +201,20 @@ async function respondFriendReq(user_id, sentFrom, isAccepted) {
 function fetchMyCollection(user_id) {
   const db = client.db("game-master-test");
   const usersCollection = db.collection("users");
-     return usersCollection
-       .find({ _id: user_id})
-       .toArray()
-       .then((userArray) => {
-         return userArray[0].myCreatures;
-       });
+  return usersCollection
+    .find({ _id: user_id })
+    .toArray()
+    .then((userArray) => {
+      return userArray[0].myCreatures;
+    });
 }
 
 async function userBlockRequest(user_id = undefined, userIdToGetBlocked) {
   const objectIdHexRegExp = /^[0-9a-fA-F]{24}$/
-  if (objectIdHexRegExp.test(user_id) || isNaN(user_id) || user_id === undefined || user_id === userIdToGetBlocked){
+  if (objectIdHexRegExp.test(user_id) || isNaN(user_id) || user_id === undefined || user_id === userIdToGetBlocked) {
     return Promise.reject({ status: 404, msg: "Bad request" })
   }
-  if (userIdToGetBlocked === undefined || isNaN(userIdToGetBlocked) || objectIdHexRegExp.test(userIdToGetBlocked)){
+  if (userIdToGetBlocked === undefined || isNaN(userIdToGetBlocked) || objectIdHexRegExp.test(userIdToGetBlocked)) {
     return Promise.reject({ status: 404, msg: "Bad request" })
   }
 
@@ -224,10 +233,10 @@ async function userBlockRequest(user_id = undefined, userIdToGetBlocked) {
 
   user[0].blocked.push(userIdToGetBlocked)
 
-  return usersCollection.findOneAndUpdate({ _id: user_id }, { $set: { "blocked": user[0].blocked }})
-  .then((msg) => {
-    return msg
-  })
+  return usersCollection.findOneAndUpdate({ _id: user_id }, { $set: { "blocked": user[0].blocked } })
+    .then((msg) => {
+      return msg
+    })
 }
 
 module.exports = { getAllUsers, getUser, addNewUser, requestNewFriend, modifyStats, fetchMyCollection, userBlockRequest, respondFriendReq };
