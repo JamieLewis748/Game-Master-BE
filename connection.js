@@ -11,9 +11,9 @@ let uri
 if (ENV === "test"){
   console.log(ENV);
    uri = `mongodb+srv://emm__:${password}@cluster0.pfbhecj.mongodb.net`
-}
+}  
 
-if (ENV === "live") {
+else if (ENV === "live") {
   console.log("🚀 ~ file: connection.js:17 ~ ENV:", ENV)
   
   uri = `mongodb+srv://Emm:k89J6N7JN522M3Q3@cluster0.pdcei6g.mongodb.net/`;
@@ -22,6 +22,8 @@ if (ENV === "live") {
 if (!process.env.PGDATABASE) {
   throw new Error("PGDATABASE not set");
 }
+
+console.log("🚀 ~ file: connection.js:21 ~ uri:", uri)
 
 const client = new MongoClient(uri);
 
