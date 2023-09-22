@@ -14,7 +14,8 @@ if (ENV === "test"){
 }
 
 if (ENV === "live") {
-  console.log(ENV);
+  console.log("🚀 ~ file: connection.js:17 ~ ENV:", ENV)
+  
   uri = `mongodb+srv://Emm:k89J6N7JN522M3Q3@cluster0.pdcei6g.mongodb.net/`;
 }
 
@@ -23,6 +24,13 @@ if (!process.env.PGDATABASE) {
 }
 
 const client = new MongoClient(uri);
+
+if (client.isConnected()) {
+  console.log("Connected to MongoDB");
+} else {
+  console.log("Not connected to MongoDB");
+}
+
 
 exports.dbConnection = (req, res) => {
   return client.connect().then(() => {
