@@ -9,12 +9,10 @@ require("dotenv").config({ path: `${__dirname}/.env.${ENV}` });
 
 let uri
 if (ENV === "test"){
-   console.log("🚀 ~ file: connection.js:12 ~ ENV:", ENV)
    uri = `mongodb+srv://emm__:${password}@cluster0.pfbhecj.mongodb.net`
 }  
 
 else if (ENV === "live") {
-  console.log("🚀 ~ file: connection.js:16 ~ ENV:", ENV)
   uri = `mongodb+srv://Emm:k89J6N7JN522M3Q3@cluster0.pdcei6g.mongodb.net/`;
 }
 
@@ -24,7 +22,6 @@ if (!process.env.PGDATABASE) {
 
 
 const client = new MongoClient(uri);
-console.log("🚀 ~ file: connection.js:27 ~ uri:", uri)
 
 
 const dbConnection = (req, res) => {
@@ -36,7 +33,5 @@ const dbConnection = (req, res) => {
 };
 
 dbConnection()
-
-module.exports = new Pool();
-module.exports = ENV;
-module.exports = {client};
+const pool = new Pool()
+module.exports = {ENV, pool, client};

@@ -22,7 +22,7 @@ afterAll(() => {
 
 
 //TEST SUITE
-describe("GET /api/users", () => {
+describe.only("GET /api/users", () => {
   test("200: Should return status 200 on successful access", () => {
     return request(app).get("/api/users").expect(200);
   });

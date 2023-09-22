@@ -1,18 +1,14 @@
 const { users } = require('../_tests_/Data/Users');
-const { client } = require('../connection')
+const { client } = require('../seed')
 // const { client } = require('../seed')
 const { ObjectId } = require('mongodb');
 const  adminCode = require("../AdminCode")
-const ENV = require("../connection");
+const {ENV} = require("../connection");
 
 
-async function getAllUsers(query = undefined, sortBy = undefined, orderBy = undefined) {
-  await client.connect().then(() => {
-      return client.db()
-  })
-  const db = client.db(`game-master-${ENV}`);
+function getAllUsers(query = undefined, sortBy = undefined, orderBy = undefined) {
+  const db = client.db(`game-master-${ENV}`)
   const usersCollection = db.collection("users");
-  console.log("🚀 ~ file: users.model.js:15 ~ getAllUsers ~ `game-master-${ENV}`:", `game-master-${ENV}`)
   let searchQuery = {};
   let orderQuery = {};
   if (query !== undefined) {
