@@ -6,7 +6,8 @@ const  adminCode = require("../AdminCode")
 const ENV = require("../connection");
 
 
-function getAllUsers(query = undefined, sortBy = undefined, orderBy = undefined) {
+async function getAllUsers(query = undefined, sortBy = undefined, orderBy = undefined) {
+  await client.connect()
   const db = client.db(`game-master-${ENV}`);
   const usersCollection = db.collection("users");
   let searchQuery = {};
