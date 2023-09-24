@@ -42,7 +42,19 @@ describe("GET /api/users/:user_id", () => {
       .send({ userWhoRequested: "00000020f51bb4362eee2a02" })
       .expect(200);
   });
-  test("200: Should return status 200 and the expected user data for a valid user ID", () => {
+  test('200: Should return status 200 and the expected user data for a valid user ID', () => {
+    return request(app).get("/api/users/aiden@gmail.com").send({ userWhoRequested: "00000020f51bb4362eee2a02" }).expect(200)
+      .then(({ body }) => {
+        expect(body).toEqual({ user: users[10] })
+      })
+  });
+  test('200: Should return status 200 and the expected user data for a valid user ID', () => {
+    return request(app).get("/api/users/noah@gmail.com").send({ userWhoRequested: "00000020f51bb4362eee2a02" }).expect(200)
+      .then(({ body }) => {
+        expect(body).toEqual({ user: users[8] })
+      })
+  });
+  test('200: Should return status 200 and the expected user data for a valid user ID', () => {
     return request(app)
       .get("/api/users/00000020f51bb4362eee2a05")
       .send({ userWhoRequested: "00000020f51bb4362eee2a02" })
@@ -483,6 +495,26 @@ describe("GET /api/events/:event_id", () => {
 });
 
 describe("POST /api/events", () => {
+  test("POST /api/events - Create a new event", async () => {
+    const newEvent = {
+      image: 'https://example.com/event3.jpg',
+      gameInfo: 'Event 3 - Card Games Night',
+      isGameFull: false,
+      gameType: 'Card Games',
+      dateTime: '2023-09-28 20:00:00',
+      duration: '3:00:00',
+      capacity: 8,
+      prizeCollection_id: '2',
+      prize: 'https://example.com/prize.jpg',
+    };
+
+    const response = await request(app)
+      .post('/api/events')
+      .send(newEvent)
+      .expect(200);
+
+    expect(response.body.acknowledged).toBe(true);
+  });
   test("200: Should return status 200 on successful event creation", () => {
     return request(app).post("/api/events").send({
       image: 'https://example.com/event2.jpg',
@@ -492,7 +524,7 @@ describe("POST /api/events", () => {
       dateTime: '2023-09-21 19:30:00',
       duration: '2:00:00',
       capacity: 6,
-      prizeCollection_id: "1"
+      prizeCollection_id: "1",
     }).expect(200)
       .then(({ body }) => {
         expect(body.acknowledged).toBe(true)
@@ -651,7 +683,7 @@ describe("POST /api/users/:user_id/inviteFriend", () => {
         expect(body.msg === "can not send friend request to self").toBe(true);
       });
   });
-});   
+});
 
 describe("200: GET /users with  queries", () => {
   test("200: GET /users?topics=Board+Games", () => {
@@ -760,19 +792,19 @@ describe("200: GET /users with  queries", () => {
 })
 
 describe("200: GET /users/user_id/myCreatures", () => {
-    test("200: Return status 200 on successful get", () => {
-      return request(app).get("/api/users/1/myCreatures").expect(200);
-    });
-    test("200: should return users myCreatures array", () => {
-      return request(app)
-        .get("/api/users/1/myCreatures")
-        .expect(200)
-        .then(({ body }) => {
-          expect(body).toEqual(users[0].myCreatures);
-        });
-    });   
-  }) 
-   
+  test("200: Return status 200 on successful get", () => {
+    return request(app).get("/api/users/1/myCreatures").expect(200);
+  });
+  test("200: should return users myCreatures array", () => {
+    return request(app)
+      .get("/api/users/1/myCreatures")
+      .expect(200)
+      .then(({ body }) => {
+        expect(body).toEqual(users[0].myCreatures);
+      });
+  });
+})
+
 describe("POST /api/users/:user_id/friends", () => {
   test("201: Should return status 201 if successfully posted", () => {
     return request(app)
@@ -794,14 +826,14 @@ describe("POST /api/users/:user_id/friends", () => {
       })
       .expect(201);
     return request(app)
-      .get("/api/users/1").send({userWhoRequested: adminCode})
+      .get("/api/users/1").send({ userWhoRequested: adminCode })
       .then(({ body }) => {
         expect(body.user.friendRequestsReceived).toEqual(["6", "11", "9", "7"]);
       });
   });
   test("201: only handles friend request from id inside friendRequestsReceived", async () => {
     const event = await request(app)
-      .get("/api/users/1").send({userWhoRequested: adminCode})
+      .get("/api/users/1").send({ userWhoRequested: adminCode })
       .then(({ body }) => {
         expect(body.user.friendRequestsReceived.includes("7")).toBe(true);
       });
@@ -814,7 +846,7 @@ describe("POST /api/users/:user_id/friends", () => {
       })
       .expect(201);
     return request(app)
-      .get("/api/users/1").send({userWhoRequested: adminCode})
+      .get("/api/users/1").send({ userWhoRequested: adminCode })
       .then(({ body }) => {
         expect(body.user.friendRequestsReceived).toEqual([
           "6",
@@ -834,7 +866,7 @@ describe("POST /api/users/:user_id/friends", () => {
       })
       .expect(201);
     return request(app)
-      .get("/api/users/10").send({userWhoRequested: adminCode})
+      .get("/api/users/10").send({ userWhoRequested: adminCode })
       .then(({ body }) => {
         expect(body.user.friendRequestsSent).toEqual([]);
       });
@@ -849,7 +881,7 @@ describe("POST /api/users/:user_id/friends", () => {
       })
       .expect(201);
     return request(app)
-      .get("/api/users/1").send({userWhoRequested: adminCode})
+      .get("/api/users/1").send({ userWhoRequested: adminCode })
       .then(({ body }) => {
         expect(body.user.friends).toEqual(["2", "3", "4", "10"]);
       });
@@ -864,7 +896,7 @@ describe("POST /api/users/:user_id/friends", () => {
       })
       .expect(201);
     return request(app)
-      .get("/api/users/10").send({userWhoRequested: adminCode})
+      .get("/api/users/10").send({ userWhoRequested: adminCode })
       .then(({ body }) => {
         expect(body.user.friends).toEqual(["3", "1"]);
       });
@@ -895,12 +927,12 @@ describe("200: PATCH /api/events/:event_id", () => {
   });
   test("200: testing that winner now has the creature that it could win", async () => {
     await request(app).get("/api/users/3").send({ userWhoRequested: adminCode }).expect(200)
-    .then(({ body }) => {
-      expect(body.user.myCreatures).toEqual([
-        { _id: '1', name: 'grass', img_url: 'url' },
-        { _id: '2', name: 'water', img_url: 'url' }
-      ])
-    });
+      .then(({ body }) => {
+        expect(body.user.myCreatures).toEqual([
+          { _id: '1', name: 'grass', img_url: 'url' },
+          { _id: '2', name: 'water', img_url: 'url' }
+        ])
+      });
 
     await request(app).patch("/api/events/2").send({
       host_id: "1",
@@ -910,24 +942,24 @@ describe("200: PATCH /api/events/:event_id", () => {
     })
 
     return request(app).get("/api/users/3").send({ userWhoRequested: adminCode }).expect(200)
-    .then(({ body }) => {
-      expect(body.user.myCreatures).toEqual([
-        { _id: '1', name: 'grass', img_url: 'url' },
-        { _id: '2', name: 'water', img_url: 'url' },
-        { _id: '2', name: 'water', img_url: 'url' }
-      ])
-    });
+      .then(({ body }) => {
+        expect(body.user.myCreatures).toEqual([
+          { _id: '1', name: 'grass', img_url: 'url' },
+          { _id: '2', name: 'water', img_url: 'url' },
+          { _id: '2', name: 'water', img_url: 'url' }
+        ])
+      });
   })
   test("200: testing that the participant gets the exp", async () => {
     await request(app).get("/api/users/3").send({ userWhoRequested: adminCode }).expect(200)
-    .then(({ body }) => {
-      expect(body.user.characterStats).toEqual({
-        name: "Character3",
-        level: "6",
-        experience: "19",
-        experienceToLevelUp: "60"
-      })
-    });
+      .then(({ body }) => {
+        expect(body.user.characterStats).toEqual({
+          name: "Character3",
+          level: "6",
+          experience: "19",
+          experienceToLevelUp: "60"
+        })
+      });
 
     await request(app).patch("/api/events/2").send({
       host_id: "1",
@@ -937,25 +969,25 @@ describe("200: PATCH /api/events/:event_id", () => {
     })
 
     return request(app).get("/api/users/3").send({ userWhoRequested: adminCode }).expect(200)
-    .then(({ body }) => {
-      expect(body.user.characterStats).toEqual({
-        name: "Character3",
-        level: "7",
-        experience: "9",
-        experienceToLevelUp: "70",
-      })
-    });
+      .then(({ body }) => {
+        expect(body.user.characterStats).toEqual({
+          name: "Character3",
+          level: "7",
+          experience: "9",
+          experienceToLevelUp: "70",
+        })
+      });
   })
   test("200: testing that the host gets the exp", async () => {
     await request(app).get("/api/users/1").send({ userWhoRequested: adminCode }).expect(200)
-    .then(({ body }) => {
-      expect(body.user.characterStats).toEqual({
-        name: "Character1",
-        level: "7",
-        experience: "29",
-        experienceToLevelUp: "70",
-      })
-    });
+      .then(({ body }) => {
+        expect(body.user.characterStats).toEqual({
+          name: "Character1",
+          level: "7",
+          experience: "29",
+          experienceToLevelUp: "70",
+        })
+      });
 
     await request(app).patch("/api/events/2").send({
       host_id: "1",
@@ -965,13 +997,13 @@ describe("200: PATCH /api/events/:event_id", () => {
     })
 
     return request(app).get("/api/users/1").send({ userWhoRequested: adminCode }).expect(200)
-    .then(({ body }) => {
-      expect(body.user.characterStats).toEqual({
-        name: "Character1",
-        level: "8",
-        experience: "34",
-        experienceToLevelUp: "80",
-      })
-    });
+      .then(({ body }) => {
+        expect(body.user.characterStats).toEqual({
+          name: "Character1",
+          level: "8",
+          experience: "34",
+          experienceToLevelUp: "80",
+        })
+      });
   })
 });
