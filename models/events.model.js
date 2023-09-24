@@ -55,8 +55,7 @@ function addNewEvent(image, gameInfo, isGameFull, gameType, dateTime, duration, 
         participants: [],
         requestedToParticipate: [],
         prizeCollection_id: prizeCollection_id,
-        prize: prize,
-        isCompleted: "false",
+        isCompleted: "false"
     }
 
     return eventsCollection.insertOne(eventToAdd)
@@ -69,8 +68,11 @@ const updateCompleted = async (event_id, host_id, participants, winner, duration
     const db = client.db(`game-master-${ENV}`);
     const eventsCollection = db.collection("events");
 
-    const eventInDatabase = (await eventsCollection.findOne({ _id: event_id }))
-    if (host_id !== eventInDatabase.hostedBy) return Promise.reject({ status: 400, msg: "Not Host" })
+    const eventInDatabase = (await eventsCollection.findOne({ _id: event_id }).then((event) => {
+        if (host_id !== event.hostedBy) return Promise.reject({ status: 400, msg: "Not Host" })
+        return event
+    }))
+            
 
     await Promise.all(participants.map(async (participant) => {
         if (participant === host_id) return

@@ -28,11 +28,11 @@ exports.users = [
     },
     myCreatures: [
       {
-        _id: "1",
+        _id: "00000020f61bb4362eee2c01",
         name: "grass",
-        img_url: "url",
-      },
-    ],
+        img_url: "https://publicdomainvectors.org/photos/Biteme.png",
+      }
+    ]
   },
   {
     _id: "00000020f51bb4362eee2a02",
@@ -58,11 +58,11 @@ exports.users = [
     },
     myCreatures: [
       {
-        _id: "3",
+        _id: "00000020f61bb4362eee2c03",
         name: "fire",
-        img_url: "url",
-      },
-    ],
+        img_url: "https://publicdomainvectors.org/photos/flame-boy.png",
+      }
+    ]
   },
   {
     _id: "00000020f51bb4362eee2a03",
@@ -88,16 +88,16 @@ exports.users = [
     },
     myCreatures: [
       {
-        _id: "1",
+        _id: "00000020f61bb4362eee2c01",
         name: "grass",
-        img_url: "url",
+        img_url: "https://publicdomainvectors.org/photos/Biteme.png",
       },
       {
-        _id: "2",
+        _id: "00000020f61bb4362eee2c02",
         name: "water",
-        img_url: "url",
-      },
-    ],
+        img_url: "https://publicdomainvectors.org/photos/Thuy-Quai-Vuong.png",
+      }
+    ]
   },
   {
     _id: "00000020f51bb4362eee2a04",
@@ -118,11 +118,11 @@ exports.users = [
     },
     myCreatures: [
       {
-        _id: "1",
+        _id: "00000020f61bb4362eee2c01",
         name: "grass",
-        img_url: "url",
-      },
-    ],
+        img_url: "https://publicdomainvectors.org/photos/Biteme.png",
+      }
+    ]
   },
   {
     _id: "00000020f51bb4362eee2a05",
@@ -143,16 +143,16 @@ exports.users = [
     },
     myCreatures: [
       {
-        _id: "3",
-        name: "fire",
-        img_url: "url",
+        _id: "00000020f61bb4362eee2c02",
+        name: "water",
+        img_url: "https://publicdomainvectors.org/photos/Thuy-Quai-Vuong.png",
       },
       {
-        _id: "2",
-        name: "water",
-        img_url: "url",
-      },
-    ],
+        _id: "00000020f61bb4362eee2c03",
+        name: "fire",
+        img_url: "https://publicdomainvectors.org/photos/flame-boy.png",
+      }
+    ]
   },
   {
     _id: "00000020f51bb4362eee2a06",
@@ -173,11 +173,11 @@ exports.users = [
     },
     myCreatures: [
       {
-        _id: "3",
+        _id: "00000020f61bb4362eee2c03",
         name: "fire",
-        img_url: "url",
-      },
-    ],
+        img_url: "https://publicdomainvectors.org/photos/flame-boy.png",
+      }
+    ]
   },
   {
     _id: "00000020f51bb4362eee2a07",
@@ -198,16 +198,16 @@ exports.users = [
     },
     myCreatures: [
       {
-        _id: "3",
-        name: "fire",
-        img_url: "url",
+        _id: "00000020f61bb4362eee2c02",
+        name: "water",
+        img_url: "https://publicdomainvectors.org/photos/Thuy-Quai-Vuong.png",
       },
       {
-        _id: "2",
-        name: "water",
-        img_url: "url",
-      },
-    ],
+        _id: "00000020f61bb4362eee2c03",
+        name: "fire",
+        img_url: "https://publicdomainvectors.org/photos/flame-boy.png",
+      }
+    ]
   },
   {
     _id: "00000020f51bb4362eee2a08",
@@ -228,11 +228,11 @@ exports.users = [
     },
     myCreatures: [
       {
-        _id: "3",
+        _id: "00000020f61bb4362eee2c03",
         name: "fire",
-        img_url: "url",
-      },
-    ],
+        img_url: "https://publicdomainvectors.org/photos/flame-boy.png",
+      }
+    ]
   },
   {
     _id: "00000020f51bb4362eee2a09",
@@ -253,16 +253,16 @@ exports.users = [
     },
     myCreatures: [
       {
-        _id: "3",
-        name: "fire",
-        img_url: "url",
+        _id: "00000020f61bb4362eee2c02",
+        name: "water",
+        img_url: "https://publicdomainvectors.org/photos/Thuy-Quai-Vuong.png",
       },
       {
-        _id: "2",
-        name: "water",
-        img_url: "url",
-      },
-    ],
+        _id: "00000020f61bb4362eee2c03",
+        name: "fire",
+        img_url: "https://publicdomainvectors.org/photos/flame-boy.png",
+      }
+    ]
   },
   {
     _id: "00000020f51bb4362eee2a20",
@@ -283,16 +283,16 @@ exports.users = [
     },
     myCreatures: [
       {
-        _id: "1",
+        _id: "00000020f61bb4362eee2c01",
         name: "grass",
-        img_url: "url",
+        img_url: "https://publicdomainvectors.org/photos/Biteme.png",
       },
       {
-        _id: "2",
+        _id: "00000020f61bb4362eee2c02",
         name: "water",
-        img_url: "url",
-      },
-    ],
+        img_url: "https://publicdomainvectors.org/photos/Thuy-Quai-Vuong.png",
+      }
+    ]
   },
   {
     _id: "00000020f51bb4362eee2a21",
@@ -313,10 +313,10 @@ exports.users = [
     },
     myCreatures: [
       {
-        _id: "3",
-        name: "fire",
-        img_url: "url",
-      },
-    ],
+    _id: "00000020f61bb4362eee2c03",
+    name: "fire",
+    img_url: "https://publicdomainvectors.org/photos/flame-boy.png",
+  }
+    ]
   },
 ];

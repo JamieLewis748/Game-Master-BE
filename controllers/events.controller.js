@@ -26,8 +26,8 @@ const returnEvent = (req, res) => {
 };
 
 const postNewEvent = (req, res) => {
-    const { image, gameInfo, isGameFull, gameType, dateTime, duration, capacity, prizeCollection_id, prize } = req.body
-    addNewEvent(image, gameInfo, isGameFull, gameType, dateTime, duration, capacity, prizeCollection_id, prize)
+    const { image, gameInfo, isGameFull, gameType, dateTime, duration, capacity, prizeCollection_id} = req.body
+    addNewEvent(image, gameInfo, isGameFull, gameType, dateTime, duration, capacity, prizeCollection_id)
         .then((userArray) => {
             res.status(200).json(userArray);
         })
@@ -39,8 +39,14 @@ const postNewEvent = (req, res) => {
 const patchCompletedStatus = (req, res) => {
     const { event_id } = req.params;
     const { host_id, participants, winner, duration } = req.body
-    updateCompleted(event_id, host_id, participants, winner, duration).then((data) => {
-        res.status(200).json(data);
+    updateCompleted(
+      event_id.toString(),
+      host_id.toString(),
+      participants,
+      winner,
+      duration
+    ).then((data) => {
+      res.status(200).json(data);
     });
 }
 

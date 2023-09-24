@@ -15,7 +15,7 @@ const closeConnection = (req, res) => {
 }
 
 const testSeed = (data) => {
-    const db = client.db('game-master-live')
+    const db = client.db('game-master-test')
     return dbConnection()
     .then(() => {
         return db.collection("users").deleteMany({})
