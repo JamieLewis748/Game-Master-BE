@@ -42,19 +42,25 @@ describe("GET /api/users/:user_id", () => {
       .send({ userWhoRequested: "00000020f51bb4362eee2a02" })
       .expect(200);
   });
-  test('200: Should return status 200 and the expected user data for a valid user ID', () => {
-    return request(app).get("/api/users/aiden@gmail.com").send({ userWhoRequested: "00000020f51bb4362eee2a02" }).expect(200)
+  test("200: Should return status 200 and the expected user data for a valid user ID", () => {
+    return request(app)
+      .get("/api/users/aiden@gmail.com")
+      .send({ userWhoRequested: "00000020f51bb4362eee2a02" })
+      .expect(200)
       .then(({ body }) => {
-        expect(body).toEqual({ user: users[10] })
-      })
+        expect(body).toEqual({ user: users[10] });
+      });
   });
-  test('200: Should return status 200 and the expected user data for a valid user ID', () => {
-    return request(app).get("/api/users/noah@gmail.com").send({ userWhoRequested: "00000020f51bb4362eee2a02" }).expect(200)
+  test("200: Should return status 200 and the expected user data for a valid user ID", () => {
+    return request(app)
+      .get("/api/users/noah@gmail.com")
+      .send({ userWhoRequested: "00000020f51bb4362eee2a02" })
+      .expect(200)
       .then(({ body }) => {
-        expect(body).toEqual({ user: users[8] })
-      })
+        expect(body).toEqual({ user: users[8] });
+      });
   });
-  test('200: Should return status 200 and the expected user data for a valid user ID', () => {
+  test("200: Should return status 200 and the expected user data for a valid user ID", () => {
     return request(app)
       .get("/api/users/00000020f51bb4362eee2a05")
       .send({ userWhoRequested: "00000020f51bb4362eee2a02" })
@@ -354,7 +360,7 @@ describe("PATCH /api/users/characterStats/:user_id", () => {
 });
 
 
-describe.only("GET /api/events ", () => {
+describe("GET /api/events ", () => {
   test("200: Should return status 200 on successful access", () => {
     return request(app).get("/api/events").expect(200);
   });
@@ -497,15 +503,14 @@ describe("GET /api/events/:event_id", () => {
 describe("POST /api/events", () => {
   test("POST /api/events - Create a new event", async () => {
     const newEvent = {
-      image: 'https://example.com/event3.jpg',
-      gameInfo: 'Event 3 - Card Games Night',
+      image: "https://example.com/event3.jpg",
+      gameInfo: "Event 3 - Card Games Night",
       isGameFull: false,
-      gameType: 'Card Games',
-      dateTime: '2023-09-28 20:00:00',
-      duration: '3:00:00',
+      gameType: "Card Games",
+      dateTime: "2023-09-28 20:00:00",
+      duration: "3:00:00",
       capacity: 8,
-      prizeCollection_id: '2',
-      prize: 'https://example.com/prize.jpg',
+      prizeCollection_id: "00000020f61bb4362eee2c02",
     };
 
     const response = await request(app)
@@ -516,31 +521,34 @@ describe("POST /api/events", () => {
     expect(response.body.acknowledged).toBe(true);
   });
   test("200: Should return status 200 on successful event creation", () => {
-    return request(app).post("/api/events").send({
-      image: 'https://example.com/event2.jpg',
-      gameInfo: 'Event 2 - Family Board Games',
-      isGameFull: false,
-      gameType: 'Board Games',
-      dateTime: '2023-09-21 19:30:00',
-      duration: '2:00:00',
-      capacity: 6,
-      prizeCollection_id: "1",
-    }).expect(200)
-      .then(({ body }) => {
-        expect(body.acknowledged).toBe(true)
+    return request(app)
+      .post("/api/events")
+      .send({
+        image: "https://example.com/event2.jpg",
+        gameInfo: "Event 2 - Family Board Games",
+        isGameFull: false,
+        gameType: "Board Games",
+        dateTime: "2023-09-21 19:30:00",
+        duration: "2:00:00",
+        capacity: 6,
+        prizeCollection_id: "00000020f61bb4362eee2c01",
       })
+      .expect(200)
+      .then(({ body }) => {
+        expect(body.acknowledged).toBe(true);
+      });
   });
   test("200: Should return status 200 on create and retrieve event with matching data", async () => {
     const data = {
-      image: 'https://example.com/event2.jpg',
-      gameInfo: 'Event 2 - Family Board Games',
+      image: "https://example.com/event2.jpg",
+      gameInfo: "Event 2 - Family Board Games",
       isGameFull: false,
-      gameType: 'Board Games',
-      dateTime: '2023-09-21 19:30:00',
-      duration: '2:00:00',
+      gameType: "Board Games",
+      dateTime: "2023-09-21 19:30:00",
+      duration: "2:00:00",
       capacity: 6,
-      prizeCollection_id: "1"
-    }
+      prizeCollection_id: "00000020f61bb4362eee2c01",
+    };
 
     const event = (await request(app).post("/api/events").send(data)).body
     expect(event.acknowledged).toBe(true)
@@ -567,83 +575,92 @@ describe("GET /api/collections", () => {
 
 describe("GET /api/collections/:collection_id", () => {
   test("200: Should return status 200 on successful collection retrieval by ID", () => {
-    return request(app).get("/api/collections/1").expect(200);
+    return request(app)
+      .get("/api/collections/00000020f61bb4362eee2c01")
+      .expect(200);
   });
   test("200: Should return status 200 and collection data by 'ID' object key when accessed successfully", () => {
     return request(app)
-      .get("/api/collections/1")
+      .get("/api/collections/00000020f61bb4362eee2c01")
       .then(({ body }) => {
-        expect(body).toMatchObject({ collections: collections[0] })
+        expect(body).toMatchObject({ collections: collections[0] });
       });
   });
   test("200: Should return status 200 and collection data by 'name' object key when accessed successfully", () => {
     return request(app)
-      .get("/api/collections/tree")
+      .get("/api/collections/wind")
       .then(({ body }) => {
-        expect(body).toMatchObject({ collections: collections[3] })
+        expect(body).toMatchObject({ collections: collections[3] });
       });
   });
   test("400: Should return status 400 for an invalid collection 'name'", () => {
-    return request(app)
-      .get("/api/collections/banana")
-      .expect(400)
+    return request(app).get("/api/collections/banana").expect(400);
   });
   test("400: Should return 400 for a non-existent collection 'ID'", () => {
-    return request(app)
-      .get("/api/collections/100")
-      .expect(400)
+    return request(app).get("/api/collections/100").expect(400);
   });
 });
 
 
 describe("POST /api/collections", () => {
   test("200: Should return status 200 on successful collection creation", () => {
-    return request(app).post("/api/collections").send({
-      name: "Rock",
-      img_url: 'https://example.com/event2.jpg'
-    }).expect(200)
-      .then(({ body }) => {
-        expect(body.acknowledged).toBe(true)
+    return request(app)
+      .post("/api/collections")
+      .send({
+        name: "Rock",
+        img_url: "https://example.com/event2.jpg",
       })
+      .expect(200)
+      .then(({ body }) => {
+        expect(body.acknowledged).toBe(true);
+      });
   });
   test("200: Should retrun status 200, create and retrieve a collection with matching data", async () => {
     const data = {
       name: "Rock",
-      img_url: 'https://example.com/event2.jpg'
-    }
+      img_url: "https://example.com/event2.jpg",
+    };
 
-    const event = (await request(app).post("/api/collections").send(data)).body
-    expect(event.acknowledged).toBe(true)
+    const event = (await request(app).post("/api/collections").send(data)).body;
+    expect(event.acknowledged).toBe(true);
 
-    return await request(app).get(`/api/collections/${event.insertedId}`).expect(200)
+    return await request(app)
+      .get(`/api/collections/${event.insertedId}`)
+      .expect(200)
       .then(({ body }) => {
-        expect(body).toMatchObject({ collections: data })
-      })
+        expect(body).toMatchObject({ collections: data });
+      });
   });
   test("404: Should return status 404 for missing 'name' and 'img_url'", () => {
-    return request(app).post("/api/collections").send({}).expect(404)
+    return request(app).post("/api/collections").send({}).expect(404);
   });
   test("404: Should return status 404 for missing 'img_url'", () => {
-    return request(app).post("/api/collections").send({
-      name: "test"
-    }).expect(404)
+    return request(app)
+      .post("/api/collections")
+      .send({
+        name: "test",
+      })
+      .expect(404);
   });
   test("404: Should return status 404 for missing 'name'", () => {
-    return request(app).post("/api/collections").send({
-      img_url: "test"
-    }).expect(404)
-      .then((msg) => {
-        expect(JSON.parse(msg.text)).toBe("Bad Request")
+    return request(app)
+      .post("/api/collections")
+      .send({
+        img_url: "test",
       })
+      .expect(404)
+      .then((msg) => {
+        expect(JSON.parse(msg.text)).toBe("Bad Request");
+      });
   });
 });
 
 describe("POST /api/users/:user_id/inviteFriend", () => {
   test("201: Should return status 201 if successfully posted", () => {
     return request(app)
-      .post("/api/users/1/inviteFriend")
+      .post("/api/users/00000020f51bb4362eee2a01/inviteFriend")
       .send({
-        _id: 5,
+        _id: '00000020f51bb4362eee2a05',
         username: "henry1234",
         img_url: "",
         topics: ["RPGs", "Tabletop"],
@@ -655,9 +672,9 @@ describe("POST /api/users/:user_id/inviteFriend", () => {
   });
   test("201: Should return msg object with modifiedCount: 1 if successful", () => {
     return request(app)
-      .post("/api/users/1/inviteFriend")
+      .post("/api/users/00000020f51bb4362eee2a01/inviteFriend")
       .send({
-        _id: 5,
+        _id: '00000020f51bb4362eee2a05',
         username: "henry1234",
         img_url: "",
         topics: ["RPGs", "Tabletop"],
@@ -670,9 +687,9 @@ describe("POST /api/users/:user_id/inviteFriend", () => {
   });
   test("201: Should be unable to friend request self and recieve message instead", () => {
     return request(app)
-      .post("/api/users/5/inviteFriend")
+      .post("/api/users/00000020f51bb4362eee2a05/inviteFriend")
       .send({
-        _id: 5,
+        _id: '00000020f51bb4362eee2a05',
         username: "henry1234",
         img_url: "",
         topics: ["RPGs", "Tabletop"],
@@ -688,17 +705,18 @@ describe("POST /api/users/:user_id/inviteFriend", () => {
 describe("200: GET /users with  queries", () => {
   test("200: GET /users?topics=Board+Games", () => {
     return request(app).get("/api/users?topics=Board+Games").expect(200);
-  })
+  });
   test("200: should only return users with topic Board Games", () => {
-    return request(app).get("/api/users?topics=Board+Games")
+    return request(app)
+      .get("/api/users?topics=Board+Games")
       .expect(200)
       .then(({ body }) => {
         body.map((user) => {
-          expect(user.topics.includes('Board Games')).toBe(true)
-        })
-      })
-  })
-})
+          expect(user.topics.includes("Board Games")).toBe(true);
+        });
+      });
+  });
+});
 describe("200: GET /users with  queries", () => {
   test("200: GET /users?topics=BoardGame", () => {
     return request(app).get("/api/users?topics=Board+Games").expect(200);
@@ -755,9 +773,7 @@ describe("200: GET /users with  queries", () => {
   });
   test("200: users array should be ordered by experience to level up ascending", () => {
     return request(app)
-      .get(
-        "/api/users?sortBy=characterStats.experienceToLevelUp&&orderBy=asc"
-      )
+      .get("/api/users?sortBy=characterStats.experienceToLevelUp&&orderBy=asc")
       .expect(200)
       .then(({ body }) => {
         expToLvlOnly = body.map((user) => {
@@ -784,226 +800,302 @@ describe("200: GET /users with  queries", () => {
       .then(({ body }) => {
         const usernamesOnly = body.map((user) => {
           expect(user.topics.includes("Board Games")).toBe(true);
-          return user.username
+          return user.username;
         });
         expect(usernamesOnly).toBeSorted({ ascending: true });
       });
   });
-})
+});
 
 describe("200: GET /users/user_id/myCreatures", () => {
   test("200: Return status 200 on successful get", () => {
-    return request(app).get("/api/users/1/myCreatures").expect(200);
+    return request(app)
+      .get("/api/users/00000020f51bb4362eee2a01/myCreatures")
+      .expect(200);
   });
   test("200: should return users myCreatures array", () => {
     return request(app)
-      .get("/api/users/1/myCreatures")
+      .get("/api/users/00000020f51bb4362eee2a01/myCreatures")
       .expect(200)
       .then(({ body }) => {
         expect(body).toEqual(users[0].myCreatures);
       });
   });
-})
+});
 
 describe("POST /api/users/:user_id/friends", () => {
   test("201: Should return status 201 if successfully posted", () => {
     return request(app)
-      .post("/api/users/1/friends")
+      .post("/api/users/00000020f51bb4362eee2a01/friends")
       .send({
-        user_id: "1",
-        sentFrom: "6",
+        user_id: "00000020f51bb4362eee2a01",
+        sentFrom: "00000020f51bb4362eee2a06",
         isAccepted: true,
       })
       .expect(201);
   });
   test("201: Should remove id from from requests recieved when posted", async () => {
     const event = await request(app)
-      .post("/api/users/1/friends")
+      .post("/api/users/00000020f51bb4362eee2a01/friends")
       .send({
-        user_id: "1",
-        sentFrom: "10",
+        user_id: "00000020f51bb4362eee2a01",
+        sentFrom: "00000020f51bb4362eee2a20",
         isAccepted: true,
       })
       .expect(201);
     return request(app)
-      .get("/api/users/1").send({ userWhoRequested: adminCode })
+      .get("/api/users/00000020f51bb4362eee2a01")
+      .send({ userWhoRequested: adminCode })
       .then(({ body }) => {
-        expect(body.user.friendRequestsReceived).toEqual(["6", "11", "9", "7"]);
+        expect(body.user.friendRequestsReceived).toEqual([
+          "00000020f51bb4362eee2a06",
+          "00000020f51bb4362eee2a21",
+          "00000020f51bb4362eee2a09",
+          "00000020f51bb4362eee2a07",
+        ]);
       });
   });
   test("201: only handles friend request from id inside friendRequestsReceived", async () => {
     const event = await request(app)
-      .get("/api/users/1").send({ userWhoRequested: adminCode })
+      .get("/api/users/00000020f51bb4362eee2a01")
+      .send({ userWhoRequested: adminCode })
       .then(({ body }) => {
-        expect(body.user.friendRequestsReceived.includes("7")).toBe(true);
+        expect(
+          body.user.friendRequestsReceived.includes("00000020f51bb4362eee2a07")
+        ).toBe(true);
       });
     await request(app)
-      .post("/api/users/1/friends")
+      .post("/api/users/00000020f51bb4362eee2a01/friends")
       .send({
-        user_id: "1",
-        sentFrom: "7",
+        user_id: "00000020f51bb4362eee2a01",
+        sentFrom: "00000020f51bb4362eee2a07",
         isAccepted: true,
       })
       .expect(201);
     return request(app)
-      .get("/api/users/1").send({ userWhoRequested: adminCode })
+      .get("/api/users/00000020f51bb4362eee2a01")
+      .send({ userWhoRequested: adminCode })
       .then(({ body }) => {
         expect(body.user.friendRequestsReceived).toEqual([
-          "6",
-          "10",
-          "11",
-          "9",
+          "00000020f51bb4362eee2a06",
+          "00000020f51bb4362eee2a20",
+          "00000020f51bb4362eee2a21",
+          "00000020f51bb4362eee2a09",
         ]);
       });
   });
   test("201: Should remove id from from requests sent when posted", async () => {
     const event = await request(app)
-      .post("/api/users/1/friends")
+      .post("/api/users/00000020f51bb4362eee2a01/friends")
       .send({
-        user_id: "1",
-        sentFrom: "10",
+        user_id: "00000020f51bb4362eee2a01",
+        sentFrom: "00000020f51bb4362eee2a20",
         isAccepted: true,
       })
       .expect(201);
     return request(app)
-      .get("/api/users/10").send({ userWhoRequested: adminCode })
+      .get("/api/users/00000020f51bb4362eee2a20")
+      .send({ userWhoRequested: adminCode })
       .then(({ body }) => {
         expect(body.user.friendRequestsSent).toEqual([]);
       });
   });
   test("201: Should add id to friends if isAccepted is posted", async () => {
     const event = await request(app)
-      .post("/api/users/1/friends")
+      .post("/api/users/00000020f51bb4362eee2a01/friends")
       .send({
-        user_id: "1",
-        sentFrom: "10",
+        user_id: "00000020f51bb4362eee2a01",
+        sentFrom: "00000020f51bb4362eee2a20",
         isAccepted: true,
       })
       .expect(201);
     return request(app)
-      .get("/api/users/1").send({ userWhoRequested: adminCode })
+      .get("/api/users/00000020f51bb4362eee2a01")
+      .send({ userWhoRequested: adminCode })
       .then(({ body }) => {
-        expect(body.user.friends).toEqual(["2", "3", "4", "10"]);
+        expect(body.user.friends).toEqual([
+          "00000020f51bb4362eee2a02",
+          "00000020f51bb4362eee2a03",
+          "00000020f51bb4362eee2a04",
+          "00000020f51bb4362eee2a20",
+        ]);
       });
   });
   test("201: Should add id to friends of sender if isAccepted is posted", async () => {
     const event = await request(app)
-      .post("/api/users/1/friends")
+      .post("/api/users/00000020f51bb4362eee2a01/friends")
       .send({
-        user_id: "1",
-        sentFrom: "10",
+        user_id: "00000020f51bb4362eee2a01",
+        sentFrom: "00000020f51bb4362eee2a20",
         isAccepted: true,
       })
       .expect(201);
     return request(app)
-      .get("/api/users/10").send({ userWhoRequested: adminCode })
+      .get("/api/users/00000020f51bb4362eee2a20")
+      .send({ userWhoRequested: adminCode })
       .then(({ body }) => {
-        expect(body.user.friends).toEqual(["3", "1"]);
+        expect(body.user.friends).toEqual([
+          "00000020f51bb4362eee2a03",
+          "00000020f51bb4362eee2a01",
+        ]);
       });
   });
 });
 
 describe("200: PATCH /api/events/:event_id", () => {
   test("200: should return 200 when successfully patched", () => {
-    return request(app).patch("/api/events/2").send({
-      host_id: "1",
-      participants: ["1", "3"],
-      duration: "2:00:00"
-    }).expect(200);
+    return request(app)
+      .patch("/api/events/00000020f51bb4362eee2e02")
+      .send({
+        host_id: "00000020f51bb4362eee2a01",
+        participants: ["00000020f51bb4362eee2a01", "00000020f51bb4362eee2a03"],
+        duration: "2:00:00",
+      })
+      .expect(200);
   });
   test("200: should return that event is now set to completed", async () => {
-    await request(app).patch("/api/events/2").send({
-      host_id: "1",
-      participants: ["1", "3"],
-      duration: "2:00:00"
-    })
+    await request(app)
+      .patch("/api/events/00000020f51bb4362eee2e02")
+      .send({
+        host_id: "00000020f51bb4362eee2a01",
+        participants: ["00000020f51bb4362eee2a01", "00000020f51bb4362eee2a03"],
+        winner: "00000020f51bb4362eee2a01",
+        duration: "2:00:00",
+      });
 
     return await request(app)
-      .get("/api/events/2")
+      .get("/api/events/00000020f51bb4362eee2e02")
       .expect(200)
       .then(({ body }) => {
         expect(body.event.isCompleted).toBe("true");
       });
   });
   test("200: testing that winner now has the creature that it could win", async () => {
-    await request(app).get("/api/users/3").send({ userWhoRequested: adminCode }).expect(200)
+    await request(app)
+      .get("/api/users/00000020f51bb4362eee2a03")
+      .send({ userWhoRequested: adminCode })
+      .expect(200)
       .then(({ body }) => {
         expect(body.user.myCreatures).toEqual([
-          { _id: '1', name: 'grass', img_url: 'url' },
-          { _id: '2', name: 'water', img_url: 'url' }
-        ])
+          {
+            _id: "00000020f61bb4362eee2c01",
+            name: "grass",
+            img_url: "https://publicdomainvectors.org/photos/Biteme.png",
+          },
+          {
+            _id: "00000020f61bb4362eee2c02",
+            name: "water",
+            img_url:
+              "https://publicdomainvectors.org/photos/Thuy-Quai-Vuong.png",
+          },
+        ]);
       });
 
-    await request(app).patch("/api/events/2").send({
-      host_id: "1",
-      participants: ["1", "3"],
-      winner: "3",
-      duration: "2:00:00"
-    })
+    await request(app)
+      .patch("/api/events/00000020f51bb4362eee2e02")
+      .send({
+        host_id: "00000020f51bb4362eee2a01",
+        participants: ["00000020f51bb4362eee2a01", "00000020f51bb4362eee2a03"],
+        winner: "00000020f51bb4362eee2a03",
+        duration: "2:00:00",
+      });
 
-    return request(app).get("/api/users/3").send({ userWhoRequested: adminCode }).expect(200)
+    return request(app)
+      .get("/api/users/00000020f51bb4362eee2a03")
+      .send({ userWhoRequested: adminCode })
+      .expect(200)
       .then(({ body }) => {
         expect(body.user.myCreatures).toEqual([
-          { _id: '1', name: 'grass', img_url: 'url' },
-          { _id: '2', name: 'water', img_url: 'url' },
-          { _id: '2', name: 'water', img_url: 'url' }
-        ])
+          {
+            _id: "00000020f61bb4362eee2c01",
+            name: "grass",
+            img_url: "https://publicdomainvectors.org/photos/Biteme.png",
+          },
+          {
+            _id: "00000020f61bb4362eee2c02",
+            name: "water",
+            img_url:
+              "https://publicdomainvectors.org/photos/Thuy-Quai-Vuong.png",
+          },
+          {
+            _id: "00000020f61bb4362eee2c02",
+            name: "water",
+            img_url:
+              "https://publicdomainvectors.org/photos/Thuy-Quai-Vuong.png",
+          },
+        ]);
       });
-  })
+  });
   test("200: testing that the participant gets the exp", async () => {
-    await request(app).get("/api/users/3").send({ userWhoRequested: adminCode }).expect(200)
+    await request(app)
+      .get("/api/users/00000020f51bb4362eee2a03")
+      .send({ userWhoRequested: adminCode })
+      .expect(200)
       .then(({ body }) => {
         expect(body.user.characterStats).toEqual({
           name: "Character3",
           level: "6",
           experience: "19",
-          experienceToLevelUp: "60"
-        })
+          experienceToLevelUp: "60",
+        });
       });
 
-    await request(app).patch("/api/events/2").send({
-      host_id: "1",
-      participants: ["1", "3"],
-      winner: "3",
-      duration: "2:00:00"
-    })
+    await request(app)
+      .patch("/api/events/00000020f51bb4362eee2e02")
+      .send({
+        host_id: "00000020f51bb4362eee2a01",
+        participants: ["00000020f51bb4362eee2a01", "00000020f51bb4362eee2a03"],
+        winner: "00000020f51bb4362eee2a03",
+        duration: "2:00:00",
+      });
 
-    return request(app).get("/api/users/3").send({ userWhoRequested: adminCode }).expect(200)
+    return request(app)
+      .get("/api/users/00000020f51bb4362eee2a03")
+      .send({ userWhoRequested: adminCode })
+      .expect(200)
       .then(({ body }) => {
         expect(body.user.characterStats).toEqual({
           name: "Character3",
           level: "7",
           experience: "9",
           experienceToLevelUp: "70",
-        })
+        });
       });
-  })
+  });
   test("200: testing that the host gets the exp", async () => {
-    await request(app).get("/api/users/1").send({ userWhoRequested: adminCode }).expect(200)
+    await request(app)
+      .get("/api/users/00000020f51bb4362eee2a01")
+      .send({ userWhoRequested: adminCode })
+      .expect(200)
       .then(({ body }) => {
         expect(body.user.characterStats).toEqual({
           name: "Character1",
           level: "7",
           experience: "29",
           experienceToLevelUp: "70",
-        })
+        });
       });
 
-    await request(app).patch("/api/events/2").send({
-      host_id: "1",
-      participants: ["1", "3"],
-      winner: "3",
-      duration: "2:00:00"
-    })
+    await request(app)
+      .patch("/api/events/00000020f51bb4362eee2e02")
+      .send({
+        host_id: "00000020f51bb4362eee2a01",
+        participants: ["00000020f51bb4362eee2a01", "00000020f51bb4362eee2a03"],
+        winner: "00000020f51bb4362eee2a03",
+        duration: "2:00:00",
+      });
 
-    return request(app).get("/api/users/1").send({ userWhoRequested: adminCode }).expect(200)
+    return request(app)
+      .get("/api/users/00000020f51bb4362eee2a01")
+      .send({ userWhoRequested: adminCode })
+      .expect(200)
       .then(({ body }) => {
         expect(body.user.characterStats).toEqual({
           name: "Character1",
           level: "8",
           experience: "34",
           experienceToLevelUp: "80",
-        })
+        });
       });
-  })
+  });
 });

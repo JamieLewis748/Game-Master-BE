@@ -54,7 +54,7 @@ const patchCharacterStats = (req, res) => {
 
 const postFriendRequest = (req, res) => {
   const { user_id } = req.params;
-  if (user_id * 1 !== req.body._id) {
+  if (user_id !== req.body._id) {
     requestNewFriend(user_id, req.body).then((msg) => {
       res.status(201).json(msg);
     });

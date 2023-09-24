@@ -4,6 +4,7 @@ const { ObjectId } = require('mongodb');
 const  adminCode = require("../AdminCode")
 const {ENV} = require("../connection");
 
+
 function getAllUsers(query = undefined, sortBy = undefined, orderBy = undefined) {
   const db = client.db(`game-master-${ENV}`)
   const usersCollection = db.collection("users");
