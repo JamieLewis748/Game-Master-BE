@@ -1,2 +1,4 @@
 node_modules
 db_password.js
+.env.test
+.env.live

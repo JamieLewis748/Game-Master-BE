@@ -1,8 +1,9 @@
 const { client } = require('../seed')
 const { ObjectId } = require('mongodb');
+const {ENV} = require('../connection')
 
 function getAllCollections() {
-    const db = client.db('game-master-test');
+    const db = client.db(`game-master-${ENV}`);
     const collectionCreaturesCollection = db.collection('collections');
     return collectionCreaturesCollection.find().toArray()
         .then((collectionArray) => {
@@ -22,7 +23,7 @@ function getCollection(collection_id) {
     }
 
 
-    const db = client.db('game-master-test');
+    const db = client.db(`game-master-${ENV}`);
     const collectionCreaturesCollection = db.collection('collections');
     return collectionCreaturesCollection.findOne(query)
         .then((collection) => {
@@ -32,7 +33,7 @@ function getCollection(collection_id) {
 };
 
 function addNewCollection(name, img_url) {
-    const db = client.db('game-master-test');
+    const db = client.db(`game-master-${ENV}`);
     const collectionCreaturesCollection = db.collection('collections');
 
     if (name === undefined || name === "") return Promise.reject({ status: 404, msg: "Bad Request" });

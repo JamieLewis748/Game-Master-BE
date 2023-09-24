@@ -1,10 +1,11 @@
 const { users } = require('../_tests_/Data/Users');
 const { client } = require('../seed')
 const { ObjectId } = require('mongodb');
-const adminCode = require("../AdminCode")
+const  adminCode = require("../AdminCode")
+const {ENV} = require("../connection");
 
 function getAllUsers(query = undefined, sortBy = undefined, orderBy = undefined) {
-  const db = client.db("game-master-test");
+  const db = client.db(`game-master-${ENV}`)
   const usersCollection = db.collection("users");
   let searchQuery = {};
   let orderQuery = {};
@@ -31,7 +32,7 @@ function getAllUsers(query = undefined, sortBy = undefined, orderBy = undefined)
 }
 
 function getUser(user_id, userWhoRequested = undefined) {
-  const db = client.db('game-master-test');
+  const db = client.db(`game-master-${ENV}`);
   const usersCollection = db.collection('users');
 
   let query = {}
@@ -77,7 +78,7 @@ function addNewUser(name = undefined, username = undefined, email = undefined, i
     }]
   }
 
-  const db = client.db('game-master-test');
+  const db = client.db(`game-master-${ENV}`);
   const usersCollection = db.collection('users');
 
   return usersCollection.insertOne(userToAdd)
@@ -90,7 +91,7 @@ const modifyStats = async (user_id, exp = undefined) => {
   if (exp === undefined) return Promise.reject({ status: 400, msg: "Missing exp" })
   if (isNaN(exp)) return Promise.reject({ status: 404, msg: "Bad Request" })
 
-  const db = client.db('game-master-test');
+  const db = client.db(`game-master-${ENV}`);
   const usersCollection = db.collection('users');
 
   const userBeforeUpdate = (await usersCollection.find({ _id: user_id }).toArray())
@@ -113,7 +114,7 @@ const modifyStats = async (user_id, exp = undefined) => {
 }
 
 function requestNewFriend(user_id, friendToAdd) {
-  const db = client.db("game-master-test");
+  const db = client.db(`game-master-${ENV}`);
   const usersCollection = db.collection("users");
 
   return usersCollection
@@ -127,7 +128,7 @@ function requestNewFriend(user_id, friendToAdd) {
 }
 
 async function respondFriendReq(user_id, sentFrom, isAccepted) {
-  const db = client.db("game-master-test");
+  const db = client.db(`game-master-${ENV}`);
   const usersCollection = db.collection("users");
 
   const respondingUser = await usersCollection.findOne({ _id: user_id });
@@ -199,7 +200,7 @@ async function respondFriendReq(user_id, sentFrom, isAccepted) {
 }
 
 function fetchMyCollection(user_id) {
-  const db = client.db("game-master-test");
+  const db = client.db(`game-master-${ENV}`);
   const usersCollection = db.collection("users");
   return usersCollection
     .find({ _id: user_id })
@@ -211,14 +212,16 @@ function fetchMyCollection(user_id) {
 
 async function userBlockRequest(user_id = undefined, userIdToGetBlocked) {
   const objectIdHexRegExp = /^[0-9a-fA-F]{24}$/
-  if (objectIdHexRegExp.test(user_id) || isNaN(user_id) || user_id === undefined || user_id === userIdToGetBlocked) {
+  if (!objectIdHexRegExp.test(user_id) || user_id === undefined || user_id === userIdToGetBlocked) {
     return Promise.reject({ status: 404, msg: "Bad request" })
   }
-  if (userIdToGetBlocked === undefined || isNaN(userIdToGetBlocked) || objectIdHexRegExp.test(userIdToGetBlocked)) {
-    return Promise.reject({ status: 404, msg: "Bad request" })
+  if (
+    userIdToGetBlocked === undefined || !objectIdHexRegExp.test(userIdToGetBlocked)
+  ) {
+    return Promise.reject({ status: 404, msg: "Bad request" });
   }
 
-  const db = client.db("game-master-test");
+  const db = client.db(`game-master-${ENV}`);
   const usersCollection = db.collection("users");
 
   const user = (await usersCollection.find({ _id: user_id }).toArray())

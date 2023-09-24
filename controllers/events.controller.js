@@ -17,7 +17,7 @@ const returnAllEvents = (req, res) => {
 
 const returnEvent = (req, res) => {
     const { event_id } = req.params
-    getEvent(event_id).then((data) => {
+    getEvent(event_id.toString()).then((data) => {
         res.status(200).json(data)
     })
         .catch((error) => {

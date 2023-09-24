@@ -16,8 +16,11 @@ const returnAllUsers = (req, res) => {
 
 const returnUser = (req, res) => {
     const {user_id} = req.params
-    const {userWhoRequested} = req.body
-    getUser(user_id, userWhoRequested)
+  const { userWhoRequested } = req.body
+  if (!userWhoRequested) {
+    res.status(400).json("Bad Request")
+  }
+    getUser(user_id.toString(), userWhoRequested.toString())
         .then((msg) => {
             res.status(200).json(msg);
         })
@@ -40,7 +43,7 @@ const postNewUser = (req,res) => {
 const patchCharacterStats = (req, res) => {
     const {user_id} = req.params
     const { exp } = req.body
-    modifyStats(user_id, exp)
+    modifyStats(user_id.toString(), exp)
     .then((msg) => {
         res.status(200).json(msg);
     })    
@@ -75,7 +78,7 @@ const blockUser = (req, res) => {
   const { user_id } = req.params;
   const { userIdToGetBlocked } = req.body
 
-  userBlockRequest(user_id, userIdToGetBlocked)
+  userBlockRequest(user_id.toString(), userIdToGetBlocked.toString())
   .then((response) => {
     res.status(204).json(response)
   })
