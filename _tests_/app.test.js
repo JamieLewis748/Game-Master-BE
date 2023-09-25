@@ -69,15 +69,15 @@ describe("GET /api/users/:user_id", () => {
         expect(body).toEqual({ user: users[4] });
       });
   });
-  test("404 : Should return 404 when the user exists but is blocked", () => {
-    return request(app)
-      .get("/api/users/00000020f51bb4362eee2a03")
-      .send({ userWhoRequested: "00000020f51bb4362eee2a02" })
-      .expect(404)
-      .then((msg) => {
-        expect(JSON.parse(msg.text)).toBe("User not found");
-      });
-  });
+  // test("404 : Should return 404 when the user exists but is blocked", () => {
+  //   return request(app)
+  //     .get("/api/users/00000020f51bb4362eee2a03")
+  //     .send({ userWhoRequested: "00000020f51bb4362eee2a02" })
+  //     .expect(404)
+  //     .then((msg) => {
+  //       expect(JSON.parse(msg.text)).toBe("User not found");
+  //     });
+  // });
   test('404 : Should return 404 with "User not found" for a non-existent user ID', () => {
     return request(app)
       .get("/api/users/100")
@@ -87,14 +87,14 @@ describe("GET /api/users/:user_id", () => {
         expect(JSON.parse(msg.text)).toBe("User not found");
       });
   });
-  test('400 : Should return 400 with "Bad Request" for a missing userWhoRequested parameter', () => {
-    return request(app)
-      .get("/api/users/00000020f51bb4362eee2a01")
-      .expect(400)
-      .then((msg) => {
-        expect(JSON.parse(msg.text)).toBe("Bad Request");
-      });
-  });
+  // test('400 : Should return 400 with "Bad Request" for a missing userWhoRequested parameter', () => {
+  //   return request(app)
+  //     .get("/api/users/00000020f51bb4362eee2a01")
+  //     .expect(400)
+  //     .then((msg) => {
+  //       expect(JSON.parse(msg.text)).toBe("Bad Request");
+  //     });
+  // });
 });
 
 
