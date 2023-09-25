@@ -42,7 +42,7 @@ function getUser(user_id, userWhoRequested = undefined) {
   if (emailRegex.test(user_id)) {
     query = { email: user_id }
   }
-  else if (userWhoRequested === undefined && userWhoRequested !== adminCode) return Promise.reject({ status: 400, msg: "Bad Request" })
+  // else if (userWhoRequested === undefined && userWhoRequested !== adminCode) return Promise.reject({ status: 400, msg: "Bad Request" })
   else {
     query = { _id: user_id }
   }
@@ -50,7 +50,7 @@ function getUser(user_id, userWhoRequested = undefined) {
   return usersCollection.findOne(query)
     .then((userArray) => {
       if (!userArray) throw { status: 404, msg: "User not found" }
-      if (userArray.blocked.includes(userWhoRequested)) throw { status: 404, msg: "User not found" }
+      // if (userArray.blocked.includes(userWhoRequested)) throw { status: 404, msg: "User not found" }
       else return { user: userArray }
     })
 };
