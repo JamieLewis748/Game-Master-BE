@@ -1,4 +1,4 @@
-const { getAllUsers, getUser, addNewUser, modifyStats, requestNewFriend, fetchMyCollection, userBlockRequest, respondFriendReq } = require('../models/users.model.js')
+const { getAllUsers, getUser, getMultipleUsers, addNewUser, modifyStats, requestNewFriend, fetchMyCollection, userBlockRequest, respondFriendReq } = require('../models/users.model.js')
 
 const returnAllUsers = (req, res) => {
   const { topics } = req.query;
@@ -17,9 +17,9 @@ const returnAllUsers = (req, res) => {
 const returnUser = (req, res) => {
     const {user_id} = req.params
   const { userWhoRequested } = req.body
-  if (!userWhoRequested) {
-    res.status(400).json("Bad Request")
-  }
+  // if (!userWhoRequested) {
+  //   res.status(400).json("Bad Request")
+  // }
     getUser(user_id.toString(), userWhoRequested.toString())
         .then((msg) => {
             res.status(200).json(msg);
@@ -27,6 +27,18 @@ const returnUser = (req, res) => {
         .catch((error) => {
             res.status(error.status).json(error.msg);
         });
+};
+
+const returnMultipleUsers = (req, res) => {
+  const { ids } = req.body
+
+  getMultipleUsers(ids)
+      .then((msg) => {
+          res.status(200).json(msg);
+      })
+      .catch((error) => {
+          res.status(error.status).json(error.msg);
+      });
 };
 
 const postNewUser = (req,res) => {
@@ -107,5 +119,6 @@ module.exports = {
   postFriendRequest,
   getOwnedCollections,
   blockUser,
-  handleFriendReq
+  handleFriendReq,
+  returnMultipleUsers
 };
