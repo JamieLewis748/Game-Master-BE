@@ -98,6 +98,31 @@ describe("GET /api/users/:user_id", () => {
 });
 
 
+
+
+
+describe("GET /api/manyusers", () => {
+  test("200: Should return status 200 on successful access", () => {
+    return request(app).get("/api/manyusers").send({
+      ids: ["00000020f51bb4362eee2a01", "00000020f51bb4362eee2a02", "00000020f51bb4362eee2a03"]
+    }).expect(200);
+  });
+  test("200: Should return an object with expected users data structure", () => {
+    return request(app)
+      .get("/api/manyusers").send({
+        ids: ["00000020f51bb4362eee2a01", "00000020f51bb4362eee2a02", "00000020f51bb4362eee2a03"]
+      }).expect(200)
+      .then(({ body }) => {
+        let expectedResult = [...users]
+        expectedResult = expectedResult.slice(0,3)
+        expect(body.users).toMatchObject(expectedResult);
+      });
+  });
+});
+
+
+
+
 describe("POST /api/users", () => {
   test("200: Should return status 200 on successful user creation", () => {
     return request(app)

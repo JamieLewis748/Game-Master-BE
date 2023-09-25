@@ -2,7 +2,7 @@ const express = require("express");
 const app = express();
 const cors = require('cors');
 
-const {returnAllUsers, returnUser, postNewUser, patchCharacterStats, postFriendRequest, getOwnedCollections, blockUser, handleFriendReq} = require('./controllers/users.controller')
+const {returnAllUsers, returnUser, returnMultipleUsers, postNewUser, patchCharacterStats, postFriendRequest, getOwnedCollections, blockUser, handleFriendReq} = require('./controllers/users.controller')
 const {returnAllEvents, returnEvent, postNewEvent, patchCompletedStatus} = require("./controllers/events.controller");
 const {returnAllCollections, returnCollection, postNewCollection} = require('./controllers/collections.controller')
 
@@ -12,6 +12,7 @@ app.use(express.json());
 
 app.get("/api/users", returnAllUsers)
 app.get("/api/users/:user_id", returnUser)
+app.get("/api/manyusers", returnMultipleUsers)
 app.post("/api/users", postNewUser)
 app.patch("/api/users/characterStats/:user_id", patchCharacterStats)
 app.post("/api/users/:user_id/friends", handleFriendReq);

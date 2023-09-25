@@ -55,6 +55,19 @@ function getUser(user_id, userWhoRequested = undefined) {
     })
 };
 
+function getMultipleUsers(ids) {
+  const db = client.db(`game-master-${ENV}`);
+  const usersCollection = db.collection('users');
+
+  let query = { _id: { $in: ids } }
+
+  return usersCollection.find(query).toArray()
+    .then((userArray) => {
+      if (!userArray) throw { status: 404, msg: "User not found" }
+      else return { users: userArray }
+    })
+};
+
 function addNewUser(name = undefined, username = undefined, email = undefined, img_url = undefined, characterName = undefined) {
   if (name === undefined || username === undefined || email === undefined || img_url === undefined || characterName === undefined) {
     return Promise.reject({ status: 404, msg: "Bad Request" });
@@ -243,4 +256,4 @@ async function userBlockRequest(user_id = undefined, userIdToGetBlocked) {
     })
 }
 
-module.exports = { getAllUsers, getUser, addNewUser, requestNewFriend, modifyStats, fetchMyCollection, userBlockRequest, respondFriendReq };
+module.exports = { getAllUsers, getUser, getMultipleUsers, addNewUser, requestNewFriend, modifyStats, fetchMyCollection, userBlockRequest, respondFriendReq };
