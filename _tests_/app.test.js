@@ -528,6 +528,7 @@ describe("GET /api/events/:event_id", () => {
 describe("POST /api/events", () => {
   test("POST /api/events - Create a new event", async () => {
     const newEvent = {
+      hostedBy: "00000020f51bb4362eee2a01",
       image: "https://example.com/event3.jpg",
       gameInfo: "Event 3 - Card Games Night",
       isGameFull: false,
@@ -549,6 +550,7 @@ describe("POST /api/events", () => {
     return request(app)
       .post("/api/events")
       .send({
+        hostedBy: "00000020f51bb4362eee2a01",
         image: "https://example.com/event2.jpg",
         gameInfo: "Event 2 - Family Board Games",
         isGameFull: false,
@@ -565,6 +567,7 @@ describe("POST /api/events", () => {
   });
   test("200: Should return status 200 on create and retrieve event with matching data", async () => {
     const data = {
+      hostedBy: "00000020f51bb4362eee2a01",
       image: "https://example.com/event2.jpg",
       gameInfo: "Event 2 - Family Board Games",
       isGameFull: false,
