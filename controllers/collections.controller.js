@@ -19,8 +19,8 @@ const returnCollection = (req, res) => {
 };
 
 const postNewCollection = (req,res) => {
-    const {name, img_url} = req.body
-    addNewCollection(name, img_url)
+    const {name, image} = req.body
+    addNewCollection(name, image)
     .then((data)=> {
         res.status(200).json(data);
     }).catch((error) => {

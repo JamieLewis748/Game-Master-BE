@@ -384,7 +384,6 @@ describe("PATCH /api/users/characterStats/:user_id", () => {
   });
 });
 
-
 describe("GET /api/events ", () => {
   test("200: Should return status 200 on successful access", () => {
     return request(app).get("/api/events").expect(200);
@@ -636,7 +635,7 @@ describe("POST /api/collections", () => {
       .post("/api/collections")
       .send({
         name: "Rock",
-        img_url: "https://example.com/event2.jpg",
+        image: "https://example.com/event2.jpg",
       })
       .expect(200)
       .then(({ body }) => {
@@ -646,7 +645,7 @@ describe("POST /api/collections", () => {
   test("200: Should retrun status 200, create and retrieve a collection with matching data", async () => {
     const data = {
       name: "Rock",
-      img_url: "https://example.com/event2.jpg",
+      image: "https://example.com/event2.jpg",
     };
 
     const event = (await request(app).post("/api/collections").send(data)).body;
@@ -674,7 +673,7 @@ describe("POST /api/collections", () => {
     return request(app)
       .post("/api/collections")
       .send({
-        img_url: "test",
+        image: "test",
       })
       .expect(404)
       .then((msg) => {
@@ -1008,12 +1007,12 @@ describe("200: PATCH /api/events/:event_id", () => {
           {
             _id: "00000020f61bb4362eee2c01",
             name: "grass",
-            img_url: "https://publicdomainvectors.org/photos/Biteme.png",
+            image: "https://publicdomainvectors.org/photos/Biteme.png",
           },
           {
             _id: "00000020f61bb4362eee2c02",
             name: "water",
-            img_url:
+            image:
               "https://publicdomainvectors.org/photos/Thuy-Quai-Vuong.png",
           },
         ]);
@@ -1037,18 +1036,18 @@ describe("200: PATCH /api/events/:event_id", () => {
           {
             _id: "00000020f61bb4362eee2c01",
             name: "grass",
-            img_url: "https://publicdomainvectors.org/photos/Biteme.png",
+            image: "https://publicdomainvectors.org/photos/Biteme.png",
           },
           {
             _id: "00000020f61bb4362eee2c02",
             name: "water",
-            img_url:
+            image:
               "https://publicdomainvectors.org/photos/Thuy-Quai-Vuong.png",
           },
           {
             _id: "00000020f61bb4362eee2c02",
             name: "water",
-            img_url:
+            image:
               "https://publicdomainvectors.org/photos/Thuy-Quai-Vuong.png",
           },
         ]);

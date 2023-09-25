@@ -32,17 +32,17 @@ function getCollection(collection_id) {
         })
 };
 
-function addNewCollection(name, img_url) {
+function addNewCollection(name, image) {
     const db = client.db(`game-master-${ENV}`);
     const collectionCreaturesCollection = db.collection('collections');
 
     if (name === undefined || name === "") return Promise.reject({ status: 404, msg: "Bad Request" });
-    if (img_url === undefined || img_url === "") return Promise.reject({ status: 404, msg: "Bad Request" });
+    if (image === undefined || image === "") return Promise.reject({ status: 404, msg: "Bad Request" });
 
     const collectionToAdd = {
         _id: new ObjectId().toHexString(),
         name: name,
-        img_url: img_url
+        image: image
     }
 
     return collectionCreaturesCollection.insertOne(collectionToAdd)
