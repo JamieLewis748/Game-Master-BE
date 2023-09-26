@@ -2,6 +2,7 @@ const { client } = require('../seed')
 const { ObjectId } = require('mongodb');
 const { modifyStats } = require('./users.model')
 const {ENV} = require("../connection");
+const socket = require('../socket.js')
 
 function getAllEvents(isGameFull = undefined, gameType = undefined, sortBy = "dateTime", order = "1") {
     const db = client.db(`game-master-${ENV}`);
@@ -66,25 +67,47 @@ function addNewEvent(hostedBy, image, gameInfo, isGameFull, gameType, dateTime, 
 };
 
 
-function updateRequestToParticipateWithNewUser(event_id, user_id){
+async function updateRequestToParticipateWithNewUser(event_id, user_id){
     const db = client.db(`game-master-${ENV}`);
     const eventsCollection = db.collection('events');
+    const usersCollection = db.collection('users');
+
+    const event = await eventsCollection.findOne({_id:event_id})
+
+    const user = await usersCollection.findOne({_id: user_id})
+
+    const host = await usersCollection.findOne({_id: event.hostedBy})
 
     return eventsCollection.updateOne({ _id: event_id }, { $push: { "requestedToParticipate": user_id }})
         .then((msg) => {
+            socket.emit("notification", {
+                type: "msg",
+                from: `${user.username} has requested to participate in ${event.gameInfo}`,
+                to: host.username,
+              })
             return msg
         })
 };
 
-function updateParticipateWithNewUser(event_id, user_id){
+async function updateParticipateWithNewUser(event_id, user_id){
     const db = client.db(`game-master-${ENV}`);
     const eventsCollection = db.collection('events');
+    const usersCollection = db.collection('users');
+
+    const event = await eventsCollection.findOne({_id:event_id})
+
+    const user = await usersCollection.findOne({_id: user_id})
 
     return eventsCollection.updateOne({ _id: event_id }, {
         $pull: { requestedToParticipate: user_id }, 
         $push: { participants: user_id }
       })
         .then((msg) => {
+            socket.emit("notification", {
+                type: "msg",
+                from: `You have been accepted into ${event.gameInfo}`,
+                to: user.username,
+              })
             return msg
         })
 };
@@ -103,12 +126,24 @@ const updateCompleted = async (event_id, host_id, participants, winner, duration
         if (participant === host_id) return
         else {
             try {
+                const usersCollection = db.collection("users");
                 if(winner === participant){
                     const creatureCollection = db.collection("collections");
                     const prizeCollection =  (await creatureCollection.findOne({_id : eventInDatabase.prizeCollection_id}))
-                    const usersCollection = db.collection("users");
                     await usersCollection.findOneAndUpdate({_id : winner}, { $push: { "myCreatures": prizeCollection} })
+                    const winnerUser = await usersCollection.findOne({_id : participant})
+                    await socket.emit("notification", {
+                        type: "msg",
+                        from: `You have been given a new collection`,
+                        to: winnerUser.username,
+                      })
                 }
+                const user = await usersCollection.findOne({_id : participant})
+                await socket.emit("notification", {
+                    type: "msg",
+                    from: `You have been given 50 xp`,
+                    to: user.username,
+                  })
                 await modifyStats(participant, "50")
             }
             catch(error) {
