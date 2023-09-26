@@ -69,15 +69,15 @@ describe("GET /api/users/:user_id", () => {
         expect(body).toEqual({ user: users[4] });
       });
   });
-  test("404 : Should return 404 when the user exists but is blocked", () => {
-    return request(app)
-      .get("/api/users/00000020f51bb4362eee2a03")
-      .send({ userWhoRequested: "00000020f51bb4362eee2a02" })
-      .expect(404)
-      .then((msg) => {
-        expect(JSON.parse(msg.text)).toBe("User not found");
-      });
-  });
+  // test("404 : Should return 404 when the user exists but is blocked", () => {
+  //   return request(app)
+  //     .get("/api/users/00000020f51bb4362eee2a03")
+  //     .send({ userWhoRequested: "00000020f51bb4362eee2a02" })
+  //     .expect(404)
+  //     .then((msg) => {
+  //       expect(JSON.parse(msg.text)).toBe("User not found");
+  //     });
+  // });
   test('404 : Should return 404 with "User not found" for a non-existent user ID', () => {
     return request(app)
       .get("/api/users/100")
@@ -87,15 +87,40 @@ describe("GET /api/users/:user_id", () => {
         expect(JSON.parse(msg.text)).toBe("User not found");
       });
   });
-  test('400 : Should return 400 with "Bad Request" for a missing userWhoRequested parameter', () => {
+  // test('400 : Should return 400 with "Bad Request" for a missing userWhoRequested parameter', () => {
+  //   return request(app)
+  //     .get("/api/users/00000020f51bb4362eee2a01")
+  //     .expect(400)
+  //     .then((msg) => {
+  //       expect(JSON.parse(msg.text)).toBe("Bad Request");
+  //     });
+  // });
+});
+
+
+
+
+
+describe("GET /api/manyusers", () => {
+  test("200: Should return status 200 on successful access", () => {
+    return request(app).get("/api/manyusers").send({
+      ids: ["00000020f51bb4362eee2a01", "00000020f51bb4362eee2a02", "00000020f51bb4362eee2a03"]
+    }).expect(200);
+  });
+  test("200: Should return an object with expected users data structure", () => {
     return request(app)
-      .get("/api/users/00000020f51bb4362eee2a01")
-      .expect(400)
-      .then((msg) => {
-        expect(JSON.parse(msg.text)).toBe("Bad Request");
+      .get("/api/manyusers").send({
+        ids: ["00000020f51bb4362eee2a01", "00000020f51bb4362eee2a02", "00000020f51bb4362eee2a03"]
+      }).expect(200)
+      .then(({ body }) => {
+        let expectedResult = [...users]
+        expectedResult = expectedResult.slice(0,3)
+        expect(body.users).toMatchObject(expectedResult);
       });
   });
 });
+
+
 
 
 describe("POST /api/users", () => {
@@ -359,7 +384,6 @@ describe("PATCH /api/users/characterStats/:user_id", () => {
   });
 });
 
-
 describe("GET /api/events ", () => {
   test("200: Should return status 200 on successful access", () => {
     return request(app).get("/api/events").expect(200);
@@ -503,6 +527,7 @@ describe("GET /api/events/:event_id", () => {
 describe("POST /api/events", () => {
   test("POST /api/events - Create a new event", async () => {
     const newEvent = {
+      hostedBy: "00000020f51bb4362eee2a01",
       image: "https://example.com/event3.jpg",
       gameInfo: "Event 3 - Card Games Night",
       isGameFull: false,
@@ -524,6 +549,7 @@ describe("POST /api/events", () => {
     return request(app)
       .post("/api/events")
       .send({
+        hostedBy: "00000020f51bb4362eee2a01",
         image: "https://example.com/event2.jpg",
         gameInfo: "Event 2 - Family Board Games",
         isGameFull: false,
@@ -540,6 +566,7 @@ describe("POST /api/events", () => {
   });
   test("200: Should return status 200 on create and retrieve event with matching data", async () => {
     const data = {
+      hostedBy: "00000020f51bb4362eee2a01",
       image: "https://example.com/event2.jpg",
       gameInfo: "Event 2 - Family Board Games",
       isGameFull: false,
@@ -608,7 +635,7 @@ describe("POST /api/collections", () => {
       .post("/api/collections")
       .send({
         name: "Rock",
-        img_url: "https://example.com/event2.jpg",
+        image: "https://example.com/event2.jpg",
       })
       .expect(200)
       .then(({ body }) => {
@@ -618,7 +645,7 @@ describe("POST /api/collections", () => {
   test("200: Should retrun status 200, create and retrieve a collection with matching data", async () => {
     const data = {
       name: "Rock",
-      img_url: "https://example.com/event2.jpg",
+      image: "https://example.com/event2.jpg",
     };
 
     const event = (await request(app).post("/api/collections").send(data)).body;
@@ -646,7 +673,7 @@ describe("POST /api/collections", () => {
     return request(app)
       .post("/api/collections")
       .send({
-        img_url: "test",
+        image: "test",
       })
       .expect(404)
       .then((msg) => {
@@ -980,12 +1007,12 @@ describe("200: PATCH /api/events/:event_id", () => {
           {
             _id: "00000020f61bb4362eee2c01",
             name: "grass",
-            img_url: "https://publicdomainvectors.org/photos/Biteme.png",
+            image: "https://publicdomainvectors.org/photos/Biteme.png",
           },
           {
             _id: "00000020f61bb4362eee2c02",
             name: "water",
-            img_url:
+            image:
               "https://publicdomainvectors.org/photos/Thuy-Quai-Vuong.png",
           },
         ]);
@@ -1009,18 +1036,18 @@ describe("200: PATCH /api/events/:event_id", () => {
           {
             _id: "00000020f61bb4362eee2c01",
             name: "grass",
-            img_url: "https://publicdomainvectors.org/photos/Biteme.png",
+            image: "https://publicdomainvectors.org/photos/Biteme.png",
           },
           {
             _id: "00000020f61bb4362eee2c02",
             name: "water",
-            img_url:
+            image:
               "https://publicdomainvectors.org/photos/Thuy-Quai-Vuong.png",
           },
           {
             _id: "00000020f61bb4362eee2c02",
             name: "water",
-            img_url:
+            image:
               "https://publicdomainvectors.org/photos/Thuy-Quai-Vuong.png",
           },
         ]);

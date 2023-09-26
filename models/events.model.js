@@ -40,7 +40,7 @@ function getEvent(event_id) {
         })
 };
 
-function addNewEvent(image, gameInfo, isGameFull, gameType, dateTime, duration, capacity, prizeCollection_id) {
+function addNewEvent(hostedBy, image, gameInfo, isGameFull, gameType, dateTime, duration, capacity, prizeCollection_id) {
     const db = client.db(`game-master-${ENV}`);
     const eventsCollection = db.collection('events');
     const eventToAdd = {
@@ -55,7 +55,8 @@ function addNewEvent(image, gameInfo, isGameFull, gameType, dateTime, duration, 
         participants: [],
         requestedToParticipate: [],
         prizeCollection_id: prizeCollection_id,
-        isCompleted: "false"
+        isCompleted: "false",
+        hostedBy: hostedBy
     }
 
     return eventsCollection.insertOne(eventToAdd)
