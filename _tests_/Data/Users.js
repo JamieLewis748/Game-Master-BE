@@ -31,8 +31,9 @@ exports.users = [
         _id: "00000020f61bb4362eee2c01",
         name: "grass",
         img_url: "https://publicdomainvectors.org/photos/Biteme.png",
-      }
-    ]
+      },
+    ],
+    watchList: ["00000020f51bb4362eee2e04"],
   },
   {
     _id: "00000020f51bb4362eee2a02",
@@ -61,8 +62,9 @@ exports.users = [
         _id: "00000020f61bb4362eee2c03",
         name: "fire",
         img_url: "https://publicdomainvectors.org/photos/flame-boy.png",
-      }
-    ]
+      },
+    ],
+    watchList: [],
   },
   {
     _id: "00000020f51bb4362eee2a03",
@@ -96,8 +98,9 @@ exports.users = [
         _id: "00000020f61bb4362eee2c02",
         name: "water",
         img_url: "https://publicdomainvectors.org/photos/Thuy-Quai-Vuong.png",
-      }
-    ]
+      },
+    ],
+    watchList: [],
   },
   {
     _id: "00000020f51bb4362eee2a04",
@@ -121,8 +124,9 @@ exports.users = [
         _id: "00000020f61bb4362eee2c01",
         name: "grass",
         img_url: "https://publicdomainvectors.org/photos/Biteme.png",
-      }
-    ]
+      },
+    ],
+    watchList: [],
   },
   {
     _id: "00000020f51bb4362eee2a05",
@@ -151,8 +155,9 @@ exports.users = [
         _id: "00000020f61bb4362eee2c03",
         name: "fire",
         img_url: "https://publicdomainvectors.org/photos/flame-boy.png",
-      }
-    ]
+      },
+    ],
+    watchList: [],
   },
   {
     _id: "00000020f51bb4362eee2a06",
@@ -176,8 +181,9 @@ exports.users = [
         _id: "00000020f61bb4362eee2c03",
         name: "fire",
         img_url: "https://publicdomainvectors.org/photos/flame-boy.png",
-      }
-    ]
+      },
+    ],
+    watchList: [],
   },
   {
     _id: "00000020f51bb4362eee2a07",
@@ -206,8 +212,9 @@ exports.users = [
         _id: "00000020f61bb4362eee2c03",
         name: "fire",
         img_url: "https://publicdomainvectors.org/photos/flame-boy.png",
-      }
-    ]
+      },
+    ],
+    watchList: [],
   },
   {
     _id: "00000020f51bb4362eee2a08",
@@ -231,8 +238,9 @@ exports.users = [
         _id: "00000020f61bb4362eee2c03",
         name: "fire",
         img_url: "https://publicdomainvectors.org/photos/flame-boy.png",
-      }
-    ]
+      },
+    ],
+    watchList: [],
   },
   {
     _id: "00000020f51bb4362eee2a09",
@@ -261,8 +269,9 @@ exports.users = [
         _id: "00000020f61bb4362eee2c03",
         name: "fire",
         img_url: "https://publicdomainvectors.org/photos/flame-boy.png",
-      }
-    ]
+      },
+    ],
+    watchList: [],
   },
   {
     _id: "00000020f51bb4362eee2a20",
@@ -291,8 +300,9 @@ exports.users = [
         _id: "00000020f61bb4362eee2c02",
         name: "water",
         img_url: "https://publicdomainvectors.org/photos/Thuy-Quai-Vuong.png",
-      }
-    ]
+      },
+    ],
+    watchList: [],
   },
   {
     _id: "00000020f51bb4362eee2a21",
@@ -313,10 +323,11 @@ exports.users = [
     },
     myCreatures: [
       {
-    _id: "00000020f61bb4362eee2c03",
-    name: "fire",
-    img_url: "https://publicdomainvectors.org/photos/flame-boy.png",
-  }
-    ]
+        _id: "00000020f61bb4362eee2c03",
+        name: "fire",
+        img_url: "https://publicdomainvectors.org/photos/flame-boy.png",
+      },
+    ],
+    watchList: [],
   },
 ];
