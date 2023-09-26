@@ -301,7 +301,7 @@ exports.users = [
         name: "water",
         image: "https://publicdomainvectors.org/photos/Thuy-Quai-Vuong.png",
       }
-      },
+      
     ],
     watchList: [],
   },

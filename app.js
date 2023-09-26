@@ -24,6 +24,7 @@ app.patch("/api/users/block/:user_id", blockUser)
 app.get("/api/events", returnAllEvents)
 app.get("/api/events/:event_id", returnEvent)
 app.post("/api/events", postNewEvent)
+// app.patch("/api/events/:user_id", patchRequestParticipateEvent)
 app.post("/api/events/:event_id/watchList", postWatchList)
 app.patch("/api/events/:event_id", patchCompletedStatus);
 

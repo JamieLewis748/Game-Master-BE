@@ -39,13 +39,11 @@ describe("GET /api/users/:user_id", () => {
   test("200: Should return status 200 for a valid user ID and userWhoRequested", () => {
     return request(app)
       .get("/api/users/00000020f51bb4362eee2a01")
-      .send({ userWhoRequested: "00000020f51bb4362eee2a02" })
       .expect(200);
   });
   test("200: Should return status 200 and the expected user data for a valid user ID", () => {
     return request(app)
       .get("/api/users/aiden@gmail.com")
-      .send({ userWhoRequested: "00000020f51bb4362eee2a02" })
       .expect(200)
       .then(({ body }) => {
         expect(body).toEqual({ user: users[10] });
@@ -54,7 +52,6 @@ describe("GET /api/users/:user_id", () => {
   test("200: Should return status 200 and the expected user data for a valid user ID", () => {
     return request(app)
       .get("/api/users/noah@gmail.com")
-      .send({ userWhoRequested: "00000020f51bb4362eee2a02" })
       .expect(200)
       .then(({ body }) => {
         expect(body).toEqual({ user: users[8] });
@@ -63,7 +60,6 @@ describe("GET /api/users/:user_id", () => {
   test("200: Should return status 200 and the expected user data for a valid user ID", () => {
     return request(app)
       .get("/api/users/00000020f51bb4362eee2a05")
-      .send({ userWhoRequested: "00000020f51bb4362eee2a02" })
       .expect(200)
       .then(({ body }) => {
         expect(body).toEqual({ user: users[4] });
@@ -81,7 +77,6 @@ describe("GET /api/users/:user_id", () => {
   test('404 : Should return 404 with "User not found" for a non-existent user ID', () => {
     return request(app)
       .get("/api/users/100")
-      .send({ userWhoRequested: "00000020f51bb4362eee2a02" })
       .expect(404)
       .then((msg) => {
         expect(JSON.parse(msg.text)).toBe("User not found");

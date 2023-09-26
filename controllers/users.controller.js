@@ -15,12 +15,12 @@ const returnAllUsers = (req, res) => {
 };
 
 const returnUser = (req, res) => {
+  console.log("here")
     const {user_id} = req.params
-  const { userWhoRequested } = req.body
   // if (!userWhoRequested) {
   //   res.status(400).json("Bad Request")
   // }
-    getUser(user_id.toString(), userWhoRequested.toString())
+    getUser(user_id)
         .then((msg) => {
             res.status(200).json(msg);
         })
