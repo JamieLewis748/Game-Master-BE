@@ -324,11 +324,12 @@ exports.users = [
     },
     myCreatures: [
       {
-        _id: "00000020f61bb4362eee2c03",
-        name: "fire",
-        image: "https://publicdomainvectors.org/photos/flame-boy.png",
-      },
+    _id: "00000020f61bb4362eee2c03",
+    name: "fire",
+    image: "https://publicdomainvectors.org/photos/flame-boy.png",
+  }
     ],
-    watchList: [],
-  },
+    watchList: []
+  }
 ];
+
