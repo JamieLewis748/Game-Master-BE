@@ -40,9 +40,10 @@ function getEvent(event_id) {
         })
 };
 
-function addNewEvent(hostedBy, image, gameInfo, isGameFull, gameType, dateTime, duration, capacity, prizeCollection_id) {
+const addNewEvent = (hostedBy, image, gameInfo, isGameFull, gameType, dateTime, duration, capacity, prizeCollection_id) => {
     const db = client.db(`game-master-${ENV}`);
     const eventsCollection = db.collection('events');
+    let createdEventId
     const eventToAdd = {
         _id: new ObjectId().toHexString(),
         image: image,
@@ -58,12 +59,30 @@ function addNewEvent(hostedBy, image, gameInfo, isGameFull, gameType, dateTime, 
         isCompleted: "false",
         hostedBy: hostedBy
     }
-
     return eventsCollection.insertOne(eventToAdd)
         .then((msg) => {
+            createdEventId = msg.insertedId;
+            hostsEventToWatchList(createdEventId)
             return msg
+        }).catch((err) => {
+        return Promise.reject({ status: 500});
         })
+
 };
+
+const hostsEventToWatchList = (createdEventId) => {
+    const usersCollection = db.collection("users");
+        if (createdEventId !== null) {
+          return usersCollection
+            .updateOne(
+              { _id: user_id },
+              { $push: { watchList: createdEventId } }
+            )
+            .then((msg) => {
+              return msg;
+            });
+        }
+}
 
 
 function updateRequestToParticipateWithNewUser(event_id, user_id){

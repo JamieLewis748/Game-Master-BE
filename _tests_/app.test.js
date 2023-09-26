@@ -518,7 +518,7 @@ describe("GET /api/events/:event_id", () => {
   }, 20000);
 });
 
-describe("POST /api/events", () => {
+describe.only("POST /api/events", () => {
   test("POST /api/events - Create a new event", async () => {
     const newEvent = {
       hostedBy: "00000020f51bb4362eee2a01",
