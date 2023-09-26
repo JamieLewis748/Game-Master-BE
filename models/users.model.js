@@ -42,7 +42,7 @@ function getUser(user_id, userWhoRequested = undefined) {
   if (emailRegex.test(user_id)) {
     query = { email: user_id }
   }
-  else if (userWhoRequested === undefined && userWhoRequested !== adminCode) return Promise.reject({ status: 400, msg: "Bad Request" })
+  // else if (userWhoRequested === undefined && userWhoRequested !== adminCode) return Promise.reject({ status: 400, msg: "Bad Request" })
   else {
     query = { _id: user_id }
   }
@@ -50,8 +50,21 @@ function getUser(user_id, userWhoRequested = undefined) {
   return usersCollection.findOne(query)
     .then((userArray) => {
       if (!userArray) throw { status: 404, msg: "User not found" }
-      if (userArray.blocked.includes(userWhoRequested)) throw { status: 404, msg: "User not found" }
+      // if (userArray.blocked.includes(userWhoRequested)) throw { status: 404, msg: "User not found" }
       else return { user: userArray }
+    })
+};
+
+function getMultipleUsers(ids) {
+  const db = client.db(`game-master-${ENV}`);
+  const usersCollection = db.collection('users');
+
+  let query = { _id: { $in: ids } }
+
+  return usersCollection.find(query).toArray()
+    .then((userArray) => {
+      if (!userArray) throw { status: 404, msg: "User not found" }
+      else return { users: userArray }
     })
 };
 
@@ -243,4 +256,4 @@ async function userBlockRequest(user_id = undefined, userIdToGetBlocked) {
     })
 }
 
-module.exports = { getAllUsers, getUser, addNewUser, requestNewFriend, modifyStats, fetchMyCollection, userBlockRequest, respondFriendReq };
+module.exports = { getAllUsers, getUser, getMultipleUsers, addNewUser, requestNewFriend, modifyStats, fetchMyCollection, userBlockRequest, respondFriendReq };

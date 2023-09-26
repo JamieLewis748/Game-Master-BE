@@ -1,8 +1,9 @@
 const {
-    getAllEvents,
-    getEvent,
-    addNewEvent,
-    updateCompleted,
+  getAllEvents,
+  getEvent,
+  addNewEvent,
+  updateCompleted,
+  handleWatchList,
 } = require("../models/events.model.js");
 
 const returnAllEvents = (req, res) => {
@@ -26,8 +27,8 @@ const returnEvent = (req, res) => {
 };
 
 const postNewEvent = (req, res) => {
-    const { image, gameInfo, isGameFull, gameType, dateTime, duration, capacity, prizeCollection_id} = req.body
-    addNewEvent(image, gameInfo, isGameFull, gameType, dateTime, duration, capacity, prizeCollection_id)
+    const { hostedBy, image, gameInfo, isGameFull, gameType, dateTime, duration, capacity, prizeCollection_id} = req.body
+    addNewEvent(hostedBy, image, gameInfo, isGameFull, gameType, dateTime, duration, capacity, prizeCollection_id)
         .then((userArray) => {
             res.status(200).json(userArray);
         })
@@ -50,9 +51,21 @@ const patchCompletedStatus = (req, res) => {
     });
 }
 
+const postWatchList = (req, res) => {
+    const { event_id } = req.params
+    const {user_id} = req.body
+    handleWatchList(event_id.toString(), user_id.toString())
+      .then((msg) => {
+        res.status(201).json(msg);
+      })
+      .catch((error) => {
+        res.status(error.status).json(error.msg);
+      });
+}
 module.exports = {
-    returnAllEvents,
-    returnEvent,
-    postNewEvent,
-    patchCompletedStatus,
+  returnAllEvents,
+  returnEvent,
+  postNewEvent,
+  patchCompletedStatus,
+  postWatchList
 };
