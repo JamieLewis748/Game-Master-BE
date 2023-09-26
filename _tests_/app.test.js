@@ -117,7 +117,6 @@ describe("GET /api/manyusers", () => {
 
 
 
-
 describe("POST /api/users", () => {
   test("200: Should return status 200 on successful user creation", () => {
     return request(app)
