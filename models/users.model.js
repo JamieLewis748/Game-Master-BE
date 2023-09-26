@@ -84,13 +84,17 @@ function addNewUser(name = undefined, username = undefined, email = undefined, i
     friendRequestsReceived: [],
     friendRequestsSent: [],
     blocked: [],
-    characterStats: [{
-      name: characterName,
-      level: "1",
-      experience: "0",
-      experienceToLevelup: "10"
-    }]
-  }
+    characterStats: [
+      {
+        name: characterName,
+        level: "1",
+        experience: "0",
+        experienceToLevelup: "10",
+      },
+    ],
+    myCreatures: [],
+    watchList: [],
+  };
 
   const db = client.db(`game-master-${ENV}`);
   const usersCollection = db.collection('users');
