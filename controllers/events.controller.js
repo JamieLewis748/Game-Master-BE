@@ -62,7 +62,7 @@ const patchCompletedStatus = (req, res) => {
 }
 
 const postWatchList = (req, res) => {
-    const { event_id } = req.body
+    const { event_id } = req.params
     const {user_id} = req.body
     handleWatchList(event_id.toString(), user_id.toString())
       .then((msg) => {
@@ -74,7 +74,7 @@ const postWatchList = (req, res) => {
 }
 
 const handleDeleteEvent = (req, res) => {
-  const { event_id } = req.body;
+  const { event_id } = req.params;
   const { user_id } = req.body;
   cancelEvent(event_id.toString(), user_id.toString())
     .then((msg) => {
