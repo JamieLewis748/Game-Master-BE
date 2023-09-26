@@ -137,7 +137,12 @@ const handleWatchList = async (event_id, user_id) => {
         return Promise.reject({ status: 400, msg: "Bad request" });
     }
     const userWatchList = await (usersCollection.findOne({ _id: user_id }).then((user) => {
-        return user.watchList
+        if (user.watchList) {
+            return user.watchList
+        } else {
+            user.watchList = []
+            return user.watchList
+        }
     }).catch((err) => {
         return Promise.reject({ status: 404, msg: "Not Found" });
         }))  
