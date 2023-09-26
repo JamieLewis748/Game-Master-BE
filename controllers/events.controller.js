@@ -4,7 +4,8 @@ const {
   addNewEvent,
   updateCompleted,
   handleWatchList,
-  updateRequestToParticipateWithNewUser
+  updateRequestToParticipateWithNewUser,
+  updateParticipateWithNewUser
 } = require("../models/events.model.js");
 
 const returnAllEvents = (req, res) => {
@@ -46,6 +47,14 @@ const patchRequestParticipateEvent = (req, res) => {
     });
 }
 
+const patchAcceptParticipate = (req, res) => {
+  const { event_id } = req.params;
+    const { user_id } = req.body
+    updateParticipateWithNewUser(event_id, user_id).then((data) => {
+      res.status(200).json(data);
+    });
+}
+
 const patchCompletedStatus = (req, res) => {
     const { event_id } = req.params;
     const { host_id, participants, winner, duration } = req.body
@@ -76,6 +85,7 @@ module.exports = {
   returnEvent,
   postNewEvent,
   patchRequestParticipateEvent,
+  patchAcceptParticipate,
   patchCompletedStatus,
   postWatchList
 };

@@ -996,6 +996,41 @@ describe("200: PATCH /api/events/:event_id/request", () => {
  })
 })
 
+
+describe("200: PATCH /api/events/:event_id/request", () => {
+  test("200: returns 200 when successful", () => {
+     return request(app)
+       .patch("/api/events/00000020f51bb4362eee2e08/accept")
+       .send({
+         user_id: '00000020f51bb4362eee2a21'
+       })
+       .expect(200);
+  })
+  test("200: confirms that the user is added to the requestedToParticipate array", async () => {
+    await request(app).get("/api/events/00000020f51bb4362eee2e08").expect(200)
+    .then(({body}) => {
+      expect(body.event.requestedToParticipate).toMatchObject(["00000020f51bb4362eee2a01"])
+      expect(body.event.participants).toMatchObject(["00000020f51bb4362eee2a02", "00000020f51bb4362eee2a03"])
+    })
+
+    await request(app)
+      .patch("/api/events/00000020f51bb4362eee2e08/accept")
+      .send({
+        user_id: '00000020f51bb4362eee2a01'
+      })
+      .expect(200)
+      .then(({body}) => {
+        expect(body.acknowledged).toEqual(true)
+      })
+
+    return request(app).get("/api/events/00000020f51bb4362eee2e08").expect(200)
+    .then(({body}) => {
+      expect(body.event.requestedToParticipate).toMatchObject([])
+      expect(body.event.participants).toMatchObject(["00000020f51bb4362eee2a02", "00000020f51bb4362eee2a03", "00000020f51bb4362eee2a01"])
+    })
+ })
+})
+
 describe("200: PATCH /api/events/:event_id", () => {
   test("200: should return 200 when successfully patched", () => {
     return request(app)
