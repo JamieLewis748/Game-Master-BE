@@ -3,7 +3,7 @@ const app = express();
 const cors = require('cors');
 
 const {returnAllUsers, returnUser, returnMultipleUsers, postNewUser, patchCharacterStats, postFriendRequest, getOwnedCollections, blockUser, handleFriendReq} = require('./controllers/users.controller')
-const {returnAllEvents, returnEvent, postNewEvent, patchCompletedStatus, postWatchList} = require("./controllers/events.controller");
+const {returnAllEvents, returnEvent, postNewEvent, patchRequestParticipateEvent, patchCompletedStatus, postWatchList} = require("./controllers/events.controller");
 const {returnAllCollections, returnCollection, postNewCollection} = require('./controllers/collections.controller')
 
 app.use(cors());
@@ -24,7 +24,7 @@ app.patch("/api/users/block/:user_id", blockUser)
 app.get("/api/events", returnAllEvents)
 app.get("/api/events/:event_id", returnEvent)
 app.post("/api/events", postNewEvent)
-// app.patch("/api/events/:user_id", patchRequestParticipateEvent)
+app.patch("/api/events/:event_id/request", patchRequestParticipateEvent)
 app.post("/api/events/:event_id/watchList", postWatchList)
 app.patch("/api/events/:event_id", patchCompletedStatus);
 

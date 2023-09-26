@@ -65,6 +65,17 @@ function addNewEvent(hostedBy, image, gameInfo, isGameFull, gameType, dateTime, 
         })
 };
 
+
+function updateRequestToParticipateWithNewUser(event_id, user_id){
+    const db = client.db(`game-master-${ENV}`);
+    const eventsCollection = db.collection('events');
+
+    return eventsCollection.updateOne({ _id: event_id }, { $push: { "requestedToParticipate": user_id }})
+        .then((msg) => {
+            return msg
+        })
+};
+
 const updateCompleted = async (event_id, host_id, participants, winner, duration) => {
     const db = client.db(`game-master-${ENV}`);
     const eventsCollection = db.collection("events");
@@ -152,4 +163,4 @@ const handleWatchList = async (event_id, user_id) => {
          }));
     }
 };
-module.exports = { getAllEvents, getEvent, addNewEvent, updateCompleted, handleWatchList };
+module.exports = { getAllEvents, getEvent, addNewEvent, updateRequestToParticipateWithNewUser, updateCompleted, handleWatchList };
