@@ -1,8 +1,9 @@
 const {
-    getAllEvents,
-    getEvent,
-    addNewEvent,
-    updateCompleted,
+  getAllEvents,
+  getEvent,
+  addNewEvent,
+  updateCompleted,
+  handleWatchList,
 } = require("../models/events.model.js");
 
 const returnAllEvents = (req, res) => {
@@ -50,9 +51,21 @@ const patchCompletedStatus = (req, res) => {
     });
 }
 
+const postWatchList = (req, res) => {
+    const { event_id } = req.params
+    const {user_id} = req.body
+    handleWatchList(event_id.toString(), user_id.toString())
+      .then((msg) => {
+        res.status(201).json(msg);
+      })
+      .catch((error) => {
+        res.status(error.status).json(error.msg);
+      });
+}
 module.exports = {
-    returnAllEvents,
-    returnEvent,
-    postNewEvent,
-    patchCompletedStatus,
+  returnAllEvents,
+  returnEvent,
+  postNewEvent,
+  patchCompletedStatus,
+  postWatchList
 };

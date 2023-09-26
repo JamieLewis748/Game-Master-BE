@@ -1126,3 +1126,79 @@ describe("200: PATCH /api/events/:event_id", () => {
       });
   });
 });
+
+describe("201: POST /api/events/:event_id/watchList", () => {
+  test("201: returns 201 when successful", () => {
+     return request(app)
+       .post("/api/events/00000020f51bb4362eee2e02/watchList")
+       .send({
+         user_id: '00000020f51bb4362eee2a01'
+       })
+       .expect(201);
+  })
+  test("201: returns modifiedCount of 1 when updated user watchList", async () => {
+    await request(app)
+      .post("/api/events/00000020f51bb4362eee2e03/watchList")
+      .send({
+        user_id: "00000020f51bb4362eee2a01",
+      })
+      .expect(201)
+
+    return request(app)
+      .get("/api/users/00000020f51bb4362eee2a01")
+      .send({ userWhoRequested: "00000020f51bb4362eee2a02" })
+      .then(({ body }) => {
+        expect(body.user.watchList.includes("00000020f51bb4362eee2e03")).toBe(true);
+      });
+  });
+  test("201: removes event_id from user watchList if already there", async () => {
+    await request(app)
+      .post("/api/events/00000020f51bb4362eee2e04/watchList")
+      .send({
+        user_id: "00000020f51bb4362eee2a01",
+      })
+      .expect(201);
+
+    return request(app)
+      .get("/api/users/00000020f51bb4362eee2a01")
+      .send({ userWhoRequested: "00000020f51bb4362eee2a02" })
+      .then(({ body }) => {
+         expect(!body.user.watchList.includes("00000020f51bb4362eee2e04")).toBe(true);
+      });
+  });
+  test("400: returns bad request if event_id is invalid", async () => {
+    await request(app)
+      .post("/api/events/banana/watchList")
+      .send({
+        user_id: "00000020f51bb4362eee2a01",
+      })
+      .expect(400)
+    
+  })
+  test("400: returns bad request if user_id is invalid", async () => {
+    await request(app)
+      .post("/api/events/00000020f51bb4362eee2e04/watchList")
+      .send({
+        user_id: "banana",
+      })
+      .expect(400)
+  })
+  test("404: returns not found if user_id does not exist", async () => {
+    await request(app)
+      .post("/api/events/00000020f51bb4362eee2e04/watchList")
+      .send({
+        user_id: "00000020f51bb4362eee2a99",
+      })
+      .expect(404)
+  })
+  test("404: returns not found if event_id does not exist", async () => {
+    await request(app)
+      .post("/api/events/00000020f51bb4362aaa2e99/watchList")
+      .send({
+        user_id: "00000020f51bb4362eee2a01",
+      })
+    .expect(404)
+      .then(({ body }) => {
+    })
+  })
+})

@@ -56,7 +56,7 @@ exports.events = [
     currentPlayerTotal: 2,
 
     requestedToParticipate: [],
-    prizeCollection_id: "00000020f61bb4362eee2c03",
+                       
     isCompleted: "false",
     isWatched: "false",
     hostedBy: "00000020f51bb4362eee2a02",
