@@ -37,7 +37,6 @@ function getUser(user_id) {
   const usersCollection = db.collection('users');
 
   let query = {}
-  console.log("test")
 
   const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
   if (emailRegex.test(user_id)) {
@@ -48,7 +47,6 @@ function getUser(user_id) {
     query = { _id: user_id }
   }
 
-  console.log(query)
   return usersCollection.findOne(query)
     .then((userArray) => {
       if (!userArray) throw { status: 404, msg: "User not found" }
