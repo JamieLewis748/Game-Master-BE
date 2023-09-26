@@ -137,7 +137,8 @@ const handleWatchList = async (event_id, user_id) => {
         return Promise.reject({ status: 400, msg: "Bad request" });
     }
     const userWatchList = await (usersCollection.findOne({ _id: user_id }).then((user) => {
-        return user.watchList}).catch((err) => {
+        return user.watchList
+    }).catch((err) => {
         return Promise.reject({ status: 404, msg: "Not Found" });
         }))  
     
@@ -176,4 +177,44 @@ const handleWatchList = async (event_id, user_id) => {
          }));
     }
 };
-module.exports = { getAllEvents, getEvent, addNewEvent, updateRequestToParticipateWithNewUser, updateParticipateWithNewUser, updateCompleted, handleWatchList };
+
+const cancelEvent = async (event_id, user_id) => {
+    const objectIdHexRegExp = /^[0-9a-fA-F]{24}$/
+    const db = client.db(`game-master-${ENV}`);
+    const usersCollection = db.collection("users");
+    const eventsCollection = db.collection("events");
+    let thisUser 
+
+    if (!objectIdHexRegExp.test(event_id) || event_id === undefined || user_id === undefined || !objectIdHexRegExp.test(user_id)) {
+        return Promise.reject({ status: 400, msg: "Bad request" });
+    }
+    thisUser = await (usersCollection.findOne({ _id: user_id }).then((user) => {
+        if (user === null) {
+            return Promise.reject({ status: 404, msg: "Not Found" });  
+        } else {
+            return user
+        }
+    }).catch((err) => {
+        return Promise.reject({ status: 404, msg: "Not Found" });
+    }))
+    
+    await eventsCollection.findOne({ _id: event_id }).then((response) => {
+        if (response === null) {
+            return Promise.reject({ status: 404, msg: "Not Found" });
+        }
+    }).catch((err) => {
+        return Promise.reject({ status: 404, msg: "Not Found" });
+    })
+    if (event_id === thisUser._id) {
+        return Promise.reject({ status: 400, msg: "Bad request" });
+    } else {
+        return eventsCollection.findOneAndDelete({ _id: event_id })
+            .then((msg) => {
+                return msg
+            }).catch((err) => {
+            return err
+        })
+    }
+}
+
+module.exports = { getAllEvents, getEvent, addNewEvent, updateRequestToParticipateWithNewUser, updateParticipateWithNewUser, updateCompleted, handleWatchList, cancelEvent };
