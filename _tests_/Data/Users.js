@@ -318,5 +318,5 @@ exports.users = [
     img_url: "https://publicdomainvectors.org/photos/flame-boy.png",
   }
     ]
-  },
-];
+  }
+]
