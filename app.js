@@ -3,7 +3,7 @@ const app = express();
 const cors = require('cors');
 
 const {returnAllUsers, returnUser, returnMultipleUsers, postNewUser, patchCharacterStats, postFriendRequest, getOwnedCollections, blockUser, handleFriendReq} = require('./controllers/users.controller')
-const {returnAllEvents, returnEvent, postNewEvent, patchRequestParticipateEvent, patchAcceptParticipate, patchCompletedStatus, postWatchList} = require("./controllers/events.controller");
+const {returnAllEvents, returnEvent, postNewEvent, patchRequestParticipateEvent, patchAcceptParticipate, patchCompletedStatus, postWatchList, handleDeleteEvent} = require("./controllers/events.controller");
 const {returnAllCollections, returnCollection, postNewCollection} = require('./controllers/collections.controller')
 
 app.use(cors());
@@ -28,6 +28,7 @@ app.patch("/api/events/:event_id/request", patchRequestParticipateEvent)
 app.patch("/api/events/:event_id/accept", patchAcceptParticipate)
 app.post("/api/events/:event_id/watchList", postWatchList)
 app.patch("/api/events/:event_id", patchCompletedStatus);
+app.post("/api/events/:event_id/cancel", handleDeleteEvent);
 
 app.get("/api/collections", returnAllCollections)
 app.get("/api/collections/:collection_id", returnCollection)

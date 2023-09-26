@@ -1,12 +1,4 @@
-const {
-  getAllEvents,
-  getEvent,
-  addNewEvent,
-  updateCompleted,
-  handleWatchList,
-  updateRequestToParticipateWithNewUser,
-  updateParticipateWithNewUser
-} = require("../models/events.model.js");
+const {getAllEvents, getEvent, addNewEvent, updateCompleted, handleWatchList, updateRequestToParticipateWithNewUser, updateParticipateWithNewUser, cancelEvent} = require("../models/events.model.js");
 
 const returnAllEvents = (req, res) => {
     const { isGameFull, gameType, sortBy, order } = req.query
@@ -80,6 +72,19 @@ const postWatchList = (req, res) => {
         res.status(error.status).json(error.msg);
       });
 }
+
+const handleDeleteEvent = (req, res) => {
+  const { event_id } = req.params;
+  const { user_id } = req.body;
+  cancelEvent(event_id.toString(), user_id.toString())
+    .then((msg) => {
+      res.status(200).json(msg);
+    })
+    .catch((error) => {
+      res.status(error.status).json(error.msg);
+    });
+};
+
 module.exports = {
   returnAllEvents,
   returnEvent,
@@ -87,5 +92,6 @@ module.exports = {
   patchRequestParticipateEvent,
   patchAcceptParticipate,
   patchCompletedStatus,
-  postWatchList
+  postWatchList,
+  handleDeleteEvent
 };
