@@ -32,11 +32,12 @@ function getAllUsers(query = undefined, sortBy = undefined, orderBy = undefined)
     });
 }
 
-function getUser(user_id, userWhoRequested = undefined) {
+function getUser(user_id) {
   const db = client.db(`game-master-${ENV}`);
   const usersCollection = db.collection('users');
 
   let query = {}
+  console.log("test")
 
   const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
   if (emailRegex.test(user_id)) {
@@ -47,6 +48,7 @@ function getUser(user_id, userWhoRequested = undefined) {
     query = { _id: user_id }
   }
 
+  console.log(query)
   return usersCollection.findOne(query)
     .then((userArray) => {
       if (!userArray) throw { status: 404, msg: "User not found" }
