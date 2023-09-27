@@ -115,20 +115,21 @@ async function updateParticipateWithNewUser(event_id, user_id){
 const updateCompleted = async (event_id, host_id, participants, winner, duration) => {
     const db = client.db(`game-master-${ENV}`);
     const eventsCollection = db.collection("events");
+    const usersCollection = db.collection("users");
+    const creatureCollection = db.collection("collections");
 
     const eventInDatabase = (await eventsCollection.findOne({ _id: event_id }).then((event) => {
         if (host_id !== event.hostedBy) return Promise.reject({ status: 400, msg: "Not Host" })
         return event
     }))
-            
-
+    console.log(eventInDatabase)
+    console.log(participants)
+    
     await Promise.all(participants.map(async (participant) => {
         if (participant === host_id) return
         else {
             try {
-                const usersCollection = db.collection("users");
                 if(winner === participant){
-                    const creatureCollection = db.collection("collections");
                     const prizeCollection =  (await creatureCollection.findOne({_id : eventInDatabase.prizeCollection_id}))
                     await usersCollection.findOneAndUpdate({_id : winner}, { $push: { "myCreatures": prizeCollection} })
                     const winnerUser = await usersCollection.findOne({_id : participant})
@@ -139,6 +140,8 @@ const updateCompleted = async (event_id, host_id, participants, winner, duration
                       })
                 }
                 const user = await usersCollection.findOne({_id : participant})
+                console.log(participant)
+                console.log(user)
                 await socket.emit("notification", {
                     type: "msg",
                     from: `You have been given 50 xp`,
