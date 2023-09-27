@@ -1113,6 +1113,30 @@ describe("200: PATCH /api/events/:event_id", () => {
         ]);
       });
   });
+  test("200: users with no myCreatures array can still win", async () => {
+    await request(app)
+      .patch("/api/events/00000020f51bb4362eee2e02")
+      .send({
+        host_id: "00000020f51bb4362eee2a01",
+        participants: ["00000020f51bb4362eee2a01", "00000020f51bb4362eee2a31"],
+        winner: "00000020f51bb4362eee2a31",
+        duration: "2:00:00",
+      });
+
+    return request(app)
+      .get("/api/users/00000020f51bb4362eee2a31")
+      .send({ userWhoRequested: adminCode })
+      .expect(200)
+      .then(({ body }) => {
+        expect(body.user.myCreatures).toEqual([
+          {
+            _id: "00000020f61bb4362eee2c02",
+            name: "water",
+            image: "https://publicdomainvectors.org/photos/Thuy-Quai-Vuong.png",
+          }
+        ]);
+      });
+  });
   test("200: testing that the participant gets the exp", async () => {
     await request(app)
       .get("/api/users/00000020f51bb4362eee2a03")

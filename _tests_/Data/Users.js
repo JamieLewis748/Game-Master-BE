@@ -33,7 +33,7 @@ exports.users = [
         image: "https://publicdomainvectors.org/photos/Biteme.png",
       },
     ],
-    watchList: ["00000020f51bb4362eee2e04"],    
+    watchList: ["00000020f51bb4362eee2e04"],
   },
   {
     _id: "00000020f51bb4362eee2a02",
@@ -61,10 +61,10 @@ exports.users = [
       {
         _id: "00000020f61bb4362eee2c03",
         name: "fire",
-         image: "https://publicdomainvectors.org/photos/flame-boy.png",
+        image: "https://publicdomainvectors.org/photos/flame-boy.png",
       },
     ],
-    watchList: [],   
+    watchList: [],
   },
   {
     _id: "00000020f51bb4362eee2a03",
@@ -300,7 +300,7 @@ exports.users = [
         _id: "00000020f61bb4362eee2c02",
         name: "water",
         image: "https://publicdomainvectors.org/photos/Thuy-Quai-Vuong.png",
-      }
+      },
     ],
     watchList: [],
   },
@@ -323,12 +323,31 @@ exports.users = [
     },
     myCreatures: [
       {
-    _id: "00000020f61bb4362eee2c03",
-    name: "fire",
-    image: "https://publicdomainvectors.org/photos/flame-boy.png",
-  }
+        _id: "00000020f61bb4362eee2c03",
+        name: "fire",
+        image: "https://publicdomainvectors.org/photos/flame-boy.png",
+      },
     ],
+    watchList: [],
+  },
+  {
+    _id: "00000020f51bb4362eee2a31",
+    name: "NoCreatures",
+    username: "NoCreatures",
+    email: "nope@gmail.com",
+    img_url: "",
+    friends: ["00000020f51bb4362eee2a04"],
+    friendRequestsReceived: [],
+    friendRequestsSent: ["00000020f51bb4362eee2a01"],
+    blocked: [],
+    topics: ["Board Games", "Card Games"],
+    characterStats: {
+      name: "Character12",
+      level: "1",
+      experience: "0",
+      experienceToLevelUp: "10",
+    },
     watchList: []
-  }
+  },
 ];
 

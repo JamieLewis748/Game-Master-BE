@@ -122,16 +122,17 @@ const updateCompleted = async (event_id, host_id, participants, winner, duration
         if (host_id !== event.hostedBy) return Promise.reject({ status: 400, msg: "Not Host" })
         return event
     }))
-    console.log(eventInDatabase)
-    console.log(participants)
+    console.log(eventInDatabase, "---eventInDatabase");
+    console.log(participants, '---participants')
     
     await Promise.all(participants.map(async (participant) => {
         if (participant === host_id) return
         else {
             try {
-                if(winner === participant){
-                    const prizeCollection =  (await creatureCollection.findOne({_id : eventInDatabase.prizeCollection_id}))
-                    await usersCollection.findOneAndUpdate({_id : winner}, { $push: { "myCreatures": prizeCollection} })
+                if (winner === participant) {
+                    console.log('+++++ winner is participant!! +++++')
+                    const prizeCollection = (await creatureCollection.findOne({ _id: eventInDatabase.prizeCollection_id }))              
+                        await usersCollection.findOneAndUpdate({_id : winner}, { $push: { "myCreatures": prizeCollection} })
                     const winnerUser = await usersCollection.findOne({_id : participant})
                     await socket.emit("notification", {
                         type: "msg",
@@ -140,8 +141,6 @@ const updateCompleted = async (event_id, host_id, participants, winner, duration
                       })
                 }
                 const user = await usersCollection.findOne({_id : participant})
-                console.log(participant)
-                console.log(user)
                 await socket.emit("notification", {
                     type: "msg",
                     from: `You have been given 50 xp`,
@@ -154,10 +153,13 @@ const updateCompleted = async (event_id, host_id, participants, winner, duration
             }
         }
     }))
-
-    await modifyStats(eventInDatabase.hostedBy, "75")
+        console.log('--------- line 156 -------------')
+    await modifyStats(eventInDatabase.hostedBy, "75").then(() => {
+        console.log('-------------- stats modified ---------------')
+    })
 
     return eventsCollection
+        console.log('++++++ setting event completed: true +++++++++')
         .findOneAndUpdate({ _id: event_id }, { $set: { isCompleted: "true" } })
         .then((msg) => {
             return msg;
