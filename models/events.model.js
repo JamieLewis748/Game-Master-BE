@@ -130,8 +130,8 @@ const updateCompleted = async (event_id, host_id, participants, winner, duration
         else {
             try {
                 if(winner === participant){
-                    const prizeCollection =  (await creatureCollection.findOne({_id : eventInDatabase.prizeCollection_id}))
-                    await usersCollection.findOneAndUpdate({_id : winner}, { $push: { "myCreatures": prizeCollection} })
+                    const prizeCollection = (await creatureCollection.findOne({ _id: eventInDatabase.prizeCollection_id }))              
+                        await usersCollection.findOneAndUpdate({_id : winner}, { $push: { "myCreatures": prizeCollection} })
                     const winnerUser = await usersCollection.findOne({_id : participant})
                     await socket.emit("notification", {
                         type: "msg",
@@ -140,8 +140,6 @@ const updateCompleted = async (event_id, host_id, participants, winner, duration
                       })
                 }
                 const user = await usersCollection.findOne({_id : participant})
-                console.log(participant)
-                console.log(user)
                 await socket.emit("notification", {
                     type: "msg",
                     from: `You have been given 50 xp`,
