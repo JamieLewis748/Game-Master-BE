@@ -3,6 +3,7 @@ const { client } = require('../seed')
 const { ObjectId } = require('mongodb');
 const  adminCode = require("../AdminCode")
 const {ENV} = require("../connection");
+const socket = require('../socket.js')
 
 
 function getAllUsers(query = undefined, sortBy = undefined, orderBy = undefined) {
@@ -158,6 +159,8 @@ async function respondFriendReq(user_id, sentFrom, isAccepted) {
   if (!requestingUser) {
     return Promise.reject({ status: 404, msg: "Bad request" });
   }
+
+
   const updatedRecieved = await respondingUser.friendRequestsReceived.filter(
     (requestsReceived) => {
       if (requestsReceived !== sentFrom.toString()) {
@@ -191,6 +194,11 @@ async function respondFriendReq(user_id, sentFrom, isAccepted) {
       return usersCollection
         .updateOne({ _id: sentFrom }, { $push: { friends: user_id } })
         .then((msg) => {
+          socket.emit("notification", {
+            type: "msg",
+            from: `Friend requested accepted by ${requestingUser.username}`,
+            to: "tree1",
+          })
           return msg;
         });
     } catch (err) {
