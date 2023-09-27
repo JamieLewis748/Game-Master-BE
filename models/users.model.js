@@ -89,7 +89,8 @@ function addNewUser(name = undefined, username = undefined, email = undefined, i
       level: "1",
       experience: "0",
       experienceToLevelup: "10"
-    }]
+    }],
+    myCreatures: [],
   }
 
   const db = client.db(`game-master-${ENV}`);
