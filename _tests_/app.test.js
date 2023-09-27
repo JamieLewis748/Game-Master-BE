@@ -1116,7 +1116,6 @@ describe("200: PATCH /api/events/:event_id", () => {
   test("200: testing that the participant gets the exp", async () => {
     await request(app)
       .get("/api/users/00000020f51bb4362eee2a03")
-      .send({ userWhoRequested: adminCode })
       .expect(200)
       .then(({ body }) => {
         expect(body.user.characterStats).toEqual({
@@ -1138,7 +1137,6 @@ describe("200: PATCH /api/events/:event_id", () => {
 
     return request(app)
       .get("/api/users/00000020f51bb4362eee2a03")
-      .send({ userWhoRequested: adminCode })
       .expect(200)
       .then(({ body }) => {
         expect(body.user.characterStats).toEqual({
@@ -1152,7 +1150,6 @@ describe("200: PATCH /api/events/:event_id", () => {
   test("200: testing that the host gets the exp", async () => {
     await request(app)
       .get("/api/users/00000020f51bb4362eee2a01")
-      .send({ userWhoRequested: adminCode })
       .expect(200)
       .then(({ body }) => {
         expect(body.user.characterStats).toEqual({
@@ -1174,9 +1171,9 @@ describe("200: PATCH /api/events/:event_id", () => {
 
     return request(app)
       .get("/api/users/00000020f51bb4362eee2a01")
-      .send({ userWhoRequested: adminCode })
       .expect(200)
       .then(({ body }) => {
+        console.log(body)
         expect(body.user.characterStats).toEqual({
           name: "Character1",
           level: "8",

@@ -51,14 +51,17 @@ const patchCompletedStatus = (req, res) => {
     const { event_id } = req.params;
     const { host_id, participants, winner, duration } = req.body
     updateCompleted(
-      event_id.toString(),
-      host_id.toString(),
+      event_id,
+      host_id,
       participants,
       winner,
       duration
     ).then((data) => {
       res.status(200).json(data);
-    });
+    })
+    .catch((err) => {
+      res.status(err.status).json(err.msg)
+    })
 }
 
 const postWatchList = (req, res) => {
