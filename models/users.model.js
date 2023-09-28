@@ -122,19 +122,21 @@ const modifyStats = async (user_id, exp = undefined) => {
   const userBeforeUpdate = (await usersCollection.find({ _id: user_id }).toArray())
   if (userBeforeUpdate.length === 0) return Promise.reject({ status: 400, msg: "User not found" })
 
-  let totalExp = (Number(userBeforeUpdate[0].characterStats[0].experience)) + Number(exp)
+  console.log(userBeforeUpdate[0])
+
+  let totalExp = (Number(userBeforeUpdate[0].characterStats.experience)) + Number(exp)
   console.log("BEFORE WHILE ++++++++++++", totalExp)
 
-  while (totalExp >= Number(userBeforeUpdate[0].characterStats[0].experienceToLevelUp)) {
-    totalExp -= Number(userBeforeUpdate[0].characterStats[0].experienceToLevelUp)
-    userBeforeUpdate[0].characterStats[0].level = (Number(userBeforeUpdate[0].characterStats[0].level) + 1).toString()
-    userBeforeUpdate[0].characterStats[0].experienceToLevelUp = (Number(userBeforeUpdate[0].characterStats[0].experienceToLevelUp) + 10).toString()
+  while (totalExp >= Number(userBeforeUpdate[0].characterStats.experienceToLevelUp)) {
+    totalExp -= Number(userBeforeUpdate[0].characterStats.experienceToLevelUp)
+    userBeforeUpdate[0].characterStats.level = (Number(userBeforeUpdate[0].characterStats.level) + 1).toString()
+    userBeforeUpdate[0].characterStats.experienceToLevelUp = (Number(userBeforeUpdate[0].characterStats.experienceToLevelUp) + 10).toString()
   }
   console.log(totalExp)
-  userBeforeUpdate[0].characterStats[0].experience = totalExp.toString()
+  userBeforeUpdate[0].characterStats.experience = totalExp.toString()
 
   console.log(userBeforeUpdate[0])
-  return usersCollection.findOneAndUpdate({ _id: user_id }, { $set: { "characterStats": userBeforeUpdate[0].characterStats[0] } })
+  return usersCollection.findOneAndUpdate({ _id: user_id }, { $set: { "characterStats": userBeforeUpdate[0].characterStats } })
     .then((msg) => {
       console.log("xp should be added")
       return msg
