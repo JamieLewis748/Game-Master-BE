@@ -110,6 +110,8 @@ const modifyStats = async (user_id, exp = undefined) => {
   console.log('======= inside modifyStats ===========')
   console.log("🚀 ~ file: users.model.js:110 ~ modifyStats ~ user_id:", user_id)
   console.log("🚀 ~ file: users.model.js:110 ~ modifyStats ~ exp:", exp)
+
+  console.log("isNan(exp) ===========> ", isNaN(exp))
   
   if (exp === undefined) return Promise.reject({ status: 400, msg: "Missing exp" })
   if (isNaN(exp)) return Promise.reject({ status: 404, msg: "Bad Request" })
