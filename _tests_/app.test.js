@@ -1146,7 +1146,7 @@ describe.only("200: PATCH /api/events/:event_id", () => {
         name: "Character3",
         level: "6",
         experience: "19",
-        experienceToLevelUp: "60",
+        experienceToLevelup: "60",
       }]);
       });
 
@@ -1167,7 +1167,7 @@ describe.only("200: PATCH /api/events/:event_id", () => {
           name: "Character3",
           level: "7",
           experience: "9",
-          experienceToLevelUp: "70",
+          experienceToLevelup: "70",
         }]);
       });
   });
@@ -1180,7 +1180,7 @@ describe.only("200: PATCH /api/events/:event_id", () => {
           name: "Character1",
           level: "7",
           experience: "29",
-          experienceToLevelUp: "70",
+          experienceToLevelup: "70",
         }]);
       });
 
@@ -1202,7 +1202,7 @@ describe.only("200: PATCH /api/events/:event_id", () => {
           name: "Character1",
           level: "8",
           experience: "34",
-          experienceToLevelUp: "80",
+          experienceToLevelup: "80",
         }]);
       });
   });
