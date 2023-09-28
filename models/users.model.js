@@ -127,10 +127,10 @@ const modifyStats = async (user_id, exp = undefined) => {
   let totalExp = (Number(userBeforeUpdate[0].characterStats[0].experience)) + Number(exp)
   console.log("BEFORE WHILE ++++++++++++", totalExp)
 
-  while (totalExp >= Number(userBeforeUpdate[0].characterStats[0].experienceToLevelUp)) {
-    totalExp -= Number(userBeforeUpdate[0].characterStats[0].experienceToLevelUp)
+  while (totalExp >= Number(userBeforeUpdate[0].characterStats[0].experienceToLevelup)) {
+    totalExp -= Number(userBeforeUpdate[0].characterStats[0].experienceToLevelup)
     userBeforeUpdate[0].characterStats[0].level = (Number(userBeforeUpdate[0].characterStats[0].level) + 1).toString()
-    userBeforeUpdate[0].characterStats[0].experienceToLevelUp = (Number(userBeforeUpdate[0].characterStats[0].experienceToLevelUp) + 10).toString()
+    userBeforeUpdate[0].characterStats[0].experienceToLevelUp = (Number(userBeforeUpdate[0].characterStats[0].experienceToLevelup) + 10).toString()
   }
   console.log(totalExp)
   userBeforeUpdate[0].characterStats[0].experience = totalExp.toString()
