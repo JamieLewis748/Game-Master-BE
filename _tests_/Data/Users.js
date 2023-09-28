@@ -24,7 +24,7 @@ exports.users = [
       name: "Character1",
       level: "7",
       experience: "29",
-      experienceToLevelUp: "70",
+      experienceToLevelup: "70",
     }],
     myCreatures: [
       {
@@ -55,7 +55,7 @@ exports.users = [
       name: "Character2",
       level: "5",
       experience: "20",
-      experienceToLevelUp: "50",
+      experienceToLevelup: "50",
     }],
     myCreatures: [
       {
@@ -86,7 +86,7 @@ exports.users = [
       name: "Character3",
       level: "6",
       experience: "19",
-      experienceToLevelUp: "60",
+      experienceToLevelup: "60",
     }],
     myCreatures: [
       {
@@ -117,7 +117,7 @@ exports.users = [
       name: "Character4",
       level: "5",
       experience: "30",
-      experienceToLevelUp: "50",
+      experienceToLevelup: "50",
     }],
     myCreatures: [
       {
@@ -143,7 +143,7 @@ exports.users = [
       name: "Character5",
       level: "10",
       experience: "50",
-      experienceToLevelUp: "100",
+      experienceToLevelup: "100",
     }],
     myCreatures: [
       {
@@ -174,7 +174,7 @@ exports.users = [
       name: "Character6",
       level: "19",
       experience: "70",
-      experienceToLevelUp: "190",
+      experienceToLevelup: "190",
     }],
     myCreatures: [
       {
@@ -200,7 +200,7 @@ exports.users = [
       name: "Character7",
       level: "1",
       experience: "5",
-      experienceToLevelUp: "10",
+      experienceToLevelup: "10",
     }],
     myCreatures: [
       {
@@ -231,7 +231,7 @@ exports.users = [
       name: "Character8",
       level: "2",
       experience: "12",
-      experienceToLevelUp: "20",
+      experienceToLevelup: "20",
     }],
     myCreatures: [
       {
@@ -257,7 +257,7 @@ exports.users = [
       name: "Character9",
       level: "9",
       experience: "29",
-      experienceToLevelUp: "90",
+      experienceToLevelup: "90",
     }],
     myCreatures: [
       {
@@ -288,7 +288,7 @@ exports.users = [
       name: "Character10",
       level: "7",
       experience: "50",
-      experienceToLevelUp: "70",
+      experienceToLevelup: "70",
     }],
     myCreatures: [
       {
@@ -319,7 +319,7 @@ exports.users = [
       name: "Character11",
       level: "15",
       experience: "29",
-      experienceToLevelUp: "80",
+      experienceToLevelup: "80",
     }],
     myCreatures: [
       {
@@ -345,7 +345,7 @@ exports.users = [
       name: "Character12",
       level: "1",
       experience: "0",
-      experienceToLevelUp: "10",
+      experienceToLevelup: "10",
     }],
     watchList: []
   },
