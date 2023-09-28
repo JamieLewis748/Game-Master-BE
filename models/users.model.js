@@ -129,10 +129,11 @@ const modifyStats = async (user_id, exp = undefined) => {
     userBeforeUpdate[0].characterStats.level = (Number(userBeforeUpdate[0].characterStats.level) + 1).toString()
     userBeforeUpdate[0].characterStats.experienceToLevelUp = (Number(userBeforeUpdate[0].characterStats.experienceToLevelUp) + 10).toString()
   }
-  userBeforeUpdate[0].characterStats.experience = totalExp.toString()
+  console.log(totalExp)
+  userBeforeUpdate[0].characterStats[0].experience = totalExp.toString()
 
   console.log(userBeforeUpdate[0])
-  return usersCollection.findOneAndUpdate({ _id: user_id }, { $set: { "characterStats": userBeforeUpdate[0].characterStats } })
+  return usersCollection.findOneAndUpdate({ _id: user_id }, { $set: { "characterStats": userBeforeUpdate[0].characterStats[0] } })
     .then((msg) => {
       console.log("xp should be added")
       return msg
