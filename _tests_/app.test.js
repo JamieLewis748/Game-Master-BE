@@ -1030,7 +1030,7 @@ describe("200: PATCH /api/events/:event_id/request", () => {
  })
 })
 
-describe("200: PATCH /api/events/:event_id", () => {
+describe.only("200: PATCH /api/events/:event_id", () => {
   test("200: should return 200 when successfully patched", () => {
     return request(app)
       .patch("/api/events/00000020f51bb4362eee2e02")
@@ -1142,12 +1142,12 @@ describe("200: PATCH /api/events/:event_id", () => {
       .get("/api/users/00000020f51bb4362eee2a03")
       .expect(200)
       .then(({ body }) => {
-        expect(body.user.characterStats).toEqual({
-          name: "Character3",
-          level: "6",
-          experience: "19",
-          experienceToLevelUp: "60",
-        });
+      expect(body.user.characterStats).toEqual([{
+        name: "Character3",
+        level: "6",
+        experience: "19",
+        experienceToLevelUp: "60",
+      }]);
       });
 
     await request(app)
@@ -1163,12 +1163,12 @@ describe("200: PATCH /api/events/:event_id", () => {
       .get("/api/users/00000020f51bb4362eee2a03")
       .expect(200)
       .then(({ body }) => {
-        expect(body.user.characterStats).toEqual({
+        expect(body.user.characterStats).toEqual([{
           name: "Character3",
           level: "7",
           experience: "9",
           experienceToLevelUp: "70",
-        });
+        }]);
       });
   });
   test("200: testing that the host gets the exp", async () => {
@@ -1176,12 +1176,12 @@ describe("200: PATCH /api/events/:event_id", () => {
       .get("/api/users/00000020f51bb4362eee2a01")
       .expect(200)
       .then(({ body }) => {
-        expect(body.user.characterStats).toEqual({
+        expect(body.user.characterStats).toEqual([{
           name: "Character1",
           level: "7",
           experience: "29",
           experienceToLevelUp: "70",
-        });
+        }]);
       });
 
     await request(app)
@@ -1198,12 +1198,12 @@ describe("200: PATCH /api/events/:event_id", () => {
       .expect(200)
       .then(({ body }) => {
         console.log(body)
-        expect(body.user.characterStats).toEqual({
+        expect(body.user.characterStats).toEqual([{
           name: "Character1",
           level: "8",
           experience: "34",
           experienceToLevelUp: "80",
-        });
+        }]);
       });
   });
 });
