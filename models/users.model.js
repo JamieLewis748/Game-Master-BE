@@ -7,7 +7,6 @@ const socket = require('../socket.js')
 
 
 function getAllUsers(query = undefined, sortBy = undefined, orderBy = undefined) {
-  console.log("hit getrAllUsers func", `game-master-${ENV}`);
   const db = client.db(`game-master-${ENV}`)
   const usersCollection = db.collection("users");
   let searchQuery = {};
