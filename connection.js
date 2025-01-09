@@ -6,7 +6,7 @@ const ENV = process.env.NODE_ENV || "test";
 
 require("dotenv").config({ path: `${__dirname}/.env.${ENV}` });
 
-console.log("connection.js: ", "__dirname:", {__dirname}, " ENV:", {ENV})
+console.log("connection.js: ", ENV)
 
 // let uri = `mongodb+srv://emm__:${password}@cluster0.pfbhecj.mongodb.net`
 let uri = `mongodb+srv://Emm:${password}@cluster0.pdcei6g.mongodb.net`;
