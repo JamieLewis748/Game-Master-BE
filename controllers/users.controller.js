@@ -1,6 +1,7 @@
 const { getAllUsers, getUser, getMultipleUsers, addNewUser, modifyStats, requestNewFriend, fetchMyCollection, userBlockRequest, respondFriendReq } = require('../models/users.model.js')
 
 const returnAllUsers = (req, res) => {
+  console.log("hit users.controller returnAllUsers func")
   const { topics } = req.query;
   const { sortBy } = req.query;
   const { orderBy } = req.query;
